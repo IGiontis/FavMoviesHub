@@ -34,7 +34,7 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
         <Nav className="ms-auto" navbar style={{ listStyle: "none", paddingLeft: 0 }}>
           <NavItem>
             <NavLink className="text-white nav-link-hover" onClick={toggleTheme} style={{ cursor: "pointer" }}>
-              {isDarkMode ? <FontAwesomeIcon icon={faMoon} size="lg" /> : <FontAwesomeIcon icon={faSun} size="lg" />}
+              {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
             </NavLink>
           </NavItem>
 

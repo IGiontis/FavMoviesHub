@@ -1,5 +1,48 @@
+import { useFormik } from "formik";
+import FormInputsComponent from "../FormInputs/FormInputsComponent";
+import { useMemo } from "react";
+import { Card, CardBody, CardFooter, CardHeader, Col, Container, Row } from "reactstrap";
+import CancelSaveButtons from "../FormInputs/CancelSaveButtons";
+import getSignInSchema from "./schema/signInSchema";
+
 const SignIn = () => {
-  return <div>SignIn</div>;
+  const schema = useMemo(() => getSignInSchema(), []);
+
+  const formik = useFormik({
+    initialValues: {},
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  const handleSave = () => {
+    formik.handleSubmit();
+  };
+
+  const handleCancel = () => {
+    console.log("Cancel clicked");
+  };
+
+  return (
+    <Container>
+      <Row>
+        <Col className="d-flex justify-content-center">
+          <Card style={{ maxWidth: "600px" }}>
+            <CardHeader>
+              <div>Welcome and thank you register here</div>
+            </CardHeader>
+            <CardBody>
+              <FormInputsComponent formik={formik} schema={schema} leftCol={12} rightCol={12} />
+            </CardBody>
+
+            <CardFooter>
+              <CancelSaveButtons onSave={handleSave} onCancel={handleCancel} />
+            </CardFooter>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default SignIn;

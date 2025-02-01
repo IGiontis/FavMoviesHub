@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Button, Card, CardBody, CardHeader, CardTitle } from "reactstrap";
 
 import NavbarLandingPage from "./components/LandingPage/NavbarLandingPage";
 import PageNotFound from "./pages/PageNotFound";
@@ -8,6 +7,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import Layout from "./components/Layout";
 import CreateAccount from "./components/LandingPage/CreateAccount";
 import "./App.css";
+import SignIn from "./components/LandingPage/SignIn";
 
 function App() {
   const savedTheme = localStorage.getItem("theme");
@@ -36,6 +36,7 @@ function App() {
             <Route path="project/:id" element={<NavbarLandingPage />} />
           </Route>
           <Route path="register" element={<CreateAccount />} />
+          <Route path="sign-in" element={<SignIn />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Layout>

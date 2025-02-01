@@ -17,3 +17,20 @@ body {
   color: #007bff !important; /* Change to the color you want */
   transition: color 0.3s ease;
 }
+/* Hide the number input's spinner (up/down arrows) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-transparent-btn {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+}
+
+.custom-transparent-btn:hover {
+  background-color: transparent;
+  color: #007bff;
+}
