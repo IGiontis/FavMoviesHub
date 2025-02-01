@@ -8,6 +8,9 @@ const getSignInSchema = () => {
         attribute: "userName",
         editable: true,
         placeholder: "Enter user name",
+        validation: {
+          is_not_null: true, // Required field
+        },
       },
       {
         label: "Password",

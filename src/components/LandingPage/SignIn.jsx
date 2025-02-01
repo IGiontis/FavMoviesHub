@@ -4,19 +4,32 @@ import { useMemo } from "react";
 import { Card, CardBody, CardFooter, CardHeader, Col, Container, Row } from "reactstrap";
 import CancelSaveButtons from "../FormInputs/CancelSaveButtons";
 import getSignInSchema from "./schema/signInSchema";
+import { generateValidationForm } from "../../utils/validationForm";
 
 const SignIn = () => {
   const schema = useMemo(() => getSignInSchema(), []);
+  const validationSchema = generateValidationForm(schema);
 
   const formik = useFormik({
-    initialValues: {},
-    onSubmit: (values) => {
+    initialValues: {
+      userName: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
       console.log(values);
     },
+    validateOnBlur: true, // Ensure validation is triggered on blur
+    validateOnChange: true, // Ensure validation is triggered on change
   });
 
-  const handleSave = () => {
-    formik.handleSubmit();
+  const handleSave = async () => {
+    const errors = await formik.validateForm();
+    if (Object.keys(errors).length === 0) {
+      formik.handleSubmit();
+    } else {
+      console.log("Validation errors:", errors);
+    }
   };
 
   const handleCancel = () => {
@@ -29,7 +42,7 @@ const SignIn = () => {
         <Col className="d-flex justify-content-center">
           <Card style={{ maxWidth: "600px" }}>
             <CardHeader>
-              <div>Welcome and thank you register here</div>
+              <div>Welcome and thank you for registering here</div>
             </CardHeader>
             <CardBody>
               <FormInputsComponent formik={formik} schema={schema} leftCol={12} rightCol={12} />
