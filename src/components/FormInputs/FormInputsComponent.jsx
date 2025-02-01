@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
-import { Col, Form, FormGroup } from "reactstrap";
+import { Col, Form, Row } from "reactstrap";
 import { GetInputComponent } from "./GetInputComponent";
 
 const FormInputsComponent = ({ formik, schema, leftCol = 6, rightCol = 6 }) => {
-  console.log(schema);
   return (
     <Form
       onSubmit={(e) => {
@@ -13,13 +12,15 @@ const FormInputsComponent = ({ formik, schema, leftCol = 6, rightCol = 6 }) => {
       }}
     >
       {schema.fields.map((field, index) => {
+        const isLastRow = index === schema.fields.length - 1;
         return (
-          <FormGroup key={`fieldGroup_${index}`} row className="d-flex align-items-center">
-            {field?.label && <Col md={leftCol}>{field.label}</Col>}
-            <Col md={rightCol} className="justify-content-center align-self-center ">
-              {formik && <GetInputComponent formik={formik} field={field} index={index} />}
+          <Row key={index} className={`${isLastRow ? "mb-0" : "mb-3"}`}>
+            <Col xs={leftCol} className={`${leftCol === "12" || leftCol === 12 ? "mb-2" : ""}`}>
+              <div>{field.label}</div>
             </Col>
-          </FormGroup>
+
+            <Col xs={rightCol}>{formik && <GetInputComponent formik={formik} field={field} index={index} />}</Col>
+          </Row>
         );
       })}
     </Form>
@@ -29,8 +30,9 @@ const FormInputsComponent = ({ formik, schema, leftCol = 6, rightCol = 6 }) => {
 FormInputsComponent.propTypes = {
   formik: PropTypes.object.isRequired,
   schema: PropTypes.object.isRequired,
-  leftCol: PropTypes.number,
-  rightCol: PropTypes.number,
+  flexDirection: PropTypes.oneOf(["row", "column"]), // Accepts only "row" or "column"
+  leftCol: PropTypes.number, // Optional, defaults to 6 (for 50% width)
+  rightCol: PropTypes.number, // Optional, defaults to 6 (for 50% width)
 };
 
 export default FormInputsComponent;

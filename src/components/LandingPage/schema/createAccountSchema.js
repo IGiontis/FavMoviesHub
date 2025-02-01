@@ -2,12 +2,32 @@ const getCreateAccountSchema = () => {
   const schema = {
     fields: [
       {
-        label: "Title",
+        label: "First Name",
         type: "string",
         fieldType: "textfield",
-        attribute: "descr",
+        attribute: "firstName",
         editable: true,
-        viewable: false,
+      },
+      {
+        label: "Last Name",
+        type: "string",
+        fieldType: "textfield",
+        attribute: "firstName",
+        editable: true,
+      },
+      {
+        label: "First Name",
+        type: "string",
+        fieldType: "textfield",
+        attribute: "firstName",
+        editable: true,
+      },
+      {
+        label: "First Name",
+        type: "string",
+        fieldType: "textfield",
+        attribute: "firstName",
+        editable: true,
       },
     ],
   };

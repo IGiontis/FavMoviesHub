@@ -6,7 +6,7 @@ export const GetInputComponent = ({ formik, field, index }) => {
   switch (field.fieldType) {
     case "textfield":
       return (
-        <div className="form-group">
+        <div>
           <Input
             type={field.type || "text"} // Default to "text" if no type is specified
             className={

@@ -13,8 +13,11 @@ import {
   DropdownItem,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
-const NavbarLandingPage = () => {
+const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -23,12 +26,18 @@ const NavbarLandingPage = () => {
 
   return (
     <Navbar color="dark" dark expand="md">
-      <NavbarBrand tag={Link} to="/" className="text-white">
+      <NavbarBrand tag={Link} to="/" className="text-white me-auto">
         Winter Sports
       </NavbarBrand>
       <NavbarToggler onClick={toggleNavbar} />
       <Collapse isOpen={isOpen} navbar>
-        <Nav className="ml-auto" navbar style={{ listStyle: "none", paddingLeft: 0 }}>
+        <Nav className="ms-auto" navbar style={{ listStyle: "none", paddingLeft: 0 }}>
+          <NavItem>
+            <NavLink className="text-white nav-link-hover" onClick={toggleTheme} style={{ cursor: "pointer" }}>
+              {isDarkMode ? <FontAwesomeIcon icon={faMoon} size="lg" /> : <FontAwesomeIcon icon={faSun} size="lg" />}
+            </NavLink>
+          </NavItem>
+
           <NavItem>
             <NavLink tag={Link} to="/" className="text-white nav-link-hover">
               Home
@@ -50,8 +59,9 @@ const NavbarLandingPage = () => {
             </NavLink>
           </NavItem>
 
+          {/* Dropdown for Sign In/Register */}
           <NavItem className="p-2">
-            <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className=" border-0">
+            <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0">
               <DropdownToggle
                 caret
                 className="text-white p-0 border-0 bg-transparent nav-link-hover"
@@ -76,6 +86,11 @@ const NavbarLandingPage = () => {
       </Collapse>
     </Navbar>
   );
+};
+
+NavbarLandingPage.propTypes = {
+  toggleTheme: PropTypes.func.isRequired,
+  isDarkMode: PropTypes.bool.isRequired,
 };
 
 export default NavbarLandingPage;
