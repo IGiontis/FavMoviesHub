@@ -13,7 +13,7 @@ export const GetInputComponent = ({ formik, field, index }) => {
 
   const error = formik.errors[field.attribute];
 
-  const hasError = error;
+  const hasError = error && formik.touched[field.attribute];
 
   switch (field.fieldType) {
     case "textfield":
@@ -74,19 +74,24 @@ export const GetInputComponent = ({ formik, field, index }) => {
         <div>
           <InputGroup>
             <Input
-              type={isPasswordVisible ? "text" : "password"}
-              className={`form-control ${hasError ? "is-invalid" : ""}`}
+              type={isPasswordVisible ? "text" : "password"} // Toggle between password and text visibility
               name={field.attribute}
               value={formik.values[field.attribute] || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               placeholder={field.placeholder || "Enter your password"}
+              className={`form-control ${hasError ? "is-invalid" : ""}`} // Apply the 'is-invalid' class when there's an error
             />
             <InputGroupText onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
               <FontAwesomeIcon icon={faEye} />
             </InputGroupText>
           </InputGroup>
-          {hasError && <FormFeedback>{error}</FormFeedback>}
+          {<FormFeedback>{error}</FormFeedback>}
+          {error && (
+            <div className="text-danger mt-1" style={{ fontSize: "14px" }}>
+              {error}
+            </div>
+          )}
         </div>
       );
 
@@ -103,6 +108,7 @@ GetInputComponent.propTypes = {
     values: PropTypes.object.isRequired, // Formik's values object
     errors: PropTypes.object.isRequired, // Formik's errors object
     touched: PropTypes.object.isRequired, // Formik's touched object
+    setTouched: PropTypes.func.isRequired, // Formik's setTouched method
   }).isRequired,
 
   field: PropTypes.shape({

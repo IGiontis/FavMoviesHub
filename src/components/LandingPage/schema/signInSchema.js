@@ -18,6 +18,9 @@ const getSignInSchema = () => {
         fieldType: "password",
         attribute: "password",
         editable: true,
+        validation: {
+          is_not_null: true, // Required field
+        },
       },
     ],
   };

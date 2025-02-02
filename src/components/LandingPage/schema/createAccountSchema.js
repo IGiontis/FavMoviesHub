@@ -7,6 +7,9 @@ const getCreateAccountSchema = () => {
         fieldType: "textfield",
         attribute: "userName",
         editable: true,
+        validation: {
+          is_not_null: true, // Required field
+        },
       },
       {
         label: "First Name",
@@ -14,6 +17,9 @@ const getCreateAccountSchema = () => {
         fieldType: "textfield",
         attribute: "firstName",
         editable: true,
+        validation: {
+          is_not_null: true, // Required field
+        },
       },
       {
         label: "Last Name",
@@ -21,6 +27,9 @@ const getCreateAccountSchema = () => {
         fieldType: "textfield",
         attribute: "lastName",
         editable: true,
+        validation: {
+          is_not_null: true, // Required field
+        },
       },
       {
         label: "Email",
@@ -28,6 +37,9 @@ const getCreateAccountSchema = () => {
         fieldType: "email",
         attribute: "email",
         editable: true,
+        validation: {
+          is_not_null: true, // Required field
+        },
       },
       {
         label: "Phone Number",
@@ -35,13 +47,31 @@ const getCreateAccountSchema = () => {
         fieldType: "textfield",
         attribute: "phoneNumber",
         editable: true,
+        validation: {
+          is_not_null: true, // Required field
+        },
       },
       {
         label: "Password",
-        type: "password",
+        type: "string",
         fieldType: "password",
         attribute: "password",
         editable: true,
+        validation: {
+          is_not_null: true, // Required field
+        },
+      },
+      {
+        label: "Confirm Password",
+        type: "password",
+        fieldType: "password",
+        attribute: "confirmPassword",
+        editable: true,
+        validation: {
+          is_not_null: true, // Required field
+          matchWith: "password", // Custom property indicating it should match with "password"
+        },
+        placeholder: "Confirm Password",
       },
     ],
   };

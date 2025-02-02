@@ -31,10 +31,10 @@ function App() {
       <Layout toggleTheme={toggleTheme} isDarkMode={isDarkMode}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="about" element={<LandingPage />}>
+          {/* <Route path="about" element={<LandingPage />}>
             <Route index element={<NavbarLandingPage />} />
             <Route path="project/:id" element={<NavbarLandingPage />} />
-          </Route>
+          </Route> */}
           <Route path="register" element={<CreateAccount />} />
           <Route path="sign-in" element={<SignIn />} />
           <Route path="*" element={<PageNotFound />} />

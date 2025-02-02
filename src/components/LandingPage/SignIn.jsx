@@ -19,12 +19,10 @@ const SignIn = () => {
     onSubmit: async (values) => {
       console.log(values);
     },
-    validateOnBlur: true, // Ensure validation is triggered on blur
-    validateOnChange: true, // Ensure validation is triggered on change
   });
 
-  const handleSave = async () => {
-    const errors = await formik.validateForm();
+  const handleSave = () => {
+    const errors = formik.validateForm();
     if (Object.keys(errors).length === 0) {
       formik.handleSubmit();
     } else {
@@ -42,7 +40,7 @@ const SignIn = () => {
         <Col className="d-flex justify-content-center">
           <Card style={{ maxWidth: "600px" }}>
             <CardHeader>
-              <div>Welcome and thank you for registering here</div>
+              <div>Sign In</div>
             </CardHeader>
             <CardBody>
               <FormInputsComponent formik={formik} schema={schema} leftCol={12} rightCol={12} />
