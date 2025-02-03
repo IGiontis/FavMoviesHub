@@ -30,7 +30,6 @@ const FormInputsComponent = ({ formik, schema, leftCol = 6, rightCol = 6 }) => {
 FormInputsComponent.propTypes = {
   formik: PropTypes.object.isRequired,
   schema: PropTypes.object.isRequired,
-  flexDirection: PropTypes.oneOf(["row", "column"]), // Accepts only "row" or "column"
   leftCol: PropTypes.number, // Optional, defaults to 6 (for 50% width)
   rightCol: PropTypes.number, // Optional, defaults to 6 (for 50% width)
 };

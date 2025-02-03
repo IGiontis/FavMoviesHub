@@ -18,12 +18,8 @@ export const generateValidationForm = (formSchema) => {
         break;
       case "password":
         validation = Yup.string().min(8, "Password must be at least 8 characters").required("Password is required");
-
         validation = Yup.string().required("Confirm Password is required");
-
-        console.log(field.validation?.matchWith);
         if (field.validation?.matchWith) {
-          console.log("test");
           validation = validation.oneOf([Yup.ref(field.validation.matchWith), null], "Passwords must match");
         }
         break;

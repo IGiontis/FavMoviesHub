@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { Button } from "reactstrap";
 
 function CancelSaveButtons({ onCancel, onSave, submitLabel = "Save" }) {
+  
   return (
     <div className="d-flex flex-wrap align-items-center justify-content-end">
       {onCancel && (

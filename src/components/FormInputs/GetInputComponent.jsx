@@ -14,6 +14,7 @@ export const GetInputComponent = ({ formik, field, index }) => {
   const error = formik.errors[field.attribute];
 
   const hasError = error && formik.touched[field.attribute];
+  console.log(error);
 
   switch (field.fieldType) {
     case "textfield":
@@ -87,7 +88,7 @@ export const GetInputComponent = ({ formik, field, index }) => {
             </InputGroupText>
           </InputGroup>
           {<FormFeedback>{error}</FormFeedback>}
-          {error && (
+          {error && hasError && (
             <div className="text-danger mt-1" style={{ fontSize: "14px" }}>
               {error}
             </div>
@@ -100,7 +101,6 @@ export const GetInputComponent = ({ formik, field, index }) => {
   }
 };
 
-// Define prop types
 GetInputComponent.propTypes = {
   formik: PropTypes.shape({
     handleChange: PropTypes.func.isRequired, // Formik's handleChange method
