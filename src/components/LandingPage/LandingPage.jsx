@@ -4,14 +4,32 @@ import { Col, Row, Input, FormGroup, Label, Form, Container, Spinner } from "rea
 import SearchedMovies from "./SearchedMovies";
 
 const LandingPage = () => {
+  const [defaultMovies, setDefaultMovies] = useState([]); // Store initial movie list
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Fetch default movies on mount
+    const loadDefaultMovies = async () => {
+      setLoading(true);
+      try {
+        const movies = await fetchMovies(""); // Pass empty string for default movies
+        setDefaultMovies(movies);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDefaultMovies();
+  }, []);
+
+  useEffect(() => {
     if (searchTerm.length < 3) {
-      setFilteredMovies([]);
-      return () => {};
+      setFilteredMovies([]); // Reset filtered movies
+      return ;
     }
 
     const delaySearch = setTimeout(async () => {
@@ -90,7 +108,7 @@ const LandingPage = () => {
               </Row>
             </Container>
           ) : (
-            <SearchedMovies filteredMovies={filteredMovies} />
+            <SearchedMovies filteredMovies={searchTerm ? filteredMovies : defaultMovies} />
           )}
         </Col>
       </Row>

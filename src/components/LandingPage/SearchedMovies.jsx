@@ -15,6 +15,7 @@ const SearchedMovies = ({ filteredMovies }) => {
                   src={movie.Poster !== "N/A" ? movie.Poster : "default-image.jpg"}
                   alt={movie.Title}
                   style={{ height: "300px", objectFit: "cover" }}
+                
                 />
                 <CardBody>
                   <CardTitle>

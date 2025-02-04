@@ -6,57 +6,66 @@
   max-width: 300px;
 }
 
+/* Content Styling */
 .content-container {
   min-width: 200px;
 }
+
 .profile-info-container {
   height: calc(100vh - var(--nav-height)); /* Adjust height based on navbar */
   overflow-y: auto; /* Prevent unwanted scroll issues */
 }
 
-/* Content Background Colors */
-[data-theme="light"] .content-container {
-  background-color: var(--bg-color-user-profile-content-light);
-  color: var(--text-dark-gray);
+/* Theme-based Styles */
+[data-theme="light"] {
+  /* Content Background & Text */
+  .content-container {
+    background-color: var(--bg-color-user-profile-content-light);
+    color: var(--text-dark-gray);
+  }
+
+  /* Tab Links */
+  .tab-link {
+    color: var(--text-dark-gray) !important;
+  }
+
+  .tab-link:hover {
+    background-color: rgba(0, 0, 0, 0.15); /* Soft hover effect */
+    transition: background-color 0.3s ease;
+  }
+
+  /* Active Tab */
+  .tab-link.active {
+    background-color: var(--bg-color-user-profile-content-light);
+    color: var(--text-dark-gray) !important;
+  }
 }
 
-[data-theme="dark"] .content-container {
-  background-color: var(--bg-color-user-profile-content-dark);
-  color: var(--text-soft-white);
+[data-theme="dark"] {
+  /* Content Background & Text */
+  .content-container {
+    background-color: var(--bg-color-user-profile-content-dark);
+    color: var(--text-soft-white);
+  }
+
+  /* Tab Links */
+  .tab-link {
+    color: var(--text-soft-white) !important;
+  }
+
+  .tab-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+    transition: background-color 0.3s ease;
+  }
+
+  /* Active Tab */
+  .tab-link.active {
+    background-color: var(--bg-color-user-profile-content-dark);
+    color: var(--text-soft-white) !important;
+  }
 }
 
-/* Hover effect for tab links */
-[data-theme="light"] .tab-link:hover {
-  background-color: rgba(0, 0, 0, 0.192); /* Slightly darker shade */
-  transition: background-color 0.3s ease;
-}
-
-[data-theme="dark"] .tab-link:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Slightly lighter shade */
-  transition: background-color 0.3s ease;
-}
-
-/* Override Bootstrap's Default Link Color */
-[data-theme="light"] .tab-link {
-  color: var(--text-dark-gray) !important;
-}
-
-[data-theme="dark"] .tab-link {
-  color: var(--text-soft-white) !important;
-}
-
-/* Active Tab Styling */
-[data-theme="light"] .tab-link.active {
-  background-color: var(--bg-color-user-profile-content-light);
-  color: var(--text-dark-gray) !important;
-}
-
-[data-theme="dark"] .tab-link.active {
-  background-color: var(--bg-color-user-profile-content-dark);
-  color: var(--text-soft-white) !important;
-}
-
-/* Ensure the cursor remains pointer */
+/* General Tab Link Styling */
 .tab-link {
   cursor: pointer;
   transition: border-color 0.3s ease, color 0.3s ease;
