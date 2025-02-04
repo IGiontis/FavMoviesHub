@@ -35,6 +35,7 @@ export default [
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "no-unused-vars": ["warn", { args: "none" }],
       "react/prop-types": ["warn"],
+      "consistent-return": "warn"  //if bug delete
     },
   },
 ];

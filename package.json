@@ -21,6 +21,7 @@
     "react-bootstrap": "^2.10.9",
     "react-dom": "^18.3.1",
     "react-fontawesome": "^1.7.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^7.1.5",
     "react-scrollspy": "^3.4.3",
     "reactstrap": "^9.2.3",

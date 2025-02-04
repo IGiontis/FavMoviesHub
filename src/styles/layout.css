@@ -1,0 +1,10 @@
+.container-height {
+    height: calc(100vh - 57px);
+  }
+  
+  .app-container {
+    padding-left: 2%;
+    padding-right: 2%;
+    background-color: var(--bg-color);
+  }
+  

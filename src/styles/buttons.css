@@ -1,0 +1,11 @@
+.custom-transparent-btn {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+  }
+  
+  .custom-transparent-btn:hover {
+    background-color: transparent;
+    color: var(--color-primary);
+  }
+  

@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import Layout from "./components/Layout";
 import useTheme from "./hooks/useTheme";
-import "./App.css";
+import "./styles/app.css"
 
 function App() {
   const { isDarkMode, toggleTheme } = useTheme();

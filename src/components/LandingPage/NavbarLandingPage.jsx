@@ -27,7 +27,7 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   return (
     <Navbar color="dark" dark expand="md">
       <NavbarBrand tag={Link} to="/" className="text-white me-auto">
-        Winter Sports
+      Fav Movies
       </NavbarBrand>
       <NavbarToggler onClick={toggleNavbar} />
       <Collapse isOpen={isOpen} navbar>

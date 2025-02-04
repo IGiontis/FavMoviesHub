@@ -1,0 +1,5 @@
+.nav-link-hover:hover {
+    color: var(--color-primary) !important;
+    transition: color 0.3s ease;
+  }
+  

@@ -6,6 +6,7 @@ const BASE_URL = "http://www.omdbapi.com/";
 export const fetchMovies = async (searchTerm) => {
   try {
     const response = await axios.get(`${BASE_URL}?s=${searchTerm}&apikey=${API_KEY}`);
+    console.log(response)
     return response.data.Search || [];
   } catch (error) {
     console.error("Error fetching movies:", error);
