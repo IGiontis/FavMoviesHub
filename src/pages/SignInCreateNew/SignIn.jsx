@@ -1,8 +1,8 @@
 import { useFormik } from "formik";
-import FormInputsComponent from "../FormInputs/FormInputsComponent";
+import FormInputsComponent from "../../components/FormInputs/FormInputsComponent";
 import { useMemo } from "react";
 import { Card, CardBody, CardFooter, CardHeader, Col, Container, Row } from "reactstrap";
-import CancelSaveButtons from "../FormInputs/CancelSaveButtons";
+import CancelSaveButtons from "../../components/FormInputs/CancelSaveButtons";
 import getSignInSchema from "./schema/signInSchema";
 import { generateValidationForm } from "../../utils/validationForm";
 

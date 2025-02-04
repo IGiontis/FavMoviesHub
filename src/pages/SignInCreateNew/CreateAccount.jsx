@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
-import FormInputsComponent from "../FormInputs/FormInputsComponent";
+import FormInputsComponent from "../../components/FormInputs/FormInputsComponent";
 import { useMemo } from "react";
 import getCreateAccountSchema from "./schema/createAccountSchema";
 import { Card, CardBody, CardFooter, CardHeader, Col, Container, Row } from "reactstrap";
-import CancelSaveButtons from "../FormInputs/CancelSaveButtons";
+import CancelSaveButtons from "../../components/FormInputs/CancelSaveButtons";
 import { generateValidationForm } from "../../utils/validationForm";
 
 const CreateAccount = () => {

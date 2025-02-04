@@ -8,7 +8,7 @@ const getCreateAccountSchema = () => {
         attribute: "userName",
         editable: true,
         validation: {
-          is_not_null: true, // Required field
+          is_not_null: true,
         },
       },
       {
@@ -18,7 +18,7 @@ const getCreateAccountSchema = () => {
         attribute: "firstName",
         editable: true,
         validation: {
-          is_not_null: true, // Required field
+          is_not_null: true,
         },
       },
       {
@@ -28,7 +28,7 @@ const getCreateAccountSchema = () => {
         attribute: "lastName",
         editable: true,
         validation: {
-          is_not_null: true, // Required field
+          is_not_null: true,
         },
       },
       {
@@ -38,7 +38,7 @@ const getCreateAccountSchema = () => {
         attribute: "email",
         editable: true,
         validation: {
-          is_not_null: true, // Required field
+          is_not_null: true,
         },
       },
       {
@@ -48,7 +48,7 @@ const getCreateAccountSchema = () => {
         attribute: "phoneNumber",
         editable: true,
         validation: {
-          is_not_null: true, // Required field
+          is_not_null: true,
         },
       },
       {
@@ -58,7 +58,7 @@ const getCreateAccountSchema = () => {
         attribute: "password",
         editable: true,
         validation: {
-          is_not_null: true, // Required field
+          is_not_null: true,
         },
       },
       {
@@ -68,7 +68,7 @@ const getCreateAccountSchema = () => {
         attribute: "confirmPassword",
         editable: true,
         validation: {
-          is_not_null: true, // Required field
+          is_not_null: true,
           matchWith: "password", // Custom property indicating it should match with "password"
         },
         placeholder: "Confirm Password",

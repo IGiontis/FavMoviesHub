@@ -1,18 +1,24 @@
 :root {
-    --color-primary: #007bff;
-    --color-dark-slate: #1e2836; /* Dark but not black */
-    --color-light-gray: #eaeaea; /* Softer than pure white */
-    --text-dark-gray: #333333; /* Gentle dark text */
-    --text-soft-white: #f5f5f5; /* Soft white for dark mode */
-  }
-  
-  [data-theme="light"] {
-    --bg-color: var(--color-light-gray); /* Soft light gray */
-    --text-color: var(--text-dark-gray); /* Dark gray text */
-  }
-  
-  [data-theme="dark"] {
-    --bg-color: var(--color-dark-slate); /* Deep slate instead of black */
-    --text-color: var(--text-soft-white); /* Soft white instead of pure white */
-  }
-  
+  --color-primary: #007bff;
+  --color-dark-slate: #1e2836; /* Dark but not black */
+  --color-light-gray: #eaeaea; /* Softer than pure white */
+  --text-dark-gray: #272727; /* Gentle dark text */
+  --text-soft-white: #f5f5f5; /* Soft white for dark mode */
+  --bg-color-user-profile-content-light: #909fac; /* Light mode background */
+  --bg-color-user-profile-content-dark: #343a40; /* Dark mode background */
+  --bg-color-user-profile-sidebar-light: #c5d0da; /* Light mode background */
+  --bg-color-user-profile-sidebar-dark: #565b5f; /* Dark mode background */
+  --nav-height: 57px; /* Adjust based on your actual navbar height */
+}
+
+[data-theme="light"] {
+  --bg-color: var(--color-light-gray); /* Soft light gray */
+  --text-color: var(--text-dark-gray); /* Dark gray text */
+  --bg-color-user-profile: var(--bg-color-user-profile-light);
+}
+
+[data-theme="dark"] {
+  --bg-color: var(--color-dark-slate); /* Deep slate instead of black */
+  --text-color: var(--text-soft-white); /* Soft white instead of pure white */
+  --bg-color-user-profile: var(--bg-color-user-profile-dark);
+}

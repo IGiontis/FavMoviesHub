@@ -39,58 +39,62 @@ const LandingPage = () => {
   };
 
   return (
-    <>
-      <Form>
-        <FormGroup style={{ position: "relative", display: "inline-block", maxWidth: "200px" }}>
-          <Label for="searchTerm">Search for a Movie</Label>
-          <div style={{ position: "relative" }}>
-            <Input
-              type="text"
-              id="searchTerm"
-              placeholder="Type movie name..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              style={{
-                paddingRight: "30px",
-                position: "relative",
-              }}
-            />
-            {searchTerm && (
-              <span
-                onClick={clearSearch}
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  right: "10px",
-                  transform: "translateY(-50%)",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                  color: "#999",
-                  backgroundColor: "transparent",
-                  padding: "2px",
-                }}
-              >
-                ✖
-              </span>
-            )}
-          </div>
-        </FormGroup>
-      </Form>
+    <Container fluid className="pt-4">
+      <Row>
+        <Col>
+          <Form>
+            <FormGroup style={{ position: "relative", display: "inline-block", maxWidth: "200px" }}>
+              <Label for="searchTerm">Search for a Movie</Label>
+              <div style={{ position: "relative" }}>
+                <Input
+                  type="text"
+                  id="searchTerm"
+                  placeholder="Type movie name..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  style={{
+                    paddingRight: "30px",
+                    position: "relative",
+                  }}
+                />
+                {searchTerm && (
+                  <span
+                    onClick={clearSearch}
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      right: "10px",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                      color: "#999",
+                      backgroundColor: "transparent",
+                      padding: "2px",
+                    }}
+                  >
+                    ✖
+                  </span>
+                )}
+              </div>
+            </FormGroup>
+          </Form>
 
-      {loading ? (
-        <Container fluid>
-          <Row>
-            <Col>
-              <p>Loading...</p>
-              <Spinner />
-            </Col>
-          </Row>
-        </Container>
-      ) : (
-        <SearchedMovies filteredMovies={filteredMovies} />
-      )}
-    </>
+          {loading ? (
+            <Container fluid>
+              <Row>
+                <Col>
+                  <p>Loading...</p>
+                  <Spinner />
+                </Col>
+              </Row>
+            </Container>
+          ) : (
+            <SearchedMovies filteredMovies={filteredMovies} />
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

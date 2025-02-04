@@ -54,12 +54,11 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={Link} to="/contact" className="text-white nav-link-hover">
-              Contact
+            <NavLink tag={Link} to="/profile" className="text-white nav-link-hover">
+              Profile
             </NavLink>
           </NavItem>
 
-          {/* Dropdown for Sign In/Register */}
           <NavItem className="p-2">
             <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0">
               <DropdownToggle
