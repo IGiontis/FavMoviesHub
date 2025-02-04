@@ -16,10 +16,20 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/authSlice";
 
 const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  console.log("this is the user", user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   const toggleNavbar = () => setIsOpen(!isOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -27,7 +37,7 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   return (
     <Navbar color="dark" dark expand="md">
       <NavbarBrand tag={Link} to="/" className="text-white me-auto">
-      Fav Movies
+        Fav Movies
       </NavbarBrand>
       <NavbarToggler onClick={toggleNavbar} />
       <Collapse isOpen={isOpen} navbar>
@@ -59,28 +69,33 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
             </NavLink>
           </NavItem>
 
-          <NavItem className="p-2">
-            <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0">
-              <DropdownToggle
-                caret
-                className="text-white p-0 border-0 bg-transparent nav-link-hover"
-                style={{
-                  backgroundColor: "transparent",
-                  border: "none",
-                }}
-              >
-                Sign In / Register
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem tag={Link} to="/sign-in">
-                  Sign In
-                </DropdownItem>
-                <DropdownItem tag={Link} to="/register">
-                  Register
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </NavItem>
+          {user ? (
+            <NavItem >
+              <NavLink onClick={handleLogout} className="text-white nav-link-hover" style={{ cursor: "pointer" }}>
+                Logout
+              </NavLink>
+            </NavItem>
+          ) : (
+            <NavItem className="p-2">
+              <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0">
+                <DropdownToggle
+                  caret
+                  className="text-white p-0 border-0 bg-transparent nav-link-hover"
+                  style={{ backgroundColor: "transparent", border: "none" }}
+                >
+                  Sign In / Register
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem tag={Link} to="/sign-in">
+                    Sign In
+                  </DropdownItem>
+                  <DropdownItem tag={Link} to="/register">
+                    Register
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavItem>
+          )}
         </Nav>
       </Collapse>
     </Navbar>

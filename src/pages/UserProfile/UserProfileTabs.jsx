@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import ProfileInfo from "./ProfileInfo";
 import "./UserProfileTabs.css";
+import FavMovies from "./FavMovies";
 const tabs = [
   { id: "1", title: "Profile Info", content: <ProfileInfo /> },
   { id: "2", title: "Settings", content: "User settings content goes here." },
   { id: "3", title: "Activity", content: "User activity history goes here." },
-  { id: "4", title: "Fav Movies", content: "User favorite movies goes here." },
+  { id: "4", title: "Fav Movies", content: <FavMovies /> },
 ];
 
 const UserProfileTabs = () => {

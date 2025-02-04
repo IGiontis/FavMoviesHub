@@ -1,13 +1,13 @@
 import { Col, Container, Row } from "reactstrap";
 
-const ProfileInfo = () => {
+const FavMovies = () => {
   return (
     <Container fluid className="pt-4 profile-container">
       <Row>
-        <Col>tst</Col>
+        <Col>FavMovies</Col>
       </Row>
     </Container>
   );
 };
 
-export default ProfileInfo;
+export default FavMovies;

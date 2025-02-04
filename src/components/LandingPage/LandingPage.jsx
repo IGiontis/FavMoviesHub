@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchMovies } from "../../services/api";
-import { Col, Row, Input, FormGroup, Label, Form, Container, Spinner } from "reactstrap";
+import { Col, Row, Input, FormGroup, Form, Container, Spinner } from "reactstrap";
 import SearchedMovies from "./SearchedMovies";
 
 const LandingPage = () => {
@@ -29,7 +29,7 @@ const LandingPage = () => {
   useEffect(() => {
     if (searchTerm.length < 3) {
       setFilteredMovies([]); // Reset filtered movies
-      return ;
+      return undefined;
     }
 
     const delaySearch = setTimeout(async () => {
@@ -60,9 +60,9 @@ const LandingPage = () => {
     <Container fluid className="pt-4">
       <Row>
         <Col>
+          <h2 className="text-center">Welcome to Fav movies hub </h2>
           <Form>
             <FormGroup style={{ position: "relative", display: "inline-block", maxWidth: "200px" }}>
-              <Label for="searchTerm">Search for a Movie</Label>
               <div style={{ position: "relative" }}>
                 <Input
                   type="text"

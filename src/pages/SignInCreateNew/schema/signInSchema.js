@@ -2,12 +2,12 @@ const getSignInSchema = () => {
   const schema = {
     fields: [
       {
-        label: "User Name",
+        label: "Email",
         type: "string",
         fieldType: "textfield",
-        attribute: "userName",
+        attribute: "email",
         editable: true,
-        placeholder: "Enter user name",
+        placeholder: "Enter your email address",
         validation: {
           is_not_null: true, // Required field
         },

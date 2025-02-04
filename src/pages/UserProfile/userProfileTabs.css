@@ -11,7 +11,7 @@
   min-width: 200px;
 }
 
-.profile-info-container {
+.profile-container {
   height: calc(100vh - var(--nav-height)); /* Adjust height based on navbar */
   overflow-y: auto; /* Prevent unwanted scroll issues */
 }

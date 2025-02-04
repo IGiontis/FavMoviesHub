@@ -5,9 +5,15 @@ import getCreateAccountSchema from "./schema/createAccountSchema";
 import { Card, CardBody, CardFooter, CardHeader, Col, Container, Row } from "reactstrap";
 import CancelSaveButtons from "../../components/FormInputs/CancelSaveButtons";
 import { generateValidationForm } from "../../utils/validationForm";
+import { auth } from "../../firebase/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { db } from "../../firebase/firebaseConfig"; // Firestore DB
+import { setDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const CreateAccount = () => {
   const schema = useMemo(() => getCreateAccountSchema(), []);
+  const navigation = useNavigate()
   const validationSchema = generateValidationForm(schema);
 
   const formik = useFormik({
@@ -21,8 +27,36 @@ const CreateAccount = () => {
       confirmPassword: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log("Form submitted:", values);
+    onSubmit: async (values) => {
+      try {
+        // Register user in Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        );
+        console.log("User registered:", userCredential.user);
+
+        // Save additional user data to Firestore under the user's UID
+        await setDoc(doc(db, "users", userCredential.user.uid), {
+          email: values.email,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          phoneNumber: values.phoneNumber,
+          userName: values.userName,
+          password:values.password
+        });
+
+        // Optionally, you can send a confirmation email
+        // await userCredential.user.sendEmailVerification();
+
+        // Reset the form after successful submission
+
+        formik.resetForm();
+        navigation("/sign-in")
+      } catch (error) {
+        console.error("Error registering user:", error);
+      }
     },
   });
 

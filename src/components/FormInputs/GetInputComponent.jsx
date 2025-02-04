@@ -14,7 +14,7 @@ export const GetInputComponent = ({ formik, field, index }) => {
   const error = formik.errors[field.attribute];
 
   const hasError = error && formik.touched[field.attribute];
-  console.log(error);
+
 
   switch (field.fieldType) {
     case "textfield":
