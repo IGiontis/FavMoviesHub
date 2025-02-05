@@ -12,9 +12,9 @@ import { setDoc, doc } from "firebase/firestore";
 import HeaderCloseBtn from "../../components/FormInputs/HeaderCloseBtn";
 import PropTypes from "prop-types";
 
-const CreateAccount = ({toggleModal}) => {
+const CreateAccount = ({ toggleModal }) => {
   const schema = useMemo(() => getCreateAccountSchema(), []);
-  
+
   const validationSchema = generateValidationForm(schema);
 
   const formik = useFormik({
@@ -74,7 +74,7 @@ const CreateAccount = ({toggleModal}) => {
   return (
     <Card style={{ maxWidth: "600px" }}>
       <CardHeader>
-        <HeaderCloseBtn title='Create New Account' onClose={handleCancel}/>
+        <HeaderCloseBtn title="Create New Account" onClose={handleCancel} />
       </CardHeader>
       <CardBody>
         <FormInputsComponent formik={formik} schema={schema} leftCol={12} rightCol={12} />
@@ -87,8 +87,8 @@ const CreateAccount = ({toggleModal}) => {
   );
 };
 
-CreateAccount.propTypes  ={
-  toggleModal: PropTypes.func.isRequired,
-}
+CreateAccount.propTypes = {
+  toggleModal: PropTypes.func,
+};
 
 export default CreateAccount;

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import NavbarLandingPage from "./LandingPage/NavbarLandingPage";
+import NavbarLandingPage from "./NavbarLandingPage";
 
 const Layout = ({ children, toggleTheme, isDarkMode }) => {
   return (

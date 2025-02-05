@@ -78,7 +78,7 @@ const SignIn = ({ toggleModal }) => {
 };
 
 SignIn.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func,
 };
 
 export default SignIn;

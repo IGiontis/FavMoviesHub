@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -13,7 +13,7 @@ import {
   DropdownItem,
   Modal,
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
@@ -32,6 +32,7 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleLogout = () => {
     dispatch(logout());
@@ -41,6 +42,12 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   const toggleNavbar = () => setIsOpen(!isOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const toggleModal = () => setModalOpen(!modalOpen);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <>
