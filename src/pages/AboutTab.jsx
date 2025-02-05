@@ -39,7 +39,7 @@ const AboutTab = () => {
             <label className="fw-bold fs-5">🛠 Τεχνολογίες που χρησιμοποιήθηκαν</label>
             <ul>
               <li>
-                <span className="fw-semibold">Frontend:</span> React.js, React Router DOM, Reactstrap, Redux Toolkit
+                <span className="fw-semibold">Frontend:</span> React.js, React Router DOM, Reactstrap, Redux Toolkit, Bootstrap 5
               </li>
               <li>
                 <span className="fw-semibold">Backend & Authentication:</span> Supabase για database, authentication και

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchMovies } from "../../services/api";
 import { Col, Row, Input, FormGroup, Form, Container, Spinner } from "reactstrap";
 import SearchedMovies from "./SearchedMovies";
+import {  useSelector } from "react-redux";
 
 const LandingPage = () => {
   const [defaultMovies, setDefaultMovies] = useState([]); // Store initial movie list
@@ -9,6 +10,9 @@ const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const user = useSelector((state) => state.auth.user);
+
+  console.log(user)
   useEffect(() => {
     // Fetch default movies on mount
     const loadDefaultMovies = async () => {

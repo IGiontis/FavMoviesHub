@@ -1,4 +1,6 @@
 import * as Yup from "yup";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 export const generateValidationForm = (formSchema) => {
   const validationSchema = {};
@@ -18,7 +20,6 @@ export const generateValidationForm = (formSchema) => {
         break;
       case "password":
         validation = Yup.string().min(8, "Password must be at least 8 characters").required("Password is required");
-        validation = Yup.string().required("Confirm Password is required");
         if (field.validation?.matchWith) {
           validation = validation.oneOf([Yup.ref(field.validation.matchWith), null], "Passwords must match");
         }
@@ -28,6 +29,22 @@ export const generateValidationForm = (formSchema) => {
     // Apply required validation if 'is_not_null' is set
     if (field.validation?.is_not_null) {
       validation = validation.required(`${field.label} is required`);
+    }
+
+    // Add asynchronous validation for the username
+    if (field.attribute === "userName") {
+      validation = validation.test(
+        "check-username-existence", // Custom test name
+        "Username already exists", // Error message
+        async (value) => {
+          if (value) {
+            const userNameRef = doc(db, "usernames", value); // Check if username exists in Firestore
+            const userNameSnap = await getDoc(userNameRef);
+            return !userNameSnap.exists(); // Return false if username exists, which will trigger validation failure
+          }
+          return true; // If no value is provided, skip this check
+        }
+      );
     }
 
     // Add the validation to the schema for the current field attribute

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import NavbarLandingPage from "./NavbarLandingPage";
+import { ToastContainer, Zoom } from "react-toastify";
 
 const Layout = ({ children, toggleTheme, isDarkMode }) => {
   return (
@@ -11,6 +12,20 @@ const Layout = ({ children, toggleTheme, isDarkMode }) => {
       >
         {children}
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Zoom}
+        theme="light"
+        style={{ zIndex: 999999 }}
+      />
     </>
   );
 };

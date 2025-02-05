@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useFormik } from "formik";
-import { ToastContainer, Zoom } from "react-toastify";
 import { Card, CardBody, CardFooter, CardHeader } from "reactstrap";
 
 import { useDispatch } from "react-redux";
@@ -46,34 +45,18 @@ const SignIn = ({ toggleModal }) => {
   };
 
   return (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Zoom}
-      />
+    <Card style={{ maxWidth: "600px" }}>
+      <CardHeader>
+        <HeaderCloseBtn title="Sign In" onClose={toggleModal} />
+      </CardHeader>
+      <CardBody>
+        <FormInputsComponent formik={formik} schema={schema} leftCol={12} rightCol={12} />
+      </CardBody>
 
-      <Card style={{ maxWidth: "600px" }}>
-        <CardHeader>
-          <HeaderCloseBtn title="Sign In" onClose={toggleModal} />
-        </CardHeader>
-        <CardBody>
-          <FormInputsComponent formik={formik} schema={schema} leftCol={12} rightCol={12} />
-        </CardBody>
-
-        <CardFooter>
-          <CancelSaveButtons onSave={handleSave} onCancel={handleCancel} />
-        </CardFooter>
-      </Card>
-    </>
+      <CardFooter>
+        <CancelSaveButtons onSave={handleSave} onCancel={handleCancel} />
+      </CardFooter>
+    </Card>
   );
 };
 
