@@ -26,6 +26,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
     "react-scrollspy": "^3.4.3",
+    "react-toastify": "^11.0.3",
     "reactstrap": "^9.2.3",
     "yup": "^1.6.1"
   },

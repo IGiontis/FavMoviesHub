@@ -11,6 +11,7 @@ function App() {
 
   return (
     <Provider store={store}>
+     
       <BrowserRouter>
         <Layout toggleTheme={toggleTheme} isDarkMode={isDarkMode}>
           <AppRoutes />
