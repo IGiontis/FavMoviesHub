@@ -18,10 +18,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/authSlice";
-import SignIn from "../../pages/SignInCreateNew/SignIn";
-import CreateAccount from "../../pages/SignInCreateNew/CreateAccount";
-import ConfirmationModal from "../ConfirmationModal";
+import { logout } from "../redux/authSlice";
+import SignIn from "../pages/SignInCreateNew/SignIn";
+import CreateAccount from "../pages/SignInCreateNew/CreateAccount";
+import ConfirmationModal from "./ConfirmationModal";
 
 const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
