@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer  from "./authSlice";
+import authReducer from "./authSlice";
+import likedMoviesReducer from "./likedMoviesSlice"
 
 const store = configureStore({
   reducer: {
-    auth: authReducer ,
+    auth: authReducer,
+    likedMovies: likedMoviesReducer,
   },
 });
 
