@@ -17,7 +17,7 @@ const CreateAccount = ({ toggleModal }) => {
 
   const formik = useFormik({
     initialValues: {
-      username: "", // Consistent key with form field
+      username: "",
       firstName: "",
       lastName: "",
       email: "",
