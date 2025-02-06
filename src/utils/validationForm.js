@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, query, collection, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
 export const generateValidationForm = (formSchema) => {
@@ -19,7 +19,6 @@ export const generateValidationForm = (formSchema) => {
           .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, "Invalid email format");
         break;
       case "password":
-        // validation = Yup.string().min(8, "Password must be at least 8 characters").required("Password is required");
         if (field.validation?.matchWith) {
           validation = validation.oneOf([Yup.ref(field.validation.matchWith), null], "Passwords must match");
         }
@@ -32,7 +31,7 @@ export const generateValidationForm = (formSchema) => {
     }
 
     // Add asynchronous validation for the username
-    if (field.attribute === "userName") {
+    if (field.attribute === "username") {
       validation = validation.test(
         "check-username-existence", // Custom test name
         "Username already exists", // Error message
@@ -41,6 +40,25 @@ export const generateValidationForm = (formSchema) => {
             const userNameRef = doc(db, "usernames", value); // Check if username exists in Firestore
             const userNameSnap = await getDoc(userNameRef);
             return !userNameSnap.exists(); // Return false if username exists, which will trigger validation failure
+          }
+          return true; // If no value is provided, skip this check
+        }
+      );
+    }
+
+    // Add asynchronous validation for the email to ensure it's unique
+    if (field.attribute === "email") {
+      validation = validation.test(
+        "check-email-existence", // Custom test name
+        "Email already exists", // Error message
+        async (value) => {
+          if (value) {
+            // Here we check the `users` collection for the email's existence
+            const userEmailRef = query(collection(db, "users"), where("email", "==", value)); // Query for email field
+            const userEmailSnap = await getDocs(userEmailRef); // getDocs is used for queries, not getDoc
+
+            console.log("Email validation triggered");
+            return userEmailSnap.empty; // Return true if the email does not exist (empty result)
           }
           return true; // If no value is provided, skip this check
         }

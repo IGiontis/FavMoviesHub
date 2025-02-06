@@ -21,7 +21,7 @@ const SignIn = ({ toggleModal }) => {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      usernameEmail: "",
       password: "",
     },
     validationSchema: validationSchema,

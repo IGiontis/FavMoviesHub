@@ -5,7 +5,7 @@ const getSignInSchema = () => {
         label: "Email",
         type: "string",
         fieldType: "textfield",
-        attribute: "email",
+        attribute: "usernameEmail",
         editable: true,
         placeholder: "Enter your email address",
         validation: {

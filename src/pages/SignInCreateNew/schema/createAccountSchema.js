@@ -5,7 +5,7 @@ const getCreateAccountSchema = () => {
         label: "User Name",
         type: "string",
         fieldType: "textfield",
-        attribute: "userName",
+        attribute: "username",
         editable: true,
         validation: {
           is_not_null: true,

@@ -22,20 +22,17 @@ const showToast = (toastID, message, type = "info") => {
 
 export const signInHandler = async (values, dispatch, toggleModal) => {
   const toastID = toast.loading("Please wait...");
-  let email = values.email;
+  let email = values.usernameEmail;
 
-  // Email validation regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!emailRegex.test(values.email)) {
-    // Look up username in the database
-    const userNameRef = doc(db, "usernames", values.email);
+  if (!emailRegex.test(values.usernameEmail)) {
+    const userNameRef = doc(db, "usernames", values.usernameEmail); // Now using the correct key, values.email for the username
     const userNameSnap = await getDoc(userNameRef);
 
     if (userNameSnap.exists()) {
       const userId = userNameSnap.data().userId;
 
-      // Retrieve email from users collection
       const userRef = doc(db, "users", userId);
       const userSnap = await getDoc(userRef);
 
@@ -56,13 +53,11 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
     const userRef = doc(db, "users", userCredential.user.uid);
     const responseData = await getDoc(userRef);
 
-    console.log(userCredential.user)
     if (responseData.exists()) {
-      // Dispatch user details, including UID, to Redux store
       dispatch(
         setUser({
-          uid: userCredential.user.uid, // Adding UID here
-          ...responseData.data(), // You can add other user details here as needed
+          uid: userCredential.user.uid,
+          ...responseData.data(),
         })
       );
     }
@@ -80,31 +75,39 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
 
 export const createNewAccount = async (values, formik, toggleModal) => {
   const toastID = toast.loading("Please wait...");
+  console.log("enters");
 
   try {
-    const userNameRef = doc(db, "usernames", values.userName);
+    console.log("enters2");
+    console.log("Username:", values.username); // Fix key here
+
+    // Ensure the username does not exist
+    const userNameRef = doc(db, "usernames", values.username); // Corrected key to `username`
     const userNameSnap = await getDoc(userNameRef);
 
+    console.log("enters3");
     if (userNameSnap.exists()) {
+      console.log("enters exist");
       showToast(toastID, "This username is already taken. Please choose a different one.", "error");
       return;
     }
 
-    // Create user with email and password
+    // Create a new user in Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+    console.log("enters4");
 
-    // Save user data in Firestore
+    // Create user document in Firestore with userCredential.uid
     await setDoc(doc(db, "users", userCredential.user.uid), {
       email: values.email,
       firstName: values.firstName,
       lastName: values.lastName,
       phoneNumber: values.phoneNumber,
-      userName: values.userName,
-      password: values.password,
+      userName: values.username, // Corrected to match the form's field name
+      // Avoid storing password in Firestore for security reasons
     });
 
-    // Store username to ensure uniqueness
-    await setDoc(doc(db, "usernames", values.userName), {
+    // Store the username in a separate collection to ensure its uniqueness
+    await setDoc(doc(db, "usernames", values.username), {
       userId: userCredential.user.uid,
     });
 
@@ -113,6 +116,7 @@ export const createNewAccount = async (values, formik, toggleModal) => {
     formik.resetForm();
     toggleModal();
   } catch (error) {
+    console.error("Error during account creation:", error); // Log the full error for debugging
     let errorMessage = "An error occurred during registration.";
     if (error.code === "auth/email-already-in-use") {
       errorMessage = "This email is already in use. Please use a different email.";
