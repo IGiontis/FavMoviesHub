@@ -87,7 +87,7 @@ const SearchedMovies = ({ filteredMovies }) => {
       {user && (
         <div>
           {likedMovies.length > 0 && (
-            <div className="position-fixed bottom-0 end-0 me-4 mb-5">
+            <div className="position-fixed bottom-0 end-0 mx-4 mb-5">
               <LikedMoviesListCard
                 localLikedMovies={likedMovies}
                 deleteMovie={deleteMovie}
