@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import ProfileInfo from "./ProfileInfo";
-import "./UserProfileTabs.css";
+import "./userProfileTabs.css";
 import FavMovies from "./FavMovies";
 const tabs = [
   { id: "1", title: "Profile Info", content: <ProfileInfo /> },
