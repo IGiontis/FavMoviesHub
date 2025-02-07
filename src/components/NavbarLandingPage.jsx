@@ -22,6 +22,7 @@ import { logout } from "../redux/authSlice";
 import SignIn from "../pages/SignInCreateNew/SignIn";
 import CreateAccount from "../pages/SignInCreateNew/CreateAccount";
 import ConfirmationModal from "./ConfirmationModal";
+import { clearLikedMovies } from "../redux/likedMoviesSlice";
 
 const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +33,11 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate(); 
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearLikedMovies())
     navigate("/");
     setIsConfirmationModalOpen(false);
   };

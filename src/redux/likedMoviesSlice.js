@@ -1,19 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
+const initialState = {
+  likedMovies: [],
+};
 
 const likedMoviesSlice = createSlice({
   name: "likedMovies",
-  initialState: [],
+  initialState,
   reducers: {
     addLikedMovie: (state, action) => {
-      if (!state.some((movie) => movie.imdbID === action.payload.imdbID)) {
-        state.push(action.payload);
+      console.log(action.payload);
+      if (!state.likedMovies.some((movie) => movie.imdbID === action.payload.imdbID)) {
+        state.likedMovies.push(action.payload);
       }
     },
     removeLikedMovie: (state, action) => {
-      return state.filter((movie) => movie.imdbID !== action.payload);
+      state.likedMovies = state.likedMovies.filter((movie) => movie.imdbID !== action.payload);
     },
-    clearLikedMovies: () => {
-      return [];
+
+    clearLikedMovies: (state) => {
+      state.likedMovies = [];
     },
   },
 });

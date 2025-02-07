@@ -8,7 +8,10 @@ import { addLikedMovie, clearLikedMovies, removeLikedMovie } from "../../redux/l
 
 const SearchedMovies = ({ filteredMovies }) => {
   const dispatch = useDispatch();
-  const likedMovies = useSelector((state) => state.likedMovies);
+  const likedMovies = useSelector((state) => state.likedMovies.likedMovies);
+  const user = useSelector((state) => state.auth.user);
+
+  console.log(likedMovies)
 
   const handleMovieLike = (movie) => {
     if (likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID)) {
@@ -33,23 +36,26 @@ const SearchedMovies = ({ filteredMovies }) => {
           filteredMovies.map((movie) => (
             <Col key={movie.imdbID} xs={12} sm={6} md={4} lg={3} xl="3" xxl="2" className="mb-4">
               <Card className="position-relative">
-                <Button
-                  type="button"
-                  className="position-absolute top-0 end-0 m-2 p-1"
-                  onClick={() => handleMovieLike(movie)} // Handle like button click
-                >
-                  <FontAwesomeIcon
-                    icon={
-                      likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID) ? solidHeart : regularHeart
-                    } // Check if the movie is in the liked list by imdbID
-                    size="lg"
-                    className={
-                      likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID)
-                        ? "text-danger"
-                        : "text-gray-500"
-                    }
-                  />
-                </Button>
+                {user && (
+                  <Button
+                    type="button"
+                    className="position-absolute top-0 end-0 m-2 p-1"
+                    onClick={() => handleMovieLike(movie)} // Handle like button click
+                  >
+                    <FontAwesomeIcon
+                      icon={
+                        likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID) ? solidHeart : regularHeart
+                      } // Check if the movie is in the liked list by imdbID
+                      size="lg"
+                      className={
+                        likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID)
+                          ? "text-danger"
+                          : "text-gray-500"
+                      }
+                    />
+                  </Button>
+                )}
+
                 <CardImg
                   top
                   width="100%"
@@ -78,13 +84,17 @@ const SearchedMovies = ({ filteredMovies }) => {
         )}
       </Row>
 
-      {likedMovies.length > 0 && (
-        <div className="position-fixed bottom-0 end-0 me-4 mb-5">
-          <LikedMoviesListCard
-            localLikedMovies={likedMovies}
-            deleteMovie={deleteMovie}
-            clearMovieList={clearMovieList}
-          />
+      {user && (
+        <div>
+          {likedMovies.length > 0 && (
+            <div className="position-fixed bottom-0 end-0 me-4 mb-5">
+              <LikedMoviesListCard
+                localLikedMovies={likedMovies}
+                deleteMovie={deleteMovie}
+                clearMovieList={clearMovieList}
+              />
+            </div>
+          )}
         </div>
       )}
     </Container>

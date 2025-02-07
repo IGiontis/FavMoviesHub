@@ -3,18 +3,32 @@ import { Button, Card, CardBody, CardFooter, CardHeader } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import CancelSaveButtons from "./FormInputs/CancelSaveButtons";
+import { useState } from "react";
 
 const LikedMoviesListCard = ({ localLikedMovies, deleteMovie, clearMovieList }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   const handleSaveMovies = () => {
     console.log(localLikedMovies);
   };
 
   return (
-    <Card  style={{ maxHeight: "300px", overflow: "hidden" }}>
-      <CardHeader className="sticky-top ">Your list of liked movies</CardHeader>
-      <CardBody className="main-color"  style={{ height: "300px", overflowY: "auto" }}>
+    <Card style={{ maxHeight: "300px", overflow: "hidden" }}>
+      <CardHeader className="sticky-top">Your list of liked movies</CardHeader>
+      <CardBody className="main-color" style={{ height: "300px", overflowY: "auto" }}>
         {localLikedMovies.map((movie, index) => (
-          <div className="d-flex justify-content-between align-items-center mb-3" key={index}>
+          <div
+            key={index}
+            className="d-flex justify-content-between align-items-center mb-3"
+            style={{
+              borderBottom: "1px solid #ccc",
+              paddingBottom: "8px",
+              opacity: hoveredIndex !== null && hoveredIndex !== index ? 0.5 : 1,
+              transition: "opacity 0.3s ease-in-out",
+            }}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
             <div className="me-2">{movie.Title}</div>
             <Button className="p-0" color="link" size="sm" onClick={() => deleteMovie(movie.imdbID)}>
               <FontAwesomeIcon icon={faTrash} className="text-danger" />

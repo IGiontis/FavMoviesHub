@@ -39,7 +39,17 @@ export const fetchMovies = async (searchTerm) => {
     // Fetch movies
     const response = await axios.get(`${BASE_URL}?s=${query}&apikey=${API_KEY}`);
 
-    return response.data.Search || []; // Ensure no errors if response is empty
+    // Ensure response data is valid
+    if (!response.data.Search) {
+      return [];
+    }
+
+    // Filter movies to include only 'movie' and 'series'
+    const filteredMovies = response.data.Search.filter(
+      (movie) => movie.Type === "movie" || movie.Type === "series"
+    );
+
+    return filteredMovies;
   } catch (error) {
     console.error("Error fetching movies:", error);
     return [];

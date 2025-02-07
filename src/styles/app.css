@@ -19,7 +19,3 @@ body {
 #root {
   height: 100%;
 }
-
-.main-color {
-  background-color: var(--color-light-gray);
-}
