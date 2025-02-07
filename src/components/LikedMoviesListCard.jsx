@@ -8,14 +8,13 @@ import { useState } from "react";
 
 const LikedMoviesListCard = ({ localLikedMovies, deleteMovie, clearMovieList }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [isFullShowInfo, setIsFullShow] = useState(false);
+  const [isFullShowInfo, setIsFullShow] = useState(true);
 
   const handleSaveMovies = () => {
     console.log(localLikedMovies);
   };
 
   const toggleShowFullInfo = () => {
-    console.log("enters");
     setIsFullShow(!isFullShowInfo);
   };
 

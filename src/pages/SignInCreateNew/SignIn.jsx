@@ -25,11 +25,13 @@ const SignIn = ({ toggleModal }) => {
       password: "",
     },
     validationSchema: validationSchema,
+    validateOnBlur: true,
+    validateOnChange: false,
     onSubmit: async (values) => {
       await signInHandler(values, dispatch, toggleModal);
     },
   });
-
+  
   const handleSave = () => {
     formik.validateForm().then((errors) => {
       if (Object.keys(errors).length === 0) {

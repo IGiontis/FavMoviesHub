@@ -75,26 +75,25 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
 
 export const createNewAccount = async (values, formik, toggleModal) => {
   const toastID = toast.loading("Please wait...");
-  console.log("enters");
+
 
   try {
-    console.log("enters2");
-    console.log("Username:", values.username); // Fix key here
+   
 
     // Ensure the username does not exist
     const userNameRef = doc(db, "usernames", values.username); // Corrected key to `username`
     const userNameSnap = await getDoc(userNameRef);
 
-    console.log("enters3");
+  
     if (userNameSnap.exists()) {
-      console.log("enters exist");
+    
       showToast(toastID, "This username is already taken. Please choose a different one.", "error");
       return;
     }
 
     // Create a new user in Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
-    console.log("enters4");
+ 
 
     // Create user document in Firestore with userCredential.uid
     await setDoc(doc(db, "users", userCredential.user.uid), {
