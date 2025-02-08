@@ -33,11 +33,11 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(clearLikedMovies())
+    dispatch(clearLikedMovies());
     navigate("/");
     setIsConfirmationModalOpen(false);
   };
@@ -93,8 +93,8 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
                 </NavLink>
               </NavItem>
             ) : (
-              <NavItem className="p-2">
-                <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0">
+              <NavItem>
+                <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0 p-2">
                   <DropdownToggle
                     caret
                     className="text-white p-0 border-0 bg-transparent nav-link-hover"
