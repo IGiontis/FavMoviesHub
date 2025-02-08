@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import NavbarLandingPage from "./NavbarLandingPage";
+import NavbarLandingPage from "../pages/Navigation/NavbarLandingPage";
 import { ToastContainer, Zoom } from "react-toastify";
 
 const Layout = ({ children, toggleTheme, isDarkMode }) => {

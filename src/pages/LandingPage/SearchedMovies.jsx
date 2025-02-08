@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Button, Card, CardBody, CardImg, CardTitle, Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as solidHeart, faHeart as regularHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
 import LikedMoviesListCard from "../../components/LikedMoviesListCard";
 import { useDispatch, useSelector } from "react-redux";
 import { addLikedMovie, clearLikedMovies, removeLikedMovie } from "../../redux/likedMoviesSlice";
