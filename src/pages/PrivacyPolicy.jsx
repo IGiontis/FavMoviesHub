@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, CardTitle, Container } from "reactstrap";
+import { Container, Card, CardBody, CardTitle, CardFooter } from "reactstrap";
 import GoToHomeButton from "../components/Buttons/GoToHomeButton";
 
 const PrivacyPolicy = () => {

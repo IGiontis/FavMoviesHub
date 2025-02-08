@@ -1,5 +1,12 @@
-.nav-link-hover:hover {
-    color: var(--color-primary) !important;
-    transition: color 0.3s ease;
-  }
-  
+
+
+ .nav-link {
+  color: var(--color-light-gray-nav);
+}
+
+/* Active nav link and hover state */
+.nav-link.active,
+.nav-link:hover {
+  color: var(--color-light-gray) !important;
+  transition: color 0.3s ease;
+}

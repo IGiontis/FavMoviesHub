@@ -2,6 +2,7 @@
   --color-primary: #007bff;
   --color-dark-slate: #1e2836; /* Dark but not black */
   --color-light-gray: #eaeaea; /* Softer than pure white */
+  --color-light-gray-nav: #eaeaeab2; /* Softer than pure white */
   --text-dark-gray: #272727; /* Gentle dark text */
   --text-soft-white: #f5f5f5; /* Soft white for dark mode */
   --bg-color-user-profile-content-light: #909fac; /* Light mode background */

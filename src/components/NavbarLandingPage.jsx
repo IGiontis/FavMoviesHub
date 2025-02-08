@@ -13,7 +13,7 @@ import {
   DropdownItem,
   Modal,
 } from "reactstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
@@ -31,6 +31,7 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   const [modalContent, setModalContent] = useState(null);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
+  const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
@@ -46,60 +47,56 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const toggleModal = () => setModalOpen(!modalOpen);
 
+  // Helper: add "active" if the link path matches the current route
+  const isActive = (path) => (location.pathname === path ? "active" : "");
+
   return (
     <>
       <Navbar color="dark" dark expand="md">
-        <NavbarBrand tag={Link} to="/" className="text-white me-auto">
+        <NavbarBrand tag={Link} to="/" className="me-auto">
           Fav Movies Hub
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ms-auto" navbar style={{ listStyle: "none", paddingLeft: 0 }}>
             <NavItem>
-              <NavLink className="text-white nav-link-hover" onClick={toggleTheme} style={{ cursor: "pointer" }}>
+              {/* You may or may not want the theme toggle to be route-dependent */}
+              <NavLink onClick={toggleTheme} className={`nav-link ${isActive("")}`} style={{ cursor: "pointer" }}>
                 {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/" className="text-white nav-link-hover">
+              <NavLink tag={Link} to="/" className={`nav-link ${isActive("/")}`}>
                 Home
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/about" className="text-white nav-link-hover">
+              <NavLink tag={Link} to="/about" className={`nav-link ${isActive("/about")}`}>
                 About
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/services" className="text-white nav-link-hover">
+              <NavLink tag={Link} to="/services" className={`nav-link ${isActive("/services")}`}>
                 Services
               </NavLink>
             </NavItem>
             {user && (
               <NavItem>
-                <NavLink tag={Link} to="/profile" className="text-white nav-link-hover">
+                <NavLink tag={Link} to="/profile" className={`nav-link ${isActive("/profile")}`}>
                   Profile
                 </NavLink>
               </NavItem>
             )}
             {user ? (
               <NavItem>
-                <NavLink
-                  onClick={() => setIsConfirmationModalOpen(true)}
-                  className="text-white nav-link-hover"
-                  style={{ cursor: "pointer" }}
-                >
+                <NavLink onClick={() => setIsConfirmationModalOpen(true)} className="nav-link" style={{ cursor: "pointer" }}>
                   Logout
                 </NavLink>
               </NavItem>
             ) : (
               <NavItem>
                 <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0 p-2">
-                  <DropdownToggle
-                    caret
-                    className="text-white p-0 border-0 bg-transparent nav-link-hover"
-                    style={{ backgroundColor: "transparent", border: "none" }}
-                  >
+                  <DropdownToggle caret className="nav-link p-0 border-0 bg-transparent" style={{ backgroundColor: "transparent", border: "none" }}>
                     Sign In / Register
                   </DropdownToggle>
                   <DropdownMenu>

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart, faHeart as regularHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import LikedMoviesListCard from "../../components/LikedMoviesListCard";
 import { useDispatch, useSelector } from "react-redux";
-import { addLikedMovie, clearLikedMovies, removeLikedMovie, toggleDislikeMovie } from "../../redux/likedMoviesSlice";
+import { addLikedMovie, clearLikedMovies, removeLikedMovie } from "../../redux/likedMoviesSlice";
 import { saveMoviesService } from "../../services/saveMoviesService";
 import { useEffect } from "react";
 import { fetchLikedMovies } from "../../services/fetchLikedMovies";
@@ -40,11 +40,7 @@ const SearchedMovies = ({ filteredMovies }) => {
     dispatch(clearLikedMovies());
   };
 
-  const updateMovieStatus = (movieID, status) => {
-    if (status === "like") {
-      dispatch(toggleDislikeMovie(movieID)); // Τροποποιεί το disliked flag
-    }
-  };
+ 
 
   return (
     <Container fluid className="position-relative">
@@ -52,9 +48,7 @@ const SearchedMovies = ({ filteredMovies }) => {
         {filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => {
             const isLiked = likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID);
-            const isDisliked = likedMovies.some(
-              (likedMovie) => likedMovie.imdbID === movie.imdbID && likedMovie.disliked
-            );
+           
 
             return (
               <Col key={movie.imdbID} xs={12} sm={6} md={4} lg={3} xl="3" xxl="2" className="mb-4">
@@ -91,13 +85,6 @@ const SearchedMovies = ({ filteredMovies }) => {
                       </p>
                     </CardTitle>
                   </CardBody>
-
-                  {/* Dislike button */}
-                  {isLiked && (
-                    <Button type="button" onClick={() => updateMovieStatus(movie.imdbID, "like")}>
-                      <FontAwesomeIcon icon={faHeartBroken} className={isDisliked ? "text-danger" : "text-gray-500"} />
-                    </Button>
-                  )}
                 </Card>
               </Col>
             );
@@ -116,7 +103,7 @@ const SearchedMovies = ({ filteredMovies }) => {
             deleteMovie={deleteMovie}
             clearMovieList={clearMovieList}
             handleSaveMovies={handleSaveMovies}
-            updateMovieStatus={updateMovieStatus}
+           
           />
         </div>
       )}

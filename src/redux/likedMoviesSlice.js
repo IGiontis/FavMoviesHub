@@ -9,7 +9,7 @@ const likedMoviesSlice = createSlice({
   initialState,
   reducers: {
     setLikedMovies: (state, action) => {
-      state.likedMovies = action.payload; 
+      state.likedMovies = action.payload;
     },
     addLikedMovie: (state, action) => {
       if (!state.likedMovies.some((movie) => movie.imdbID === action.payload.imdbID)) {
@@ -22,13 +22,13 @@ const likedMoviesSlice = createSlice({
     clearLikedMovies: (state) => {
       state.likedMovies = [];
     },
-    toggleDislikeMovie: (state, action) => {
-      state.likedMovies = state.likedMovies.map((movie) =>
-        movie.imdbID === action.payload ? { ...movie, disliked: !movie.disliked } : movie
-      );
-    },
+    // toggleDislikeMovie: (state, action) => {
+    //   state.likedMovies = state.likedMovies.map((movie) =>
+    //     movie.imdbID === action.payload ? { ...movie, disliked: !movie.disliked } : movie
+    //   );
+    // },
   },
 });
 
-export const { setLikedMovies, addLikedMovie, removeLikedMovie, clearLikedMovies,toggleDislikeMovie } = likedMoviesSlice.actions;
+export const { setLikedMovies, addLikedMovie, removeLikedMovie, clearLikedMovies } = likedMoviesSlice.actions;
 export default likedMoviesSlice.reducer;
