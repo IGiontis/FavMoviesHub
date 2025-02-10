@@ -1,18 +1,19 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
-import { setLikedMovies } from "../redux/likedMoviesSlice";
+import { useQuery } from "@tanstack/react-query";
 
-export const fetchLikedMovies = async (userID, dispatch) => {
-  if (!userID) return;
-
-  try {
-    const moviesRef = collection(db, "users", userID, "likedMovies");
-    const snapshot = await getDocs(moviesRef);
-
-    const movies = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-    dispatch(setLikedMovies(movies));
-  } catch (error) {
-    console.error("Error fetching liked movies:", error);
-  }
+ const fetchLikedMovies = async (userID) => {
+  if (!userID) throw new Error("No user ID provided");
+  const moviesRef = collection(db,"users",userID,"likedMovies");
+  const snapshot = await getDocs(moviesRef);
+  return snapshot.docs.map((doc)=>({id:doc.id,...doc.data()}))
 };
+  
+ 
+export const useLikedMovies = (userID)=>{
+  return useQuery({
+    queryKey:["likedMovies",userID],
+    queryFn:()=>fetchLikedMovies(userID),
+    enabled: !!userID,
+  })
+}

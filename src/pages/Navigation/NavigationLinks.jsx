@@ -46,7 +46,7 @@ const NavigationLinks = React.memo(
           </NavItem>
         ) : (
           <NavItem>
-            <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0 p-2">
+            <Dropdown isOpen={isDropdownOpen} toggle={toggleDropdown} className="border-0 p-sm-2 p-0">
               <DropdownToggle
                 caret
                 className="nav-link p-0 border-0 bg-transparent"

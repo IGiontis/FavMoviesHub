@@ -18,7 +18,7 @@ import { logout } from "../../redux/authSlice";
 import SignIn from "../SignInCreateNew/SignIn";
 import CreateAccount from "../SignInCreateNew/CreateAccount";
 import ConfirmationModal from "../../components/ConfirmationModal";
-import { clearLikedMovies } from "../../redux/likedMoviesSlice";
+
 import NavigationLinks from "./NavigationLinks";
 
 const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
@@ -34,7 +34,6 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
 
   const handleLogout = useCallback(() => {
     dispatch(logout());
-    dispatch(clearLikedMovies());
     navigate("/");
     setIsConfirmationModalOpen(false);
   }, [dispatch, navigate]);

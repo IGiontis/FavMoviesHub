@@ -1,67 +1,21 @@
-import { useEffect, useState } from "react";
-import { fetchMovies } from "../../services/api";
+import { useState } from "react";
 import { Col, Row, Input, FormGroup, Form, Container, Spinner } from "reactstrap";
 import SearchedMovies from "./SearchedMovies";
+import { useMovies } from "../../hooks/useMovies";
 
 const LandingPage = () => {
-  const [defaultMovies, setDefaultMovies] = useState([]); // Store initial movie list
-  const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  // Fetch default movies when component mounts
-  useEffect(() => {
-    const loadDefaultMovies = async () => {
-      setLoading(true);
-      try {
-        const movies = await fetchMovies(""); // Fetch default movies
-        setDefaultMovies(movies);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data: movies = [], isLoading, error } = useMovies(searchTerm);
 
-    loadDefaultMovies();
-  }, []);
-
-  // Handle movie search with debounced input
-  useEffect(() => {
-    if (searchTerm.length < 3) {
-      setFilteredMovies([]); // Reset filtered movies
-      return undefined;
-    }
-
-    const delaySearch = setTimeout(async () => {
-      setLoading(true);
-      try {
-        const fetchedMovies = await fetchMovies(searchTerm);
-        setFilteredMovies(fetchedMovies);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }, 500);
-
-    return () => clearTimeout(delaySearch);
-  }, [searchTerm]);
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const clearSearch = () => {
-    setSearchTerm("");
-    setFilteredMovies([]);
-  };
+  const handleSearchChange = (e) => setSearchTerm(e.target.value);
+  const clearSearch = () => setSearchTerm("");
 
   return (
     <Container fluid className="pt-4">
       <Row>
         <Col>
-          <h2 className="text-center">Welcome to Fav Movies Hub </h2>
+          <h2 className="text-center">Welcome to Fav Movies Hub</h2>
           <Form>
             <FormGroup style={{ position: "relative", display: "inline-block", maxWidth: "200px" }}>
               <div style={{ position: "relative" }}>
@@ -71,10 +25,7 @@ const LandingPage = () => {
                   placeholder="Type movie name..."
                   value={searchTerm}
                   onChange={handleSearchChange}
-                  style={{
-                    paddingRight: "30px",
-                    position: "relative",
-                  }}
+                  style={{ paddingRight: "30px", position: "relative" }}
                 />
                 {searchTerm && (
                   <span
@@ -99,7 +50,7 @@ const LandingPage = () => {
             </FormGroup>
           </Form>
 
-          {loading ? (
+          {isLoading ? (
             <Container fluid>
               <Row>
                 <Col>
@@ -108,8 +59,10 @@ const LandingPage = () => {
                 </Col>
               </Row>
             </Container>
+          ) : error ? (
+            <p>Error loading movies.</p>
           ) : (
-            <SearchedMovies filteredMovies={searchTerm ? filteredMovies : defaultMovies} />
+            <SearchedMovies filteredMovies={movies} />
           )}
         </Col>
       </Row>

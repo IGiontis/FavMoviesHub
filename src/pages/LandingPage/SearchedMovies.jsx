@@ -2,45 +2,26 @@ import PropTypes from "prop-types";
 import { Button, Card, CardBody, CardImg, CardTitle, Col, Container, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
-import LikedMoviesListCard from "../../components/LikedMoviesListCard";
-import { useDispatch, useSelector } from "react-redux";
-import { addLikedMovie, clearLikedMovies, removeLikedMovie } from "../../redux/likedMoviesSlice";
-import { saveMoviesService } from "../../services/saveMoviesService";
-import { useEffect } from "react";
-import { fetchLikedMovies } from "../../services/fetchLikedMovies";
+import { useSelector } from "react-redux";
+import { useLikedMovies } from "../../services/fetchLikedMovies";
+import useLikedMoviesActions from "../../hooks/useLikedMoviesActions";
 
 const SearchedMovies = ({ filteredMovies }) => {
-  const dispatch = useDispatch();
-  const likedMovies = useSelector((state) => state.likedMovies.likedMovies);
   const user = useSelector((state) => state.auth.user);
-
-  useEffect(() => {
-    if (user) {
-      fetchLikedMovies(user.uid, dispatch);
-    }
-  }, [dispatch, user]);
+  const { data: likedMovies = [], isLoading, error } = useLikedMovies(user?.uid);
+  const { addMovieMutation, removeMovieMutation } = useLikedMoviesActions(user?.uid);
 
   const handleMovieLike = (movie) => {
     if (likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID)) {
-      dispatch(removeLikedMovie(movie.imdbID));
+      removeMovieMutation.mutate(movie.imdbID);
     } else {
-      dispatch(addLikedMovie(movie));
+      addMovieMutation.mutate(movie);
     }
   };
 
-  const deleteMovie = (movieID) => {
-    dispatch(removeLikedMovie(movieID));
-  };
-
-  const handleSaveMovies = () => {
-    saveMoviesService(user.uid, likedMovies);
-  };
-
-  const clearMovieList = () => {
-    dispatch(clearLikedMovies());
-  };
-
- 
+  
+  if (isLoading) return <p>Loading movies...</p>;
+  if (error) return <p>Error loading liked movies</p>;
 
   return (
     <Container fluid className="position-relative">
@@ -48,7 +29,7 @@ const SearchedMovies = ({ filteredMovies }) => {
         {filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => {
             const isLiked = likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID);
-           
+            const isProcessing = addMovieMutation.isPending || removeMovieMutation.isPending;
 
             return (
               <Col key={movie.imdbID} xs={12} sm={6} md={4} lg={3} xl="3" xxl="2" className="mb-4">
@@ -58,6 +39,7 @@ const SearchedMovies = ({ filteredMovies }) => {
                       type="button"
                       className="position-absolute top-0 end-0 m-2 p-1"
                       onClick={() => handleMovieLike(movie)}
+                      disabled={isProcessing} // Button is disabled while saving
                     >
                       <FontAwesomeIcon
                         icon={isLiked ? solidHeart : regularHeart}
@@ -95,18 +77,6 @@ const SearchedMovies = ({ filteredMovies }) => {
           </Col>
         )}
       </Row>
-
-      {user && likedMovies.length > 0 && (
-        <div className="position-fixed bottom-0 end-0 mx-4 mb-5">
-          <LikedMoviesListCard
-            localLikedMovies={likedMovies}
-            deleteMovie={deleteMovie}
-            clearMovieList={clearMovieList}
-            handleSaveMovies={handleSaveMovies}
-           
-          />
-        </div>
-      )}
     </Container>
   );
 };

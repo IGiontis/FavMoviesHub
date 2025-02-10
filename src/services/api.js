@@ -1,10 +1,9 @@
 import axios from "axios";
 
-const API_KEY = import.meta.env.VITE_OMDB_API_KEY; // Access env variable in Vite
+const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 const BASE_URL = "https://www.omdbapi.com/";
 
-// List of popular movies to rotate daily
-const defaultMovies = [
+const DEFAULT_MOVIES = [
   "Inception",
   "Titanic",
   "The Dark Knight",
@@ -26,32 +25,17 @@ const defaultMovies = [
   "Joker",
 ];
 
-export const fetchMovies = async (searchTerm) => {
-  try {
-    let query = searchTerm.trim();
+export const fetchMovies = async (searchTerm = "") => {
+  const query = searchTerm.trim() || getDailyMovie(); 
 
-    // If no search term, pick a daily-changing default movie
-    if (!query) {
-      const dayIndex = new Date().getDate() % defaultMovies.length; // Rotate movies daily
-      query = defaultMovies[dayIndex];
-    }
+  const { data } = await axios.get(BASE_URL, {
+    params: { s: query, apikey: API_KEY },
+  });
 
-    // Fetch movies
-    const response = await axios.get(`${BASE_URL}?s=${query}&apikey=${API_KEY}`);
+  return data.Search?.filter((movie) => ["movie", "series"].includes(movie.Type)) || [];
+};
 
-    // Ensure response data is valid
-    if (!response.data.Search) {
-      return [];
-    }
-
-    // Filter movies to include only 'movie' and 'series'
-    const filteredMovies = response.data.Search.filter(
-      (movie) => movie.Type === "movie" || movie.Type === "series"
-    );
-
-    return filteredMovies;
-  } catch (error) {
-    console.error("Error fetching movies:", error);
-    return [];
-  }
+const getDailyMovie = () => {
+  const dayIndex = new Date().getDate() % DEFAULT_MOVIES.length;
+  return DEFAULT_MOVIES[dayIndex];
 };
