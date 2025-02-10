@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useLikedMovies } from "../../services/fetchLikedMovies";
 import useLikedMoviesActions from "../../hooks/useLikedMoviesActions";
 
-const SearchedMovies = ({ filteredMovies }) => {
+const MoviesGallery  = ({ filteredMovies, colSizes }) => {
   const user = useSelector((state) => state.auth.user);
   const { data: likedMovies = [], isLoading, error } = useLikedMovies(user?.uid);
   const { addMovieMutation, removeMovieMutation } = useLikedMoviesActions(user?.uid);
@@ -19,12 +19,11 @@ const SearchedMovies = ({ filteredMovies }) => {
     }
   };
 
-  
   if (isLoading) return <p>Loading movies...</p>;
   if (error) return <p>Error loading liked movies</p>;
 
   return (
-    <Container fluid className="position-relative">
+    <Container fluid>
       <Row>
         {filteredMovies.length > 0 ? (
           filteredMovies.map((movie) => {
@@ -32,14 +31,14 @@ const SearchedMovies = ({ filteredMovies }) => {
             const isProcessing = addMovieMutation.isPending || removeMovieMutation.isPending;
 
             return (
-              <Col key={movie.imdbID} xs={12} sm={6} md={4} lg={3} xl="3" xxl="2" className="mb-4">
+              <Col key={movie.imdbID} {...colSizes} className="mb-4">
                 <Card className="position-relative">
                   {user && (
                     <Button
                       type="button"
                       className="position-absolute top-0 end-0 m-2 p-1"
                       onClick={() => handleMovieLike(movie)}
-                      disabled={isProcessing} // Button is disabled while saving
+                      disabled={isProcessing}
                     >
                       <FontAwesomeIcon
                         icon={isLiked ? solidHeart : regularHeart}
@@ -81,8 +80,9 @@ const SearchedMovies = ({ filteredMovies }) => {
   );
 };
 
-SearchedMovies.propTypes = {
+MoviesGallery .propTypes = {
   filteredMovies: PropTypes.array.isRequired,
+  colSizes: PropTypes.object,
 };
 
-export default SearchedMovies;
+export default MoviesGallery ;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Col, Row, Input, FormGroup, Form, Container, Spinner } from "reactstrap";
-import SearchedMovies from "./SearchedMovies";
+import MoviesGallery from "./MoviesGallery";
 import { useMovies } from "../../hooks/useMovies";
 
 const LandingPage = () => {
@@ -62,7 +62,7 @@ const LandingPage = () => {
           ) : error ? (
             <p>Error loading movies.</p>
           ) : (
-            <SearchedMovies filteredMovies={movies} />
+            <MoviesGallery filteredMovies={movies} colSizes={{ xs: 12, sm: 6, md: 6, lg: 5, xl: 4, xxl: 3 }} />
           )}
         </Col>
       </Row>

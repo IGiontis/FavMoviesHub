@@ -4,10 +4,10 @@ import ProfileInfo from "./ProfileInfo";
 import "./userProfileTabs.css";
 import FavMovies from "./FavMovies";
 const tabs = [
-  { id: "1", title: "Profile Info", content: <ProfileInfo /> },
+  { id: "1", title: "Fav Movies", content: <FavMovies /> },
   { id: "2", title: "Settings", content: "User settings content goes here." },
   { id: "3", title: "Activity", content: "User activity history goes here." },
-  { id: "4", title: "Fav Movies", content: <FavMovies /> },
+  { id: "4", title: "Profile Info", content: <ProfileInfo /> },
 ];
 
 const UserProfileTabs = () => {
