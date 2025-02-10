@@ -2,7 +2,7 @@ const getCreateAccountSchema = () => {
   const schema = {
     fields: [
       {
-        label: "User Name",
+        label: "User Name (*)",
         type: "string",
         fieldType: "textfield",
         attribute: "username",
@@ -12,7 +12,7 @@ const getCreateAccountSchema = () => {
         },
       },
       {
-        label: "First Name",
+        label: "First Name (*)",
         type: "string",
         fieldType: "textfield",
         attribute: "firstName",
@@ -22,7 +22,7 @@ const getCreateAccountSchema = () => {
         },
       },
       {
-        label: "Last Name",
+        label: "Last Name (*)",
         type: "string",
         fieldType: "textfield",
         attribute: "lastName",
@@ -32,7 +32,7 @@ const getCreateAccountSchema = () => {
         },
       },
       {
-        label: "Email",
+        label: "Email (*)",
         type: "string",
         fieldType: "email",
         attribute: "email",
@@ -47,12 +47,9 @@ const getCreateAccountSchema = () => {
         fieldType: "textfield",
         attribute: "phoneNumber",
         editable: true,
-        validation: {
-          is_not_null: true,
-        },
       },
       {
-        label: "Password",
+        label: "Password (*)",
         type: "string",
         fieldType: "password",
         attribute: "password",
@@ -62,7 +59,7 @@ const getCreateAccountSchema = () => {
         },
       },
       {
-        label: "Confirm Password",
+        label: "Confirm Password (*)",
         type: "password",
         fieldType: "password",
         attribute: "confirmPassword",

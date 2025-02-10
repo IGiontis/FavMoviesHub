@@ -32,18 +32,20 @@ export const generateValidationForm = (formSchema) => {
 
     // Add asynchronous validation for the username
     if (field.attribute === "username") {
-      validation = validation.test(
-        "check-username-existence", // Custom test name
-        "Username already exists", // Error message
-        async (value) => {
+      validation = validation
+        .matches(
+          /^[A-Za-z][A-Za-z0-9_-]*$/,
+          "Username must start with a letter and can only contain letters, numbers, _ or - . Also space is not allowed"
+        )
+        .max(20, "Username cannot be longer than 20 characters")
+        .test("check-username-existence", "Username already exists", async (value) => {
           if (value) {
-            const userNameRef = doc(db, "usernames", value); // Check if username exists in Firestore
+            const userNameRef = doc(db, "usernames", value);
             const userNameSnap = await getDoc(userNameRef);
-            return !userNameSnap.exists(); // Return false if username exists, which will trigger validation failure
+            return !userNameSnap.exists();
           }
-          return true; // If no value is provided, skip this check
-        }
-      );
+          return true;
+        });
     }
 
     // Add asynchronous validation for the email to ensure it's unique

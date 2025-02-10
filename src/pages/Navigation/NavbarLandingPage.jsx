@@ -50,7 +50,7 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ms-auto" navbar style={{ listStyle: "none", paddingLeft: 0 }}>
+          <Nav className="ms-auto d-flex flex-row gap-3" navbar style={{ listStyle: "none", paddingLeft: 0 }}>
             <NavItem>
            
               <NavLink onClick={toggleTheme} className="nav-link" style={{ cursor: "pointer" }}>

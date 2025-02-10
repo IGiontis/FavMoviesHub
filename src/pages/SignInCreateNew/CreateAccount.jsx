@@ -32,7 +32,6 @@ const CreateAccount = ({ toggleModal }) => {
   });
 
   const handleSave = () => {
-    // Trigger the form submission (formik will handle validation automatically)
     formik.handleSubmit();
   };
 
@@ -48,6 +47,9 @@ const CreateAccount = ({ toggleModal }) => {
       </CardHeader>
       <CardBody>
         <FormInputsComponent formik={formik} schema={schema} leftCol={12} rightCol={12} />
+        <p className="mb-0 mt-3">
+          <strong>* You can log in using your <span className="text-primary">Username</span> or <span className="text-primary">Email</span> along with your <span className="text-primary">Password</span>.</strong>
+        </p>
       </CardBody>
 
       <CardFooter>
