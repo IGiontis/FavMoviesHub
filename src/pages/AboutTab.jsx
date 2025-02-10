@@ -40,7 +40,7 @@ const AboutTab = () => {
             <ul>
               <li>
                 <span className="fw-semibold">Frontend:</span> React.js, React Router DOM, Reactstrap, Redux Toolkit,
-                React Query (useQuery, useMutation), Bootstrap 5
+                React Query (useQuery, useMutation), Bootstrap 5, CSS3
               </li>
               <li>
                 <span className="fw-semibold">Backend & Authentication:</span> Supabase για database, authentication και
