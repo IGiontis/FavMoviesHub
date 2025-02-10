@@ -1,14 +1,5 @@
 import { useState, useCallback } from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Collapse,
-  NavbarToggler,
-  Modal,
-} from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Collapse, NavbarToggler, Modal } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
@@ -50,15 +41,14 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ms-auto d-flex flex-row gap-3" navbar style={{ listStyle: "none", paddingLeft: 0 }}>
+          <Nav
+            className="ms-auto d-flex align-items-center flex-row gap-3"
+            navbar
+            style={{ listStyle: "none", paddingLeft: 0 }}
+          >
             <NavItem>
-           
               <NavLink onClick={toggleTheme} className="nav-link" style={{ cursor: "pointer" }}>
-                {isDarkMode ? (
-                  <FontAwesomeIcon icon={faSun} size="lg" />
-                ) : (
-                  <FontAwesomeIcon icon={faMoon} size="lg" />
-                )}
+                {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
               </NavLink>
             </NavItem>
             <NavigationLinks
