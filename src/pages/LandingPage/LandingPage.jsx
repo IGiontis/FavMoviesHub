@@ -15,7 +15,7 @@ const LandingPage = () => {
     <Container fluid className="pt-4">
       <Row>
         <Col>
-          <h2 className="text-center">Welcome to Fav Movies Hub</h2>
+          <h2 className="text-center">Welcome to Fav Movies Share</h2>
           <Form>
             <FormGroup style={{ position: "relative", display: "inline-block", maxWidth: "200px" }}>
               <div style={{ position: "relative" }}>

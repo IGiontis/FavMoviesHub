@@ -37,7 +37,7 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
     <>
       <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={Link} to="/" className="me-auto">
-          Fav Movies Hub
+          Fav Movies Share
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>

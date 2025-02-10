@@ -6,7 +6,7 @@ const AboutTab = () => {
       <Row>
         <Col>
           <div className="mb-4">
-            <label className="fw-bold fs-4">Καλώς ήρθατε στο Fav Movies Hub 🎬</label>
+            <label className="fw-bold fs-4">Καλώς ήρθατε στο Fav Movies Share 🎬</label>
             <p>
               Μια εφαρμογή που σας επιτρέπει να ανακαλύψετε ταινίες, να τις αποθηκεύσετε στα αγαπημένα σας και να
               συνδεθείτε με φίλους για να μοιραστείτε τις προτιμήσεις σας!
