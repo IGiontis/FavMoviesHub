@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useLikedMovies } from "@/services/fetchLikedMovies";
 import useLikedMoviesActions from "@/hooks/useLikedMoviesActions";
 
-const MoviesGallery  = ({ filteredMovies, colSizes }) => {
+const MoviesGallery = ({ filteredMovies, colSizes }) => {
   const user = useSelector((state) => state.auth.user);
   const { data: likedMovies = [], isLoading, error } = useLikedMovies(user?.uid);
   const { addMovieMutation, removeMovieMutation } = useLikedMoviesActions(user?.uid);
@@ -51,9 +51,9 @@ const MoviesGallery  = ({ filteredMovies, colSizes }) => {
                   <CardImg
                     top
                     width="100%"
+                    height="400px"
                     src={movie.Poster !== "N/A" ? movie.Poster : "default-image.jpg"}
                     alt={movie.Title}
-                    style={{ height: "300px", objectFit: "cover" }}
                   />
                   <CardBody>
                     <CardTitle>
@@ -80,9 +80,9 @@ const MoviesGallery  = ({ filteredMovies, colSizes }) => {
   );
 };
 
-MoviesGallery .propTypes = {
+MoviesGallery.propTypes = {
   filteredMovies: PropTypes.array.isRequired,
   colSizes: PropTypes.object,
 };
 
-export default MoviesGallery ;
+export default MoviesGallery;

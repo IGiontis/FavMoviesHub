@@ -8,7 +8,7 @@ const NavigationLinks = React.memo(
     const location = useLocation();
     const isActive = (path) => (location.pathname === path ? "active" : "");
 
-    console.log(location)
+   
 
     return (
       <>
@@ -17,6 +17,13 @@ const NavigationLinks = React.memo(
             Home
           </NavLink>
         </NavItem>
+        {user && (
+          <NavItem>
+            <NavLink tag={Link} to="/profile" className={`nav-link ${isActive("/profile")}`}>
+              Profile
+            </NavLink>
+          </NavItem>
+        )}
         <NavItem>
           <NavLink tag={Link} to="/about" className={`nav-link ${isActive("/about")}`}>
             About
@@ -27,13 +34,7 @@ const NavigationLinks = React.memo(
             Services
           </NavLink>
         </NavItem>
-        {user && (
-          <NavItem>
-            <NavLink tag={Link} to="/profile" className={`nav-link ${isActive("/profile")}`}>
-              Profile
-            </NavLink>
-          </NavItem>
-        )}
+
         {user ? (
           <NavItem>
             <NavLink

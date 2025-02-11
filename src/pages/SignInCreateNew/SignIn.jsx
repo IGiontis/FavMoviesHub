@@ -9,7 +9,7 @@ import CancelSaveButtons from "../../components/FormInputs/CancelSaveButtons";
 import getSignInSchema from "./schema/signInSchema";
 import { generateValidationForm } from "../../utils/validationForm";
 
-import { signInHandler} from "../../services/signInCreateNewServices"
+import { signInHandler } from "../../services/signInCreateNewServices";
 import HeaderCloseBtn from "../../components/FormInputs/HeaderCloseBtn";
 import PropTypes from "prop-types";
 
@@ -17,7 +17,7 @@ const SignIn = ({ toggleModal }) => {
   const dispatch = useDispatch();
 
   const schema = useMemo(() => getSignInSchema(), []);
-  const validationSchema = generateValidationForm(schema);
+  const validationSchema = useMemo(() => generateValidationForm(schema), [schema]);
 
   const formik = useFormik({
     initialValues: {
@@ -31,7 +31,7 @@ const SignIn = ({ toggleModal }) => {
       await signInHandler(values, dispatch, toggleModal);
     },
   });
-  
+
   const handleSave = () => {
     formik.validateForm().then((errors) => {
       if (Object.keys(errors).length === 0) {

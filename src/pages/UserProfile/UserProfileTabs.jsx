@@ -4,6 +4,7 @@ import ProfileInfo from "./ProfileInfo";
 import "./userProfileTabs.css";
 import FavMovies from "./FavMovies";
 
+
 const tabs = [
   { id: "1", title: "Fav Movies", content: <FavMovies /> },
   { id: "2", title: "Settings", content: "User settings content goes here." },
@@ -12,6 +13,7 @@ const tabs = [
 ];
 
 const UserProfileTabs = () => {
+
   const [activeTab, setActiveTab] = useState("1");
 
   return (
@@ -29,7 +31,7 @@ const UserProfileTabs = () => {
           </Nav>
         </Col>
 
-        {/* Content area */}
+        
         <Col xs={12} md className="content-container">
           <TabContent activeTab={activeTab}>
             {tabs.map((tab) => (

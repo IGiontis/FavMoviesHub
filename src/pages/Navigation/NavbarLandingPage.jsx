@@ -42,7 +42,7 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
           <Nav
-            className="ms-auto d-flex align-items-center flex-row gap-3"
+            className="ms-auto d-flex flex-wrap align-items-center flex-row gap-2"
             navbar
             style={{ listStyle: "none", paddingLeft: 0 }}
           >

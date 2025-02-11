@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import { Button } from "reactstrap";
+import { memo } from "react";
 
-function CancelSaveButtons({ cancelLabel = "Cancel", onCancel, onSave, submitLabel = "Save" }) {
+const CancelSaveButtons = memo(({ cancelLabel = "Cancel", onCancel, onSave, submitLabel = "Save" }) => {
   return (
     <div className="d-flex flex-wrap align-items-center justify-content-end">
       {onCancel && (
@@ -14,7 +15,9 @@ function CancelSaveButtons({ cancelLabel = "Cancel", onCancel, onSave, submitLab
       </Button>
     </div>
   );
-}
+});
+
+CancelSaveButtons.displayName = "CancelSaveButtons";
 
 CancelSaveButtons.propTypes = {
   onCancel: PropTypes.func,
