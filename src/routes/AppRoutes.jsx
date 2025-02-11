@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import LandingPage from "../pages/LandingPage/LandingPage";
-import CreateAccount from "../pages/SignInCreateNew/CreateAccount";
-import PageNotFound from "../pages/PageNotFound";
-import UserProfileTabs from "../pages/UserProfile/UserProfileTabs";
-import AboutTab from "../pages/AboutTab";
+import LandingPage from "@/pages/LandingPage/LandingPage";
+import CreateAccount from "@/pages/SignInCreateNew/CreateAccount";
+import PageNotFound from "@/pages/PageNotFound";
+import UserProfileTabs from "@/pages/UserProfile/UserProfileTabs";
+import AboutTab from "@/pages/AboutTab";
 
 const TermsOfUse = lazy(() => import("../pages/TermsOfUse"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));

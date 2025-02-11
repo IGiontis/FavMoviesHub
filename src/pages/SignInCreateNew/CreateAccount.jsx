@@ -1,13 +1,13 @@
 import { useFormik } from "formik";
-import FormInputsComponent from "../../components/FormInputs/FormInputsComponent";
+import FormInputsComponent from "@/components/FormInputs/FormInputsComponent";
 import { useMemo } from "react";
 import getCreateAccountSchema from "./schema/createAccountSchema";
 import { Card, CardBody, CardFooter, CardHeader } from "reactstrap";
-import CancelSaveButtons from "../../components/FormInputs/CancelSaveButtons";
-import { generateValidationForm } from "../../utils/validationForm";
-import { createNewAccount } from "./services/signInCreateNewServices";
+import CancelSaveButtons from "@/components/FormInputs/CancelSaveButtons";
+import { generateValidationForm } from "@/utils/validationForm";
+import { createNewAccount} from "@/services/signInCreateNewServices"
 
-import HeaderCloseBtn from "../../components/FormInputs/HeaderCloseBtn";
+import HeaderCloseBtn from "@/components/FormInputs/HeaderCloseBtn";
 import PropTypes from "prop-types";
 
 const CreateAccount = ({ toggleModal }) => {

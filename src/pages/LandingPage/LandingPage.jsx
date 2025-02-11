@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Col, Row, Input, FormGroup, Form, Container, Spinner } from "reactstrap";
 import MoviesGallery from "./MoviesGallery";
-import { useMovies } from "../../hooks/useMovies";
+import { useMovies } from "@/hooks/useMovies";
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");

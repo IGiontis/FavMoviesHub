@@ -3,8 +3,8 @@ import { Button, Card, CardBody, CardImg, CardTitle, Col, Container, Row } from 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
-import { useLikedMovies } from "../../services/fetchLikedMovies";
-import useLikedMoviesActions from "../../hooks/useLikedMoviesActions";
+import { useLikedMovies } from "@/services/fetchLikedMovies";
+import useLikedMoviesActions from "@/hooks/useLikedMoviesActions";
 
 const MoviesGallery  = ({ filteredMovies, colSizes }) => {
   const user = useSelector((state) => state.auth.user);

@@ -1,8 +1,8 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { toast, Zoom } from "react-toastify";
-import { auth, db } from "../../../firebase/firebaseConfig";
-import { setUser } from "../../../redux/authSlice";
+import { auth, db } from "@/firebase/firebaseConfig";
+import { setUser } from "@/redux/authSlice";
 
 const showToast = (toastID, message, type = "info") => {
   toast.update(toastID, {
@@ -27,7 +27,7 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(values.usernameEmail)) {
-    const userNameRef = doc(db, "usernames", values.usernameEmail); // Now using the correct key, values.email for the username
+    const userNameRef = doc(db, "usernames", values.usernameEmail);
     const userNameSnap = await getDoc(userNameRef);
 
     if (userNameSnap.exists()) {
@@ -76,24 +76,18 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
 export const createNewAccount = async (values, formik, toggleModal) => {
   const toastID = toast.loading("Please wait...");
 
-
   try {
-   
-
     // Ensure the username does not exist
-    const userNameRef = doc(db, "usernames", values.username); // Corrected key to `username`
+    const userNameRef = doc(db, "usernames", values.username);
     const userNameSnap = await getDoc(userNameRef);
 
-  
     if (userNameSnap.exists()) {
-    
       showToast(toastID, "This username is already taken. Please choose a different one.", "error");
       return;
     }
 
     // Create a new user in Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
- 
 
     // Create user document in Firestore with userCredential.uid
     await setDoc(doc(db, "users", userCredential.user.uid), {

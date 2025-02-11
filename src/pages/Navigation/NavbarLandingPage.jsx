@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/authSlice";
+import { logout } from "@/redux/authSlice";
 import SignIn from "../SignInCreateNew/SignIn";
 import CreateAccount from "../SignInCreateNew/CreateAccount";
-import ConfirmationModal from "../../components/ConfirmationModal";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 import NavigationLinks from "./NavigationLinks";
 
