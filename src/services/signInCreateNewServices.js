@@ -95,7 +95,7 @@ export const createNewAccount = async (values, formik, toggleModal) => {
       firstName: values.firstName,
       lastName: values.lastName,
       phoneNumber: values.phoneNumber,
-      userName: values.username, // Corrected to match the form's field name
+      username: values.username, // Corrected to match the form's field name
       // Avoid storing password in Firestore for security reasons
     });
 

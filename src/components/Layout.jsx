@@ -2,14 +2,19 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import NavbarLandingPage from "../pages/Navigation/NavbarLandingPage";
 import { ToastContainer, Zoom } from "react-toastify";
+import AddFriendCard from "./AddFriendCard";
+import { useSelector } from "react-redux";
 
-const Layout = ({ children, toggleTheme, isDarkMode }) => {
+const Layout = ({ children }) => {
+  const toggleAddFriend = useSelector((state) => state.friends.isAddFriendOpen);
+  console.log(toggleAddFriend);
   return (
     <>
-      <NavbarLandingPage toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+      <NavbarLandingPage />
+      {toggleAddFriend && <AddFriendCard />}
       <div className="container-height overflow-auto">
         {children}
-        <footer className="text-center p-4 mt-5 ">
+        <footer className="text-center p-4  ">
           <p>© 2024 ILIAS GIONTIS. All Rights Reserved.</p>
           <div className="mt-2">
             <Link to="/terms" className="text-primary mx-2">
@@ -21,7 +26,6 @@ const Layout = ({ children, toggleTheme, isDarkMode }) => {
           </div>
         </footer>
       </div>
-
       <ToastContainer
         position="top-right"
         autoClose={2000}

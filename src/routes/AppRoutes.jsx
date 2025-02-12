@@ -3,9 +3,10 @@ import { lazy, Suspense } from "react";
 import LandingPage from "@/pages/LandingPage/LandingPage";
 import CreateAccount from "@/pages/SignInCreateNew/CreateAccount";
 import PageNotFound from "@/pages/PageNotFound";
-import UserProfileTabs from "@/pages/UserProfile/UserProfileTabs";
-import AboutTab from "@/pages/AboutTab";
+import ProtectedRoute from "../pages/ProtectedRoute";
 
+const UserProfileTabs = lazy(() => import("@/pages/UserProfile/UserProfileTabs"));
+const AboutTab = lazy(() => import("@/pages/AboutTab"));
 const TermsOfUse = lazy(() => import("../pages/TermsOfUse"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 
@@ -17,7 +18,14 @@ const AppRoutes = () => (
       <Route path="/about" element={<AboutTab />} />
       <Route path="/terms" element={<TermsOfUse />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
-      <Route path="/profile" element={<UserProfileTabs />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <UserProfileTabs />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   </Suspense>

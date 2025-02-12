@@ -4,11 +4,9 @@ import { Link, useLocation } from "react-router-dom";
 import { NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
 const NavigationLinks = React.memo(
-  ({ user, toggleModal, setModalContent, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen }) => {
+  ({ user, openModal, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen }) => {
     const location = useLocation();
     const isActive = (path) => (location.pathname === path ? "active" : "");
-
-   
 
     return (
       <>
@@ -27,11 +25,6 @@ const NavigationLinks = React.memo(
         <NavItem>
           <NavLink tag={Link} to="/about" className={`nav-link ${isActive("/about")}`}>
             About
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink tag={Link} to="/services" className={`nav-link ${isActive("/services")}`}>
-            Services
           </NavLink>
         </NavItem>
 
@@ -56,22 +49,8 @@ const NavigationLinks = React.memo(
                 Sign In / Register
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem
-                  onClick={() => {
-                    setModalContent("sign-in");
-                    toggleModal();
-                  }}
-                >
-                  Sign In
-                </DropdownItem>
-                <DropdownItem
-                  onClick={() => {
-                    setModalContent("register");
-                    toggleModal();
-                  }}
-                >
-                  Register
-                </DropdownItem>
+                <DropdownItem onClick={() => openModal("sign-in")}>Sign In</DropdownItem>
+                <DropdownItem onClick={() => openModal("create-account")}>Register</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </NavItem>
@@ -85,10 +64,10 @@ NavigationLinks.displayName = "NavigationLinks";
 
 NavigationLinks.propTypes = {
   user: PropTypes.object,
-  toggleModal: PropTypes.func.isRequired,
-  setModalContent: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
   toggleDropdown: PropTypes.func.isRequired,
   setIsConfirmationModalOpen: PropTypes.func.isRequired,
   isDropdownOpen: PropTypes.bool.isRequired,
 };
+
 export default NavigationLinks;

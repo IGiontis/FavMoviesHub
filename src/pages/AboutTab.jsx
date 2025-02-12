@@ -43,7 +43,7 @@ const AboutTab = () => {
                 React Query (useQuery, useMutation), Bootstrap 5, CSS3
               </li>
               <li>
-                <span className="fw-semibold">Backend & Authentication:</span> Supabase για database, authentication και
+                <span className="fw-semibold">Backend & Authentication:</span> Firebase για database, authentication και
                 real-time δεδομένα
               </li>
             </ul>
@@ -53,7 +53,7 @@ const AboutTab = () => {
             <label className="fw-bold fs-5">🎯 Στόχος του Project</label>
             <p>
               Αυτό το project δημιουργήθηκε ως showcase των δεξιοτήτων μου στην ανάπτυξη σύγχρονων web εφαρμογών με
-              React και Supabase. Στόχος μου είναι να κατασκευάζω λειτουργικές, διαδραστικές και καλοσχεδιασμένες
+              React και Firebase. Στόχος μου είναι να κατασκευάζω λειτουργικές, διαδραστικές και καλοσχεδιασμένες
               εφαρμογές που προσφέρουν μια μοναδική εμπειρία χρήστη.
             </p>
           </div>

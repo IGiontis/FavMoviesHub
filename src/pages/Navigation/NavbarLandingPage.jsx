@@ -1,27 +1,32 @@
-import { useState, useCallback } from "react";
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Collapse, NavbarToggler, Modal } from "reactstrap";
+import { useState, useCallback, useMemo } from "react";
+import { Navbar, NavbarBrand, Nav, Collapse, NavbarToggler, Modal } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import PropTypes from "prop-types";
+import { faSun, faMoon, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/authSlice";
 import SignIn from "../SignInCreateNew/SignIn";
 import CreateAccount from "../SignInCreateNew/CreateAccount";
 import ConfirmationModal from "@/components/ConfirmationModal";
-
 import NavigationLinks from "./NavigationLinks";
+import useTheme from "../../hooks/useTheme";
+import { toggleAddFriend } from "../../redux/friendSlice";
 
-const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-
+const NavbarLandingPage = () => {
+  const { isDarkMode, toggleTheme } = useTheme();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  
+  // Refactored modal state
+  const [modalState, setModalState] = useState({ isOpen: false, type: null });
+
+  const openModal = (type) => setModalState({ isOpen: true, type });
+  const closeModal = () => setModalState({ isOpen: false, type: null });
 
   const handleLogout = useCallback(() => {
     dispatch(logout());
@@ -29,9 +34,12 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
     setIsConfirmationModalOpen(false);
   }, [dispatch, navigate]);
 
+  const handleToggleAddFriend = useCallback(() => {
+    dispatch(toggleAddFriend());
+  }, [dispatch]);
+
   const toggleNavbar = () => setIsOpen((prev) => !prev);
-  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
-  const toggleModal = () => setModalOpen((prev) => !prev);
+  const toggleDropdown = useCallback(() => setIsDropdownOpen((prev) => !prev), []);
 
   return (
     <>
@@ -41,20 +49,25 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav
-            className="ms-auto d-flex flex-wrap align-items-center flex-row gap-2"
-            navbar
-            style={{ listStyle: "none", paddingLeft: 0 }}
-          >
-            <NavItem>
-              <NavLink onClick={toggleTheme} className="nav-link" style={{ cursor: "pointer" }}>
-                {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
-              </NavLink>
-            </NavItem>
-            <NavigationLinks
+          <Nav className="ms-auto d-flex flex-wrap align-items-center flex-row gap-2" navbar>
+            <button
+              onClick={toggleTheme}
+              className="btn btn-link nav-link p-0 border-0 me-3"
+              style={{ background: "none", cursor: "pointer" }}
+            >
+              {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
+            </button>
+            <button
+              onClick={handleToggleAddFriend}
+              className="btn btn-link nav-link p-0 border-0 me-4"
+              style={{ background: "none", cursor: "pointer" }}
+            >
+              <FontAwesomeIcon icon={faUserPlus} size="md" />
+            </button>
+
+            <MemoizedNavigationLinks
               user={user}
-              toggleModal={toggleModal}
-              setModalContent={setModalContent}
+              openModal={openModal}
               toggleDropdown={toggleDropdown}
               isDropdownOpen={isDropdownOpen}
               setIsConfirmationModalOpen={setIsConfirmationModalOpen}
@@ -63,14 +76,13 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
         </Collapse>
       </Navbar>
 
-      <Modal isOpen={modalOpen} toggle={toggleModal} centered>
-        {modalContent === "sign-in" ? (
-          <SignIn toggleModal={toggleModal} />
-        ) : (
-          <CreateAccount toggleModal={toggleModal} />
-        )}
+      {/* Modal Implementation */}
+      <Modal isOpen={modalState.isOpen} toggle={closeModal} centered>
+        {modalState.type === "sign-in" && <SignIn toggleModal={closeModal} />}
+        {modalState.type === "create-account" && <CreateAccount toggleModal={closeModal} />}
       </Modal>
 
+      {/* Confirmation Modal */}
       <ConfirmationModal
         isOpen={isConfirmationModalOpen}
         onCancel={() => setIsConfirmationModalOpen(false)}
@@ -81,9 +93,22 @@ const NavbarLandingPage = ({ toggleTheme, isDarkMode }) => {
   );
 };
 
-NavbarLandingPage.propTypes = {
-  toggleTheme: PropTypes.func.isRequired,
-  isDarkMode: PropTypes.bool.isRequired,
-};
-
 export default NavbarLandingPage;
+
+/**
+ * Memoized version of NavigationLinks to prevent unnecessary re-renders
+ */
+const MemoizedNavigationLinks = ({ user, openModal, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen }) => {
+  return useMemo(
+    () => (
+      <NavigationLinks
+        user={user}
+        openModal={openModal}
+        toggleDropdown={toggleDropdown}
+        isDropdownOpen={isDropdownOpen}
+        setIsConfirmationModalOpen={setIsConfirmationModalOpen}
+      />
+    ),
+    [user, openModal, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen]
+  );
+};
