@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { Navbar, NavbarBrand, Nav, Collapse, NavbarToggler, Modal } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,18 +16,20 @@ const NavbarLandingPage = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const isAddFriendOpen = useSelector((state) => state.friends.isAddFriendOpen);
   const navigate = useNavigate();
 
+  // Use a single state object for modal management
+  const [modalState, setModalState] = useState({ isOpen: false, type: null });
+  const openModal = useCallback((type) => setModalState({ isOpen: true, type }), []);
+  const closeModal = useCallback(() => setModalState({ isOpen: false, type: null }), []);
+
+  // Other local state
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  
-  // Refactored modal state
-  const [modalState, setModalState] = useState({ isOpen: false, type: null });
 
-  const openModal = (type) => setModalState({ isOpen: true, type });
-  const closeModal = () => setModalState({ isOpen: false, type: null });
-
+  // Handlers wrapped in useCallback
   const handleLogout = useCallback(() => {
     dispatch(logout());
     navigate("/");
@@ -38,7 +40,7 @@ const NavbarLandingPage = () => {
     dispatch(toggleAddFriend());
   }, [dispatch]);
 
-  const toggleNavbar = () => setIsOpen((prev) => !prev);
+  const toggleNavbar = useCallback(() => setIsOpen((prev) => !prev), []);
   const toggleDropdown = useCallback(() => setIsDropdownOpen((prev) => !prev), []);
 
   return (
@@ -55,17 +57,22 @@ const NavbarLandingPage = () => {
               className="btn btn-link nav-link p-0 border-0 me-3"
               style={{ background: "none", cursor: "pointer" }}
             >
-              {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
+              {isDarkMode ? (
+                <FontAwesomeIcon icon={faSun} size="lg" />
+              ) : (
+                <FontAwesomeIcon icon={faMoon} size="lg" />
+              )}
             </button>
             <button
               onClick={handleToggleAddFriend}
-              className="btn btn-link nav-link p-0 border-0 me-4"
+              className={`btn btn-link nav-link p-0 border-0 me-4 ${isAddFriendOpen ? "add-friend-active" : ""}`}
               style={{ background: "none", cursor: "pointer" }}
             >
               <FontAwesomeIcon icon={faUserPlus} size="md" />
             </button>
 
-            <MemoizedNavigationLinks
+            {/* NavigationLinks is already memoized with React.memo */}
+            <NavigationLinks
               user={user}
               openModal={openModal}
               toggleDropdown={toggleDropdown}
@@ -76,13 +83,12 @@ const NavbarLandingPage = () => {
         </Collapse>
       </Navbar>
 
-      {/* Modal Implementation */}
+      {/* Modal using consolidated state */}
       <Modal isOpen={modalState.isOpen} toggle={closeModal} centered>
         {modalState.type === "sign-in" && <SignIn toggleModal={closeModal} />}
         {modalState.type === "create-account" && <CreateAccount toggleModal={closeModal} />}
       </Modal>
 
-      {/* Confirmation Modal */}
       <ConfirmationModal
         isOpen={isConfirmationModalOpen}
         onCancel={() => setIsConfirmationModalOpen(false)}
@@ -94,21 +100,3 @@ const NavbarLandingPage = () => {
 };
 
 export default NavbarLandingPage;
-
-/**
- * Memoized version of NavigationLinks to prevent unnecessary re-renders
- */
-const MemoizedNavigationLinks = ({ user, openModal, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen }) => {
-  return useMemo(
-    () => (
-      <NavigationLinks
-        user={user}
-        openModal={openModal}
-        toggleDropdown={toggleDropdown}
-        isDropdownOpen={isDropdownOpen}
-        setIsConfirmationModalOpen={setIsConfirmationModalOpen}
-      />
-    ),
-    [user, openModal, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen]
-  );
-};

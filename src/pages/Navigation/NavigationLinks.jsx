@@ -27,7 +27,6 @@ const NavigationLinks = React.memo(
             About
           </NavLink>
         </NavItem>
-
         {user ? (
           <NavItem>
             <NavLink

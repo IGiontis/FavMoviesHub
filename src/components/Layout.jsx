@@ -6,12 +6,12 @@ import AddFriendCard from "./AddFriendCard";
 import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
-  const toggleAddFriend = useSelector((state) => state.friends.isAddFriendOpen);
-  console.log(toggleAddFriend);
+  const isAddFriendOpen = useSelector((state) => state.friends.isAddFriendOpen);
+ 
   return (
     <>
       <NavbarLandingPage />
-      {toggleAddFriend && <AddFriendCard />}
+      {isAddFriendOpen && <AddFriendCard />}
       <div className="container-height overflow-auto">
         {children}
         <footer className="text-center p-4  ">

@@ -1,10 +1,17 @@
+/* Default nav-link color */
 .nav-link {
   color: var(--color-light-gray-nav);
 }
 
+/* Hover & Active States */
 .nav-link.active,
 .nav-link:hover {
   color: var(--color-light-gray) !important;
   transition: color 0.3s ease;
 }
 
+/* When isAddFriendOpen is true, change color to primary */
+.add-friend-active {
+  color: var(--color-light-gray) !important;
+  transition: color 0.3s ease;
+}
