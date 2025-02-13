@@ -57,20 +57,17 @@ const NavbarLandingPage = () => {
               className="btn btn-link nav-link p-0 border-0 me-3"
               style={{ background: "none", cursor: "pointer" }}
             >
-              {isDarkMode ? (
-                <FontAwesomeIcon icon={faSun} size="lg" />
-              ) : (
-                <FontAwesomeIcon icon={faMoon} size="lg" />
-              )}
+              {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
             </button>
-            <button
-              onClick={handleToggleAddFriend}
-              className={`btn btn-link nav-link p-0 border-0 me-4 ${isAddFriendOpen ? "add-friend-active" : ""}`}
-              style={{ background: "none", cursor: "pointer" }}
-            >
-              <FontAwesomeIcon icon={faUserPlus} size="md" />
-            </button>
-
+            {user && (
+              <button
+                onClick={handleToggleAddFriend}
+                className={`btn btn-link nav-link p-0 border-0 me-4 ${isAddFriendOpen ? "add-friend-active" : ""}`}
+                style={{ background: "none", cursor: "pointer" }}
+              >
+                <FontAwesomeIcon icon={faUserPlus} size="sm" />
+              </button>
+            )}
             {/* NavigationLinks is already memoized with React.memo */}
             <NavigationLinks
               user={user}

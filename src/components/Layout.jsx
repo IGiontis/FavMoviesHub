@@ -2,16 +2,16 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import NavbarLandingPage from "../pages/Navigation/NavbarLandingPage";
 import { ToastContainer, Zoom } from "react-toastify";
-import AddFriendCard from "./AddFriendCard";
+import FriendPopUpTabCard from "@/pages/FriedPopUpTabCard/AddFriendCard";
 import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
   const isAddFriendOpen = useSelector((state) => state.friends.isAddFriendOpen);
- 
+  const user = useSelector((state) => state.auth.user);
   return (
     <>
       <NavbarLandingPage />
-      {isAddFriendOpen && <AddFriendCard />}
+      {isAddFriendOpen && user && <FriendPopUpTabCard />}
       <div className="container-height overflow-auto">
         {children}
         <footer className="text-center p-4  ">
@@ -46,8 +46,6 @@ const Layout = ({ children }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  toggleTheme: PropTypes.func.isRequired,
-  isDarkMode: PropTypes.bool.isRequired,
 };
 
 export default Layout;

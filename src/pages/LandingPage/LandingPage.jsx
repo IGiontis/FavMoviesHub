@@ -1,20 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Col, Row, Input, FormGroup, Form, Container, Spinner } from "reactstrap";
 import MoviesGallery from "./MoviesGallery";
 import { useMovies } from "@/hooks/useMovies";
+import { useDebounce } from "../../hooks/useDebounce";
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500); // ✅ Use debounced value
 
   // Debounce Effect: Update debouncedSearchTerm only after 500ms of inactivity
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500);
-
-    return () => clearTimeout(handler);
-  }, [searchTerm]);
 
   const { data: movies = [], isLoading, error } = useMovies(debouncedSearchTerm);
 
