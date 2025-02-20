@@ -9,7 +9,7 @@ const NavigationLinks = React.memo(
     const isActive = (path) => (location.pathname === path ? "active" : "");
 
     return (
-      <>
+      <div className="d-flex align-items-center gap-2">
         <NavItem>
           <NavLink tag={Link} to="/" className={`nav-link ${isActive("/")}`}>
             Home
@@ -62,7 +62,7 @@ const NavigationLinks = React.memo(
             </Dropdown>
           </NavItem>
         )}
-      </>
+      </div>
     );
   }
 );

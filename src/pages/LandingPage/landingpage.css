@@ -1,0 +1,35 @@
+/* LandingPage.css */
+
+/* Centered search form */
+.search-form {
+    position: relative;
+    display: inline-block;
+    max-width: 200px;
+  }
+  
+  /* Input field */
+  .search-input {
+    padding-right: 30px;
+    position: relative;
+  }
+  
+  /* Clear (✖) button */
+  .clear-search {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    color: #999;
+    background-color: transparent;
+    padding: 2px;
+  }
+  
+  .clear-search:hover {
+    color: #666;
+  }
+  
+
+  

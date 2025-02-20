@@ -51,23 +51,26 @@ const NavbarLandingPage = () => {
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ms-auto d-flex flex-wrap align-items-center flex-row gap-2" navbar>
-            <button
-              onClick={toggleTheme}
-              className="btn btn-link nav-link p-0 border-0 me-3"
-              style={{ background: "none", cursor: "pointer" }}
-            >
-              {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
-            </button>
-            {user && (
+          <Nav className="ms-auto d-flex flex-wrap align-items-center justify-content-between flex-row gap-2" navbar>
+            <div className="d-flex align-items-center gap-2">
               <button
-                onClick={handleToggleAddFriend}
-                className={`btn btn-link nav-link p-0 border-0 me-4 ${isAddFriendOpen ? "add-friend-active" : ""}`}
+                onClick={toggleTheme}
+                className="btn btn-link nav-link p-0 border-0 me-3"
                 style={{ background: "none", cursor: "pointer" }}
               >
-                <FontAwesomeIcon icon={faUserPlus} size="sm" />
+                {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
               </button>
-            )}
+
+              {user && (
+                <button
+                  onClick={handleToggleAddFriend}
+                  className={`btn btn-link nav-link p-0 border-0 me-4 ${isAddFriendOpen ? "add-friend-active" : ""}`}
+                  style={{ background: "none", cursor: "pointer" }}
+                >
+                  <FontAwesomeIcon icon={faUserPlus} size="sm" />
+                </button>
+              )}
+            </div>
             {/* NavigationLinks is already memoized with React.memo */}
             <NavigationLinks
               user={user}
