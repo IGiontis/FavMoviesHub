@@ -22,28 +22,28 @@ const showToast = (toastID, message, type = "info") => {
 
 export const signInHandler = async (values, dispatch, toggleModal) => {
   const toastID = toast.loading("Please wait...");
-  let email = values.usernameEmail;
+  let email = values.usernameEmail.toLowerCase(); // Convert input to lowercase
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(values.usernameEmail)) {
-    const userNameRef = doc(db, "usernames", values.usernameEmail);
-    const userNameSnap = await getDoc(userNameRef);
+    // Convert username to lowercase before checking in Firestore
+    const usernameRef = doc(db, "usernames", values.usernameEmail.toLowerCase());
+    const usernameSnap = await getDoc(usernameRef);
 
-    if (userNameSnap.exists()) {
-      const userId = userNameSnap.data().userId;
-
+    if (usernameSnap.exists()) {
+      const userId = usernameSnap.data().userId;
       const userRef = doc(db, "users", userId);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
-        email = userSnap.data().email;
+        email = userSnap.data().email; // Email is already stored in lowercase
       } else {
-        showToast(toastID, "No user found for this username.", "error");
+        showToast(toastID, "The username or password isn't correct.", "error");
         return;
       }
     } else {
-      showToast(toastID, "Username not found.", "error");
+      showToast(toastID, "The username or password isn't correct.", "error");
       return;
     }
   }
@@ -64,12 +64,10 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
 
     showToast(toastID, "Login successful!", "success");
     toggleModal();
+  // eslint-disable-next-line no-unused-vars
   } catch (err) {
-    let errorMessage = "An error occurred during sign-in.";
-    if (err.code === "auth/user-not-found") errorMessage = "No user found with this email.";
-    if (err.code === "auth/wrong-password") errorMessage = "Incorrect password.";
-
-    showToast(toastID, errorMessage, "error");
+    // Always show a generic error message for incorrect username/password
+    showToast(toastID, "The username or password isn't correct.", "error");
   }
 };
 
@@ -77,30 +75,33 @@ export const createNewAccount = async (values, formik, toggleModal) => {
   const toastID = toast.loading("Please wait...");
 
   try {
-    // Ensure the username does not exist
-    const userNameRef = doc(db, "usernames", values.username);
-    const userNameSnap = await getDoc(userNameRef);
+    // Convert username and email to lowercase before storing
+    const normalizedUsername = values.username.toLowerCase();
+    const normalizedEmail = values.email.toLowerCase();
 
-    if (userNameSnap.exists()) {
+    // Ensure the username does not exist
+    const usernameRef = doc(db, "usernames", normalizedUsername);
+    const usernameSnap = await getDoc(usernameRef);
+
+    if (usernameSnap.exists()) {
       showToast(toastID, "This username is already taken. Please choose a different one.", "error");
       return;
     }
 
     // Create a new user in Firebase Authentication
-    const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+    const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, values.password);
 
     // Create user document in Firestore with userCredential.uid
     await setDoc(doc(db, "users", userCredential.user.uid), {
-      email: values.email,
+      email: normalizedEmail,
       firstName: values.firstName,
       lastName: values.lastName,
       phoneNumber: values.phoneNumber,
-      username: values.username, // Corrected to match the form's field name
-      // Avoid storing password in Firestore for security reasons
+      username: normalizedUsername, // Store username in lowercase
     });
 
     // Store the username in a separate collection to ensure its uniqueness
-    await setDoc(doc(db, "usernames", values.username), {
+    await setDoc(doc(db, "usernames", normalizedUsername), {
       userId: userCredential.user.uid,
     });
 
