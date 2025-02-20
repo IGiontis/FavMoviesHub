@@ -7,6 +7,7 @@ const getCreateAccountSchema = () => {
         fieldType: "textfield",
         attribute: "username",
         editable: true,
+        autofocus: true,
         validation: {
           is_not_null: true,
         },

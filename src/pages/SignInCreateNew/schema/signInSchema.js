@@ -8,6 +8,7 @@ const getSignInSchema = () => {
         attribute: "usernameEmail",
         editable: true,
         placeholder: "Enter your username OR address",
+        autofocus:true,
         validation: {
           is_not_null: true, // Required field
         },

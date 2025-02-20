@@ -1,20 +1,25 @@
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Input, InputGroup, InputGroupText, FormFeedback } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 
 export const GetInputComponent = ({ formik, field, index }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (field.autofocus && index === 0 && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [field.autofocus, index]);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
   const error = formik.errors[field.attribute];
-
   const hasError = error && formik.touched[field.attribute];
-
 
   switch (field.fieldType) {
     case "textfield":
@@ -28,6 +33,8 @@ export const GetInputComponent = ({ formik, field, index }) => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             placeholder={field.placeholder || ""}
+            autoFocus={field.autofocus && index === 0} // Apply autofocus only if it's the first field
+            innerRef={inputRef} // Assign ref to allow programmatic focus
           />
           {hasError && <FormFeedback>{error}</FormFeedback>}
         </div>
@@ -42,7 +49,6 @@ export const GetInputComponent = ({ formik, field, index }) => {
             name={field.attribute}
             value={formik.values[field.attribute] || ""}
             onChange={(e) => {
-              // Only allow numeric input
               if (!isNaN(e.target.value) || e.target.value === "") {
                 formik.handleChange(e);
               }
@@ -75,13 +81,13 @@ export const GetInputComponent = ({ formik, field, index }) => {
         <div>
           <InputGroup>
             <Input
-              type={isPasswordVisible ? "text" : "password"} // Toggle between password and text visibility
+              type={isPasswordVisible ? "text" : "password"}
               name={field.attribute}
               value={formik.values[field.attribute] || ""}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               placeholder={field.placeholder || "Enter your password"}
-              className={`form-control ${hasError ? "is-invalid" : ""}`} // Apply the 'is-invalid' class when there's an error
+              className={`form-control ${hasError ? "is-invalid" : ""}`}
             />
             <InputGroupText onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
               <FontAwesomeIcon icon={faEye} />
@@ -103,22 +109,23 @@ export const GetInputComponent = ({ formik, field, index }) => {
 
 GetInputComponent.propTypes = {
   formik: PropTypes.shape({
-    handleChange: PropTypes.func.isRequired, // Formik's handleChange method
-    handleBlur: PropTypes.func.isRequired, // Formik's handleBlur method
-    values: PropTypes.object.isRequired, // Formik's values object
-    errors: PropTypes.object.isRequired, // Formik's errors object
-    touched: PropTypes.object.isRequired, // Formik's touched object
-    setTouched: PropTypes.func.isRequired, // Formik's setTouched method
+    handleChange: PropTypes.func.isRequired,
+    handleBlur: PropTypes.func.isRequired,
+    values: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
+    touched: PropTypes.object.isRequired,
+    setTouched: PropTypes.func.isRequired,
   }).isRequired,
 
   field: PropTypes.shape({
-    fieldType: PropTypes.string.isRequired, // fieldType (e.g., "textfield", "number", "password")
-    type: PropTypes.string, // type of the input (e.g., "text", "email")
-    attribute: PropTypes.string.isRequired, // key to use in formik.values, formik.errors, etc.
-    placeholder: PropTypes.string, // Placeholder for the input field
+    fieldType: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    attribute: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    autofocus: PropTypes.bool, // Ensure autofocus is recognized
   }).isRequired,
 
-  index: PropTypes.number, // Optional: index (if needed for dynamic lists)
+  index: PropTypes.number,
 };
 
 export default GetInputComponent;

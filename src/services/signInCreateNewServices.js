@@ -9,7 +9,7 @@ const showToast = (toastID, message, type = "info") => {
     render: message,
     type,
     isLoading: false,
-    autoClose: 4000,
+    autoClose: 1000,
     closeOnClick: true,
     position: "top-right",
     hideProgressBar: false,
