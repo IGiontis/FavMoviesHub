@@ -1,9 +1,27 @@
-/* Sidebar Styling */
+/* Default Sidebar Styling (for larger screens) */
 .sidebar-container {
-  max-height: 100vh;
+  position: sticky;
+  top: 0;
   overflow-y: auto;
+  height: 100dvh; 
   min-width: 200px;
   max-width: 500px;
+  z-index: 10000;
+}
+
+/* Fix for Smaller Screens */
+@media (max-width: 768px) {
+  .sidebar-container {
+    height: 10svh; /* Use Small Viewport Height for better mobile support */
+    max-width: 100%; /* Allow it to fit smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-container {
+    height: 10svh ;/* Adjust based on mobile browser UI */
+    min-width: 150px; /* Ensure it doesn’t get too small */
+  }
 }
 
 /* Content Styling */
@@ -16,9 +34,14 @@
   overflow-y: auto; /* Prevent unwanted scroll issues */
 }
 
-/* Theme-based Styles */
+/* Light Theme */
 [data-theme="light"] {
-  /* Content Background & Text */
+  /* Sidebar */
+  .sidebar-container {
+    background-color: var(--color-light-gray);
+  }
+
+  /* Content */
   .content-container {
     background-color: var(--bg-color-user-profile-content-light);
     color: var(--text-dark-gray);
@@ -30,7 +53,7 @@
   }
 
   .tab-link:hover {
-    background-color: rgba(0, 0, 0, 0.15); /* Soft hover effect */
+    background-color: rgba(0, 0, 0, 0.15);
     transition: background-color 0.3s ease;
   }
 
@@ -41,8 +64,14 @@
   }
 }
 
+/* Dark Theme */
 [data-theme="dark"] {
-  /* Content Background & Text */
+  /* Sidebar */
+  .sidebar-container {
+    background-color: var(--color-dark-slate);
+  }
+
+  /* Content */
   .content-container {
     background-color: var(--bg-color-user-profile-content-dark);
     color: var(--text-soft-white);
@@ -54,7 +83,7 @@
   }
 
   .tab-link:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+    background-color: rgba(255, 255, 255, 0.1);
     transition: background-color 0.3s ease;
   }
 

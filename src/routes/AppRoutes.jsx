@@ -4,6 +4,7 @@ import LandingPage from "@/pages/LandingPage/LandingPage";
 import CreateAccount from "@/pages/SignInCreateNew/CreateAccount";
 import PageNotFound from "@/pages/PageNotFound";
 import ProtectedRoute from "../pages/ProtectedRoute";
+import FriendsTab from "../pages/FriedPopUpTabCard/FriendsTab";
 
 const UserProfileTabs = lazy(() => import("@/pages/UserProfile/UserProfileTabs"));
 const AboutTab = lazy(() => import("@/pages/AboutTab"));
@@ -25,6 +26,12 @@ const AppRoutes = () => (
             <UserProfileTabs />
           </ProtectedRoute>
         }
+      />
+      <Route path="friends" element={
+        <ProtectedRoute>
+       <FriendsTab/>
+        </ProtectedRoute>
+      }
       />
       <Route path="*" element={<PageNotFound />} />
     </Routes>

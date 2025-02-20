@@ -17,11 +17,19 @@ const NavigationLinks = React.memo(
         </NavItem>
         {user && (
           <NavItem>
+            <NavLink tag={Link} to="/friends" className={`nav-link ${isActive("/friends")}`}>
+              Friends
+            </NavLink>
+          </NavItem>
+        )}
+        {user && (
+          <NavItem>
             <NavLink tag={Link} to="/profile" className={`nav-link ${isActive("/profile")}`}>
               Profile
             </NavLink>
           </NavItem>
         )}
+
         <NavItem>
           <NavLink tag={Link} to="/about" className={`nav-link ${isActive("/about")}`}>
             About
