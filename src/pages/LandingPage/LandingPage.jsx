@@ -3,7 +3,7 @@ import { Col, Row, Input, FormGroup, Form, Container, Spinner } from "reactstrap
 import MoviesGallery from "./MoviesGallery";
 import { useMovies } from "@/hooks/useMovies";
 import { useDebounce } from "../../hooks/useDebounce";
-import "./landingPage.css";
+import "./landingpage.css";
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
