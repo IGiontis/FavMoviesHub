@@ -1,0 +1,47 @@
+/* Default Friend Card Styling */
+.friendCard {
+  color: var(--text-dark-gray);
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+  cursor: pointer;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  will-change: background-color, color, border-color; /* ✅ Improves performance */
+}
+
+/* Hover Effect */
+.friendCard:hover {
+  background: var(--bg-color-user-profile-sidebar-light);
+  transform: translateY(-2px); /* ✅ Instead of scale to prevent blur */
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Active Friend Styling (Light Mode) */
+.active {
+  background: var(--bg-color-user-profile-sidebar-light);
+  color: var(--text-dark-gray);
+  transform: translateY(-2px); /* ✅ Prevent blur by avoiding scale */
+  box-shadow: 3px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode Support */
+[data-theme="dark"] .friendCard {
+  color: var(--color-light-gray-nav);
+  background: var(--bg-color-user-profile-sidebar-dark);
+  box-shadow: 2px 4px 10px rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .friendCard:hover {
+  background: var(--bg-color-user-profile-content-dark);
+  transform: translateY(-2px);
+  box-shadow: 2px 6px 12px rgba(255, 255, 255, 0.15);
+}
+
+/* Active Friend Styling (Dark Mode) */
+[data-theme="dark"] .active {
+  background: var(--bg-color-user-profile-content-dark);
+  color: var(--color-light-gray);
+  transform: translateY(-2px);
+  box-shadow: 3px 6px 15px rgba(255, 255, 255, 0.2);
+}

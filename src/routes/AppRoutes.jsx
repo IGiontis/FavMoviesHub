@@ -4,7 +4,7 @@ import LandingPage from "@/pages/LandingPage/LandingPage";
 import CreateAccount from "@/pages/SignInCreateNew/CreateAccount";
 import PageNotFound from "@/pages/PageNotFound";
 import ProtectedRoute from "../pages/ProtectedRoute";
-import FriendsTab from "../pages/FriedPopUpTabCard/FriendsTab";
+import FriendsTab from "../pages/FriendsTab/FriendsTab";
 
 const UserProfileTabs = lazy(() => import("@/pages/UserProfile/UserProfileTabs"));
 const AboutTab = lazy(() => import("@/pages/AboutTab"));

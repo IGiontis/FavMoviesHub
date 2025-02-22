@@ -1,11 +1,12 @@
 import { useState, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { Col, Container, Row, Card, CardBody, Spinner } from "reactstrap";
+import { Col, Container, Row, Spinner } from "reactstrap";
 import { useFriends } from "../../hooks/useFriends";
 import { useFetchUsernames } from "../../hooks/useFetchUsernames";
 import { useLikedMovies } from "../../hooks/useFetchLikedMovies";
 import MovieCard from "../LandingPage/MovieCard";
 import useLikedMoviesActions from "@/hooks/useLikedMoviesActions";
+import FriendsList from "./FriendsList";
 
 const FriendsTab = () => {
   const currentUser = useSelector((state) => state.auth.user);
@@ -13,22 +14,23 @@ const FriendsTab = () => {
   const { data: myLikedMovies = [] } = useLikedMovies(currentUser?.uid);
   const { addMovieMutation, removeMovieMutation } = useLikedMoviesActions(currentUser?.uid);
 
-
   const [selectedFriend, setSelectedFriend] = useState(null);
   const { data: friendsLikedMovies = [], isLoading: isMoviesLoading } = useLikedMovies(selectedFriend);
-  
+
   // ✅ Fetch all usernames at once
   const userIds = useMemo(() => friends.map((friend) => friend.user2), [friends]);
   const usernames = useFetchUsernames(userIds);
 
-
   // ✅ Optimized function to select a friend
-  const handleFriendSelection = useCallback((friendId) => {
-    if (friendId !== selectedFriend) {
-      console.log("Selected Friend ID:", friendId);
-      setSelectedFriend(friendId);
-    }
-  }, [selectedFriend]);
+  const handleFriendSelection = useCallback(
+    (friendId) => {
+      if (friendId !== selectedFriend) {
+        console.log("Selected Friend ID:", friendId);
+        setSelectedFriend(friendId);
+      }
+    },
+    [selectedFriend]
+  );
 
   // ✅ Memoized check if a movie is liked by the user
   const isLikedByMe = useCallback(
@@ -56,31 +58,19 @@ const FriendsTab = () => {
         </Col>
       </Row>
 
-      {/* Friends List */}
-      <Row className="g-3">
-        {isFriendsLoading ? (
-          <Spinner />
-        ) : friends.length === 0 ? (
-          <Col>
-            <p>No friends yet.</p>
-          </Col>
-        ) : (
-          friends.map((friend, index) => (
-            <Col key={friend.id} xs="auto">
-              <Card
-                onClick={() => handleFriendSelection(friend.user2)}
-                style={{ cursor: "pointer" }}
-                className={`shadow-sm  text-center ${selectedFriend === friend.user2 ? "bg-light" : ""}`}
-              >
-                <CardBody>
-                  {index + 1}: {" "}
-                  <strong>{usernames[index]?.username || <Spinner size="sm" />}</strong>
-                </CardBody>
-              </Card>
-            </Col>
-          ))
-        )}
-      </Row>
+      {/* Friends List Component */}
+      {isFriendsLoading ? (
+        <Spinner />
+      ) : friends.length === 0 ? (
+        <p>No friends yet.</p>
+      ) : (
+        <FriendsList
+          friends={friends}
+          handleFriendSelection={handleFriendSelection}
+          selectedFriend={selectedFriend}
+          usernames={usernames}
+        />
+      )}
 
       {/* Liked Movies Section */}
       {selectedFriend && (
