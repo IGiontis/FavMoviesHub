@@ -4,12 +4,12 @@ import { toast, Zoom } from "react-toastify";
 import { auth, db } from "@/firebase/firebaseConfig";
 import { setUser } from "@/redux/authSlice";
 
-const showToast = (toastID, message, type = "info") => {
+const showToast = (toastID, message, type = "info", timeAutoClose = 1000) => {
   toast.update(toastID, {
     render: message,
     type,
     isLoading: false,
-    autoClose: 1000,
+    autoClose: timeAutoClose,
     closeOnClick: true,
     position: "top-right",
     hideProgressBar: false,
@@ -64,10 +64,10 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
 
     showToast(toastID, "Login successful!", "success");
     toggleModal();
-  // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line no-unused-vars
   } catch (err) {
     // Always show a generic error message for incorrect username/password
-    showToast(toastID, "The username or password isn't correct.", "error");
+    showToast(toastID, "The username or password isn't correct.", "error", 2000);
   }
 };
 

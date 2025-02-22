@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useLikedMovies } from "../../services/fetchLikedMovies";
+import { useLikedMovies} from "../../hooks/useFetchLikedMovies"
 import MoviesGallery from "../LandingPage/MoviesGallery";
 
 const FavMovies = () => {

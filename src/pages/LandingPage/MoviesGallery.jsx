@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Col, Container, Row } from "reactstrap";
 import { useSelector } from "react-redux";
-import { useLikedMovies } from "@/services/fetchLikedMovies";
+import { useLikedMovies} from "../../hooks/useFetchLikedMovies"
 import useLikedMoviesActions from "@/hooks/useLikedMoviesActions";
 import MovieCard from "./MovieCard";
 
