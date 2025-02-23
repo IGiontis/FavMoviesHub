@@ -4,25 +4,17 @@
   background: transparent;
   border: 2px solid transparent;
   border-radius: 10px;
-  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out, border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out, transform 0.1s ease-in-out;
   cursor: pointer;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  will-change: background-color, color, border-color; /* ✅ Improves performance */
 }
 
-/* Hover Effect */
-.friendCard:hover {
+/* Hover & Active State */
+.friendCard:hover,
+.friendCard.active {
   background: var(--bg-color-user-profile-sidebar-light);
-  transform: translateY(-2px); /* ✅ Instead of scale to prevent blur */
+  transform: translate3d(0, -2px, 0); /* ✅ Better GPU performance */
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Active Friend Styling (Light Mode) */
-.active {
-  background: var(--bg-color-user-profile-sidebar-light);
-  color: var(--text-dark-gray);
-  transform: translateY(-2px); /* ✅ Prevent blur by avoiding scale */
-  box-shadow: 3px 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Dark Mode Support */
@@ -32,16 +24,9 @@
   box-shadow: 2px 4px 10px rgba(255, 255, 255, 0.05);
 }
 
-[data-theme="dark"] .friendCard:hover {
+[data-theme="dark"] .friendCard:hover,
+[data-theme="dark"] .friendCard.active {
   background: var(--bg-color-user-profile-content-dark);
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
   box-shadow: 2px 6px 12px rgba(255, 255, 255, 0.15);
-}
-
-/* Active Friend Styling (Dark Mode) */
-[data-theme="dark"] .active {
-  background: var(--bg-color-user-profile-content-dark);
-  color: var(--color-light-gray);
-  transform: translateY(-2px);
-  box-shadow: 3px 6px 15px rgba(255, 255, 255, 0.2);
 }

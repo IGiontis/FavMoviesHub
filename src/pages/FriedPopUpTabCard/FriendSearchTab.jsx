@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { Input, ListGroup, ListGroupItem, Spinner, Alert, Button, Label } from "reactstrap";
+import { ListGroup, ListGroupItem, Spinner, Alert, Button, Label, FormGroup } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faClock, faUserCheck } from "@fortawesome/free-solid-svg-icons";
 import { useSearchUsers } from "../../hooks/useSearchUsers";
@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useFriendRequests, useSendFriendRequest } from "../../hooks/useFriendRequests";
 import { useFriends } from "../../hooks/useFriends";
 import { toast } from "react-toastify";
+import SearchInput from "../../components/FormInputs/SearchInput";
 
 const FriendSearchTab = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,10 +16,11 @@ const FriendSearchTab = () => {
   const currentUser = useSelector((state) => state.auth.user);
 
   // ✅ Search only if input is 3+ letters
-  const { data: users = [], isLoading, isError } = useSearchUsers(
-    debouncedSearch.length >= 3 ? debouncedSearch.trim() : "",
-    currentUser?.uid
-  );
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+  } = useSearchUsers(debouncedSearch.length >= 3 ? debouncedSearch.trim() : "", currentUser?.uid);
 
   const { data: sentRequests = [] } = useFriendRequests(currentUser?.uid);
   const { data: friends = [] } = useFriends(currentUser?.uid);
@@ -49,19 +51,23 @@ const FriendSearchTab = () => {
     [currentUser?.uid, sendFriendRequest]
   );
 
+  const handleSearchChange = useCallback((e) => setSearchTerm(e.target.value), []);
+  const clearSearch = useCallback(() => setSearchTerm(""), []);
+
   return (
     <div>
-      <Label htmlFor="search-input" className="fw-bold">
-        Search Username
-      </Label>
-      <Input
-        id="search-input"
-        type="text"
-        placeholder="Type a username..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-3"
-      />
+      <FormGroup className="d-flex   flex-column">
+        <Label htmlFor="search-input" className="fw-bold">
+          Search Username
+        </Label>
+        <SearchInput
+          ID="search-input"
+          searchTerm={searchTerm}
+          handleSearchChange={handleSearchChange}
+          clearSearch={clearSearch}
+          placeholder="Search a username"
+        />
+      </FormGroup>
 
       {isLoading && (
         <div className="text-center">

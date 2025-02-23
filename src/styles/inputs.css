@@ -1,0 +1,41 @@
+/* src/styles/inputs.css */
+
+/* General input styling */
+.input-field {
+    width: 100%;
+    padding: 8px 30px 8px 10px; /* Adjusted for clear button */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .input-field:focus {
+    border-color: #007bff; /* Highlight input on focus */
+  }
+  
+  /* Search input container */
+  .search-form {
+    position: relative;
+    display: inline-block;
+    max-width: 200px;
+  }
+  
+  /* Clear (✖) button */
+  .clear-search {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    color: #999;
+    background: transparent;
+    border: none;
+  }
+  
+  .clear-search:hover {
+    color: #666;
+  }
+  

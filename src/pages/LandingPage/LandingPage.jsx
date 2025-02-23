@@ -1,17 +1,22 @@
-import { useState, useCallback } from "react";
-import { Col, Row, Input, FormGroup, Form, Container, Spinner } from "reactstrap";
+import { useState, useCallback, useMemo } from "react";
+import { Col, Row, Form, Container, Spinner } from "reactstrap";
 import MoviesGallery from "./MoviesGallery";
 import { useMovies } from "@/hooks/useMovies";
 import { useDebounce } from "../../hooks/useDebounce";
-import "./landingpage.css";
+
+import SearchInput from "../../components/FormInputs/SearchInput";
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+
+  // ✅ Use useMemo to avoid unnecessary calculations
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const { data: movies = [], isLoading, error } = useMovies(debouncedSearchTerm);
+  // ✅ Avoid API calls unless necessary (empty search should not fetch)
+  const shouldFetchMovies = useMemo(() => debouncedSearchTerm.trim().length >= 3, [debouncedSearchTerm]);
+  const { data: movies = [], isLoading, error } = useMovies(shouldFetchMovies ? debouncedSearchTerm : "");
 
-  // Optimize functions to prevent unnecessary re-renders
+  // ✅ Prevent unnecessary re-renders
   const handleSearchChange = useCallback((e) => setSearchTerm(e.target.value), []);
   const clearSearch = useCallback(() => setSearchTerm(""), []);
 
@@ -20,39 +25,34 @@ const LandingPage = () => {
       <Row>
         <Col>
           <h2 className="text-center">Welcome to Fav Movies Share</h2>
-          <Form>
-            <FormGroup className="search-form">
-              <div>
-                <Input
-                  type="text"
-                  id="searchTerm"
-                  placeholder="Type movie name..."
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                  className="search-input"
-                />
-                {searchTerm && (
-                  <span onClick={clearSearch} className="clear-search">
-                    ✖
-                  </span>
-                )}
-              </div>
-            </FormGroup>
+          <Form className="mb-4">
+            <SearchInput
+              id="search-input" // ✅ Changed ID to lowercase for consistency
+              searchTerm={searchTerm}
+              handleSearchChange={handleSearchChange}
+              clearSearch={clearSearch}
+              placeholder="Search a movie..."
+            />
           </Form>
 
-          {isLoading ? (
-            <Container fluid>
-              <Row>
-                <Col>
-                  <p>Loading...</p>
-                  <Spinner />
-                </Col>
-              </Row>
-            </Container>
-          ) : error ? (
-            <p>Error loading movies.</p>
-          ) : (
-            <MoviesGallery filteredMovies={movies} colSizes={{ xs: 12, sm: 6, md: 6, lg: 5, xl: 4, xxl: 3 }} />
+          {isLoading && (
+            <div className="text-center">
+              <p>Loading...</p>
+              <Spinner />
+            </div>
+          )}
+
+          {error && <p className="text-danger">Error loading movies.</p>}
+
+          {!isLoading && !error && movies.length > 0 && (
+            <MoviesGallery
+              filteredMovies={movies}
+              colSizes={{ xs: 12, sm: 6, md: 6, lg: 5, xl: 4, xxl: 3 }}
+            />
+          )}
+
+          {!isLoading && !error && movies.length === 0 && shouldFetchMovies && (
+            <p className="text-muted text-center">No movies found 😞</p>
           )}
         </Col>
       </Row>
