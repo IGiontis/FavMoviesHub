@@ -4,25 +4,26 @@ import ProfileInfo from "./ProfileInfo";
 import "./userProfileTabs.css";
 import FavMovies from "./FavMovies";
 
-
 const tabs = [
-  { id: "1", title: "Fav Movies", content: <FavMovies /> },
-  { id: "2", title: "Settings", content: "User settings content goes here." },
-  { id: "3", title: "Profile Info", content: <ProfileInfo /> },
+  { ID: "1", title: "Fav Movies", content: <FavMovies /> },
+  { ID: "2", title: "Settings", content: "User settings content goes here." },
+  { ID: "3", title: "Profile Info", content: <ProfileInfo /> },
 ];
 
 const UserProfileTabs = () => {
-
   const [activeTab, setActiveTab] = useState("1");
+
+  // Find the active tab's content dynamically
+  const activeTabContent = tabs.find((tab) => tab.ID === activeTab)?.content;
 
   return (
     <Container fluid>
-      <Row className="justify-content-center ">
-        <Col xs={12} md="auto" className="pt-4 sidebar-container ">
-          <Nav className="d-flex flex-wrap flex-md-column gap-2 justify-content-center ">
+      <Row className="justify-content-center">
+        <Col xs={12} md="auto" className="pt-4 sidebar-container">
+          <Nav className="d-flex flex-wrap flex-md-column gap-2 justify-content-center">
             {tabs.map((tab) => (
-              <NavItem key={tab.id}>
-                <NavLink active={activeTab === tab.id} onClick={() => setActiveTab(tab.id)} className="tab-link">
+              <NavItem key={tab.ID}>
+                <NavLink active={activeTab === tab.ID} onClick={() => setActiveTab(tab.ID)} className="tab-link">
                   {tab.title}
                 </NavLink>
               </NavItem>
@@ -30,14 +31,9 @@ const UserProfileTabs = () => {
           </Nav>
         </Col>
 
-        
         <Col xs={12} md className="content-container">
           <TabContent activeTab={activeTab}>
-            {tabs.map((tab) => (
-              <TabPane tabId={tab.id} key={tab.id}>
-                {tab.content}
-              </TabPane>
-            ))}
+            <TabPane tabId={activeTab}>{activeTabContent}</TabPane>
           </TabContent>
         </Col>
       </Row>

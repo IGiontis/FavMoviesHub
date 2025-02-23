@@ -18,7 +18,7 @@ const FriendPopUpTabCard = () => {
     <Card className={styles.friendPopupCard}>
       <CardHeader className={styles.friendPopupHeader}>
         <Navbar color="dark" dark expand="md" className={`${styles.friendPopupNavbar} pt-4`}>
-          <Nav className="ms-auto d-flex flex-wrap align-items-center flex-row gap-2" navbar>
+          <Nav className=" d-flex flex-wrap align-items-center flex-row gap-4" navbar>
             <NavItem>
               <NavLink
                 className={activeTab === "search" ? "active" : ""}

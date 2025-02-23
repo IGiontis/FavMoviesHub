@@ -26,6 +26,8 @@ const FriendSearchTab = () => {
   const { data: friends = [] } = useFriends(currentUser?.uid);
   const sendFriendRequest = useSendFriendRequest();
 
+  console.log("this is friends", friends);
+
   const sentRequestsSet = useMemo(() => new Set(sentRequests?.map((req) => req.recipientId)), [sentRequests]);
   const friendsSet = useMemo(() => new Set(friends?.flatMap(({ user1, user2 }) => [user1, user2])), [friends]);
 
@@ -83,31 +85,33 @@ const FriendSearchTab = () => {
         <>
           <div className="fw-bold mb-2">Users Found:</div>
           <ListGroup>
-            {users.map((user) => {
-              const status = getFriendStatus(user.id);
+            {users
+              .filter((user) => !sentRequestsSet.has(user.id)) // ✅ Exclude users with pending friend requests
+              .map((user) => {
+                const status = getFriendStatus(user.id);
 
-              return (
-                <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center flex-wrap">
-                  <span className="text-truncate flex-grow-1" style={{ wordBreak: "break-word", minWidth: "0" }}>
-                    {user.username}
-                  </span>
+                return (
+                  <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center flex-wrap">
+                    <span className="text-truncate flex-grow-1" style={{ wordBreak: "break-word", minWidth: "0" }}>
+                      {user.username}
+                    </span>
 
-                  {status === "friend" ? (
-                    <Button color="secondary" size="sm" className="ms-3" disabled>
-                      <FontAwesomeIcon icon={faUserCheck} /> Friend
-                    </Button>
-                  ) : status === "pending" ? (
-                    <Button color="secondary" size="sm" className="ms-3" disabled>
-                      <FontAwesomeIcon icon={faClock} /> Pending
-                    </Button>
-                  ) : (
-                    <Button color="success" size="sm" className="ms-3" onClick={() => handleSendRequest(user.id)}>
-                      <FontAwesomeIcon icon={faUserPlus} /> Add Friend
-                    </Button>
-                  )}
-                </ListGroupItem>
-              );
-            })}
+                    {status === "friend" ? (
+                      <Button color="secondary" size="sm" className="ms-3" disabled>
+                        <FontAwesomeIcon icon={faUserCheck} /> Friend
+                      </Button>
+                    ) : status === "pending" ? (
+                      <Button color="secondary" size="sm" className="ms-3" disabled>
+                        <FontAwesomeIcon icon={faClock} /> Pending
+                      </Button>
+                    ) : (
+                      <Button color="success" size="sm" className="ms-3" onClick={() => handleSendRequest(user.id)}>
+                        <FontAwesomeIcon icon={faUserPlus} /> Add Friend
+                      </Button>
+                    )}
+                  </ListGroupItem>
+                );
+              })}
           </ListGroup>
         </>
       )}

@@ -1,9 +1,8 @@
 import { Card, CardBody, CardImg, CardTitle, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
-
 import PropTypes from "prop-types";
+import MovieRating from "../../components/MovieRating";
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   return (
@@ -30,16 +29,31 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
         src={movie.Poster !== "N/A" ? movie.Poster : "default-image.jpg"}
         alt={movie.Title}
       />
+
       <CardBody>
+        {/* ✅ Correctly place the title */}
         <CardTitle>
           <h5>{movie.Title}</h5>
-          <p className="mb-0 mt-4">
-            Year: <strong>{movie.Year}</strong>
-          </p>
-          <p className="mb-0">
-            Type: <strong>{movie.Type}</strong>
-          </p>
         </CardTitle>
+
+        {/* ✅ Separate details and rating in a structured div */}
+        <div className="d-flex align-items-center justify-content-between">
+          <div>
+            <p className="mb-0 mt-4">
+              Year: <strong>{movie.Year}</strong>
+            </p>
+            <p className="mb-0">
+              Type: <strong>{movie.Type}</strong>
+            </p>
+          </div>
+
+          {/* ✅ Keep the rating section separate */}
+          {user && (
+            <div className="mt-3">
+              <MovieRating movieID={movie.imdbID} userID={user?.uid} />
+            </div>
+          )}
+        </div>
       </CardBody>
     </Card>
   );

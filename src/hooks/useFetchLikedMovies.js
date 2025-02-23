@@ -15,7 +15,6 @@ export const useLikedMovies = (userID) => {
     // ✅ Firestore real-time listener
     const unsubscribe = onSnapshot(moviesRef, (snapshot) => {
       const movies = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      console.log("🔥 Real-time update:", movies);
       setLikedMovies(movies);
 
       // ✅ Update React Query cache

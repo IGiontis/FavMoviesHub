@@ -20,7 +20,7 @@ const FriendRequests = () => {
   const [loadingRequests, setLoadingRequests] = useState({});
 
   const handleAcceptRequest = async (request) => {
-    setLoadingRequests((prev) => ({ ...prev, [request.id]: true })); // Set loading to true
+    setLoadingRequests((prev) => ({ ...prev, [request.senderId]: true })); // ✅ Use senderId
 
     try {
       await acceptFriendRequest(request, () => {
@@ -33,7 +33,7 @@ const FriendRequests = () => {
     } catch (error) {
       toast.error("Failed to accept friend request. Please try again.");
     } finally {
-      setLoadingRequests((prev) => ({ ...prev, [request.id]: false })); // Reset loading state
+      setLoadingRequests((prev) => ({ ...prev, [request.senderId]: false })); // ✅ Reset after processing
     }
   };
 
@@ -52,9 +52,9 @@ const FriendRequests = () => {
                 color="success"
                 size="sm"
                 onClick={() => handleAcceptRequest(request)}
-                disabled={loadingRequests[request.id]} // ✅ Disable button while processing
+                disabled={!!loadingRequests[request.senderId]} // ✅ Ensure it's a boolean
               >
-                {loadingRequests[request.id] ? "Accepting..." : "Accept"}
+                {loadingRequests[request.senderId] ? "Accepting..." : "Accept"}
               </Button>
             </div>
           </ListGroupItem>

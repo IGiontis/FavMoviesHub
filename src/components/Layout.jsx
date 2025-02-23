@@ -14,8 +14,8 @@ const Layout = ({ children }) => {
       {isAddFriendOpen && user && <FriendPopUpTabCard />}
       <div className="container-height overflow-auto">
         {children}
-        <footer className="text-center p-4  ">
-          <p>© 2024 ILIAS GIONTIS. All Rights Reserved.</p>
+        <footer className="text-center p-4">
+          <p>© {new Date().getFullYear()} ILIAS GIONTIS. All Rights Reserved.</p>
           <div className="mt-2">
             <Link to="/terms" className="text-primary mx-2">
               Όροι Χρήσης
