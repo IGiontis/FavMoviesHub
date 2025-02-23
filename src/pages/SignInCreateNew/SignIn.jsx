@@ -27,8 +27,10 @@ const SignIn = ({ toggleModal }) => {
     validationSchema: validationSchema,
     validateOnBlur: true,
     validateOnChange: false,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
+      setSubmitting(true);
       await signInHandler(values, dispatch, toggleModal);
+      setSubmitting(false);
     },
   });
 
@@ -42,10 +44,6 @@ const SignIn = ({ toggleModal }) => {
     });
   };
 
-  const handleCancel = () => {
-    console.log("Cancel clicked");
-  };
-
   return (
     <Card style={{ maxWidth: "600px" }}>
       <CardHeader>
@@ -56,7 +54,11 @@ const SignIn = ({ toggleModal }) => {
       </CardBody>
 
       <CardFooter>
-        <CancelSaveButtons onSave={handleSave} onCancel={handleCancel} />
+        <CancelSaveButtons
+          onSave={handleSave}
+          onCancel={toggleModal}
+          disabled={formik.isSubmitting} // ✅ Disables buttons instead of removing handlers
+        />
       </CardFooter>
     </Card>
   );
