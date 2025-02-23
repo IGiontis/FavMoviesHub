@@ -4,6 +4,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 
 // ✅ Fetch friend requests received by the current user
 export const useReceivedFriendRequests = (userId) => {
+  console.log("re renders")
   return useQuery({
     queryKey: ["receivedFriendRequests", userId],
     queryFn: async () => {

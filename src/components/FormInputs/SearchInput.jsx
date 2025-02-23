@@ -23,7 +23,7 @@ const SearchInput = ({ ID, searchTerm, handleSearchChange, clearSearch, placehol
 
 SearchInput.propTypes = {
   searchTerm: PropTypes.string.isRequired,
-  ID: PropTypes.string.ID,
+  ID: PropTypes.string,
   handleSearchChange: PropTypes.func.isRequired,
   clearSearch: PropTypes.func.isRequired,
   placeholder: PropTypes.string,

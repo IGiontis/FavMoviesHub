@@ -10,8 +10,6 @@ export const useLikedMovies = (userID) => {
   useEffect(() => {
     if (!userID) return undefined; // ✅ Prevent running when no userID
 
-
-
     const moviesRef = collection(db, "users", userID, "likedMovies");
 
     // ✅ Firestore real-time listener
@@ -25,7 +23,6 @@ export const useLikedMovies = (userID) => {
     });
 
     return () => {
- 
       unsubscribe();
     };
   }, [userID, queryClient]);

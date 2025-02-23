@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { Navbar, NavbarBrand, Nav, Collapse, NavbarToggler, Modal } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/authSlice";
 import SignIn from "../SignInCreateNew/SignIn";
@@ -10,13 +10,14 @@ import CreateAccount from "../SignInCreateNew/CreateAccount";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import NavigationLinks from "./NavigationLinks";
 import useTheme from "../../hooks/useTheme";
-import { toggleAddFriend } from "../../redux/friendSlice";
+
+import NavigationFriendButton from "./NavigationFriendButton";
 
 const NavbarLandingPage = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
-  const isAddFriendOpen = useSelector((state) => state.friends.isAddFriendOpen);
+
   const navigate = useNavigate();
 
   // Use a single state object for modal management
@@ -36,9 +37,7 @@ const NavbarLandingPage = () => {
     setIsConfirmationModalOpen(false);
   }, [dispatch, navigate]);
 
-  const handleToggleAddFriend = useCallback(() => {
-    dispatch(toggleAddFriend());
-  }, [dispatch]);
+
 
   const toggleNavbar = useCallback(() => setIsOpen((prev) => !prev), []);
   const toggleDropdown = useCallback(() => setIsDropdownOpen((prev) => !prev), []);
@@ -62,13 +61,14 @@ const NavbarLandingPage = () => {
               </button>
 
               {user && (
-                <button
-                  onClick={handleToggleAddFriend}
-                  className={`btn btn-link nav-link p-0 border-0 me-4 ${isAddFriendOpen ? "add-friend-active" : ""}`}
-                  style={{ background: "none", cursor: "pointer" }}
-                >
-                  <FontAwesomeIcon icon={faUserPlus} size="sm" />
-                </button>
+                // <button
+                //   onClick={handleToggleAddFriend}
+                //   className={`btn btn-link nav-link p-0 border-0 me-4 ${isAddFriendOpen ? "add-friend-active" : ""}`}
+                //   style={{ background: "none", cursor: "pointer" }}
+                // >
+                //   <FontAwesomeIcon icon={faUserPlus} size="sm" />
+                // </button>
+                <NavigationFriendButton/>
               )}
             </div>
             {/* NavigationLinks is already memoized with React.memo */}

@@ -27,7 +27,7 @@ const LandingPage = () => {
           <h2 className="text-center">Welcome to Fav Movies Share</h2>
           <Form className="mb-4">
             <SearchInput
-              id="search-input" // ✅ Changed ID to lowercase for consistency
+              ID="search-input" // ✅ Changed ID to lowercase for consistency
               searchTerm={searchTerm}
               handleSearchChange={handleSearchChange}
               clearSearch={clearSearch}
