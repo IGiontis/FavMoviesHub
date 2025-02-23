@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleAddFriend } from "../../redux/friendSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { useReceivedFriendRequests } from "../../hooks/useReceivedFriendRequests";
+import { useListenForFriendRequests, useReceivedFriendRequests } from "../../hooks/useReceivedFriendRequests";
 import BadgeFriendList from "../../components/BadgeFriendList";
 
 const NavigationFriendButton = memo(() => {
@@ -13,7 +13,8 @@ const NavigationFriendButton = memo(() => {
 
   // ✅ Fetch friend requests only when user is logged in
   const { data: receivedRequests = [] } = useReceivedFriendRequests(currentUser?.uid);
-
+  useListenForFriendRequests(currentUser?.uid); // Auto-updates on new requests
+  
   // ✅ Store request count to avoid unnecessary recalculations
   const requestCount = receivedRequests.length;
 
