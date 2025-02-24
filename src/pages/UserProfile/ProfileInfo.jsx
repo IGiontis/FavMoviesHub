@@ -10,7 +10,7 @@ const ProfileInfo = () => {
   console.log(user)
   console.log(schema);
   return (
-    <Container fluid className="pt-4 profile-container">
+    <Container fluid className="pt-4">
       {schema.fields.map((field, index) => (
         <Row key={index}>
           <Col>
