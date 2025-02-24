@@ -1,14 +1,14 @@
+import { memo } from "react";
 import { Card, CardBody, CardImg, CardTitle, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import MovieRating from "../../components/MovieRating";
-import defaultImage from "../../assets/movieBackground.jpeg"
+import defaultImage from "../../assets/movieBackground.jpeg";
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   const posterSrc = movie.Poster !== "N/A" ? movie.Poster : defaultImage;
 
-  
   return (
     <Card className="position-relative">
       {user && (
@@ -17,6 +17,7 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
           className="position-absolute top-0 end-0 m-2 p-1"
           onClick={() => handleMovieLike(movie)}
           disabled={isProcessing}
+          aria-label={isLiked ? "Unlike Movie" : "Like Movie"} // ✅ Improves accessibility
         >
           <FontAwesomeIcon
             icon={isLiked ? solidHeart : regularHeart}
@@ -25,22 +26,10 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
           />
         </Button>
       )}
-
-      <CardImg
-        top
-        width="100%"
-        height="400px"
-        src={posterSrc}
-        alt={movie.Title}
-      />
-
+      <CardImg top width="100%" height="400px" src={posterSrc} alt={movie.Title} loading="lazy" />
       <CardBody>
-        {/* ✅ Correctly place the title */}
-        <CardTitle>
-          <h5>{movie.Title}</h5>
-        </CardTitle>
+        <CardTitle tag="h5">{movie.Title}</CardTitle>
 
-        {/* ✅ Separate details and rating in a structured div */}
         <div className="d-flex align-items-center justify-content-between">
           <div>
             <p className="mb-0 mt-4">
@@ -51,24 +40,30 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
             </p>
           </div>
 
-          {/* ✅ Keep the rating section separate */}
-          {user && (
-            <div className="mt-3">
-              <MovieRating movieID={movie.imdbID} userID={user?.uid} />
-            </div>
-          )}
+          {/* ✅ Render rating component only when user is logged in */}
+          {user && <MovieRating movieID={movie.imdbID} userID={user.uid} />}
         </div>
       </CardBody>
     </Card>
   );
 };
 
+// ✅ Use React.memo to prevent unnecessary re-renders if props haven't changed
+export default memo(MovieCard);
+
+// ✅ Improved PropTypes for better validation
 MovieCard.propTypes = {
-  movie: PropTypes.object.isRequired,
+  movie: PropTypes.shape({
+    Poster: PropTypes.string,
+    Title: PropTypes.string.isRequired,
+    Year: PropTypes.string.isRequired,
+    Type: PropTypes.string.isRequired,
+    imdbID: PropTypes.string.isRequired,
+  }).isRequired,
   isLiked: PropTypes.bool.isRequired,
   isProcessing: PropTypes.bool.isRequired,
   handleMovieLike: PropTypes.func.isRequired,
-  user: PropTypes.object,
+  user: PropTypes.shape({
+    uid: PropTypes.string.isRequired,
+  }),
 };
-
-export default MovieCard;
