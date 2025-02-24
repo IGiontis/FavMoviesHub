@@ -4,7 +4,7 @@ import getPersonalInfoViewSchema from "./schema/personalInfoViewSchema";
 
 
 const ProfileInfo = () => {
-  const user = useSelector((state) => state.auth.user); //TODO
+  const user = useSelector((state) => state.auth.user);
   const schema = getPersonalInfoViewSchema(user);
 
   console.log(user)

@@ -3,8 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import MovieRating from "../../components/MovieRating";
+import defaultImage from "../../assets/movieBackground.jpeg"
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
+  const posterSrc = movie.Poster !== "N/A" ? movie.Poster : defaultImage;
+
+  
   return (
     <Card className="position-relative">
       {user && (
@@ -26,7 +30,7 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
         top
         width="100%"
         height="400px"
-        src={movie.Poster !== "N/A" ? movie.Poster : "default-image.jpg"}
+        src={posterSrc}
         alt={movie.Title}
       />
 

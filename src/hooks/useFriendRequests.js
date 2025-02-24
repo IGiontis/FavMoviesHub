@@ -4,6 +4,7 @@ import { collection, query, where, getDocs, addDoc, deleteDoc, doc } from "fireb
 
 // ✅ Fetch friend requests sent by the current user
 export const useFriendRequests = (userId) => {
+  console.log("enters here ") //TODO
   return useQuery({
     queryKey: ["friendRequests", userId],
     queryFn: async () => {
