@@ -7,6 +7,8 @@ import MovieCard from "./MovieCard";
 
 const MoviesGallery = ({ filteredMovies, colSizes }) => {
   const user = useSelector((state) => state.auth.user);
+
+  console.log("this is user",user)
   const { data: likedMovies = [], isLoading, error } = useLikedMovies(user?.uid);
   const { addMovieMutation, removeMovieMutation } = useLikedMoviesActions(user?.uid);
 

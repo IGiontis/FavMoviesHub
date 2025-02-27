@@ -37,8 +37,6 @@ const NavbarLandingPage = () => {
     setIsConfirmationModalOpen(false);
   }, [dispatch, navigate]);
 
-
-
   const toggleNavbar = useCallback(() => setIsOpen((prev) => !prev), []);
   const toggleDropdown = useCallback(() => setIsDropdownOpen((prev) => !prev), []);
 
@@ -54,22 +52,17 @@ const NavbarLandingPage = () => {
             <div className="d-flex align-items-center gap-2">
               <button
                 onClick={toggleTheme}
-                className="btn btn-link nav-link p-0 border-0 me-3"
+                className="btn btn-link nav-link p-0 border-0 me-2"
                 style={{ background: "none", cursor: "pointer" }}
               >
-                {isDarkMode ? <FontAwesomeIcon icon={faSun} size="lg" /> : <FontAwesomeIcon icon={faMoon} size="lg" />}
+                {isDarkMode ? (
+                  <FontAwesomeIcon icon={faSun} size="lg" fixedWidth />
+                ) : (
+                  <FontAwesomeIcon icon={faMoon} size="lg" fixedWidth />
+                )}
               </button>
 
-              {user && (
-                // <button
-                //   onClick={handleToggleAddFriend}
-                //   className={`btn btn-link nav-link p-0 border-0 me-4 ${isAddFriendOpen ? "add-friend-active" : ""}`}
-                //   style={{ background: "none", cursor: "pointer" }}
-                // >
-                //   <FontAwesomeIcon icon={faUserPlus} size="sm" />
-                // </button>
-                <NavigationFriendButton/>
-              )}
+              {user && <NavigationFriendButton />}
             </div>
             {/* NavigationLinks is already memoized with React.memo */}
             <NavigationLinks

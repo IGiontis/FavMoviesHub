@@ -3,7 +3,7 @@ import { db } from "../firebase/firebaseConfig";
 import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect } from "react";
 
-// ✅ Fetch friend requests (Runs once, updates via cache)
+//  Fetch friend requests (Runs once, updates via cache)
 export const useReceivedFriendRequests = (userId) => {
   return useQuery({
     queryKey: ["receivedFriendRequests", userId],
@@ -18,9 +18,9 @@ export const useReceivedFriendRequests = (userId) => {
   });
 };
 
-// ✅ Real-time listener (Updates React Query cache)
+//  Real-time listener (Updates React Query cache)
 export const useListenForFriendRequests = (userId) => {
-  const queryClient = useQueryClient(); // ✅ Now used correctly
+  const queryClient = useQueryClient(); //  Now used correctly
 
   useEffect(() => {
     if (!userId) return undefined;

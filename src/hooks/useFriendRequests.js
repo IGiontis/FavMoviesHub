@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { db } from "../firebase/firebaseConfig";
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 
-// ✅ Fetch friend requests sent by the current user
+//  Fetch friend requests sent by the current user
 export const useFriendRequests = (userId) => {
   console.log("enters here ") //TODO
   return useQuery({
@@ -17,7 +17,7 @@ export const useFriendRequests = (userId) => {
   });
 };
 
-// ✅ Mutation to send a friend request
+//  Mutation to send a friend request
 export const useSendFriendRequest = () => {
   const queryClient = useQueryClient();
 
@@ -37,7 +37,7 @@ export const useSendFriendRequest = () => {
   });
 };
 
-// ✅ Mutation to delete a friend request
+//  Mutation to delete a friend request
 export const useDeleteFriendRequest = () => {
   const queryClient = useQueryClient();
 

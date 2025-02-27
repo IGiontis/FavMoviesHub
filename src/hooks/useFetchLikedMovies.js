@@ -8,16 +8,16 @@ export const useLikedMovies = (userID) => {
   const [likedMovies, setLikedMovies] = useState([]);
 
   useEffect(() => {
-    if (!userID) return undefined; // ✅ Prevent running when no userID
+    if (!userID) return undefined; //  Prevent running when no userID
 
     const moviesRef = collection(db, "users", userID, "likedMovies");
 
-    // ✅ Firestore real-time listener
+    //  Firestore real-time listener
     const unsubscribe = onSnapshot(moviesRef, (snapshot) => {
       const movies = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setLikedMovies(movies);
 
-      // ✅ Update React Query cache
+      //  Update React Query cache
       queryClient.setQueryData(["likedMovies", userID], movies);
     });
 
@@ -28,7 +28,7 @@ export const useLikedMovies = (userID) => {
 
   return useQuery({
     queryKey: ["likedMovies", userID],
-    queryFn: () => Promise.resolve(likedMovies), // ✅ Ensure function returns a valid promise
+    queryFn: () => Promise.resolve(likedMovies), //  Ensure function returns a valid promise
     enabled: !!userID,
     staleTime: Infinity,
     initialData: [],
