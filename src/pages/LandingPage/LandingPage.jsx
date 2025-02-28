@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
-import { Col, Row, Form, Container, Spinner } from "reactstrap";
+import { Col, Row, Container, Spinner } from "reactstrap";
 import MoviesGallery from "./MoviesGallery";
 import { useMovies } from "@/hooks/useMovies";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -25,15 +25,15 @@ const LandingPage = () => {
       <Row>
         <Col>
           <h2 className="text-center">Welcome to Fav Movies Share</h2>
-          <Form className="mb-4">
+          <div className="mb-4">
             <SearchInput
-              ID="search-input" // ✅ Changed ID to lowercase for consistency
+              ID="search-input"
               searchTerm={searchTerm}
               handleSearchChange={handleSearchChange}
               clearSearch={clearSearch}
               placeholder="Search a movie..."
             />
-          </Form>
+          </div>
 
           {isLoading && (
             <div className="text-center">
@@ -45,10 +45,7 @@ const LandingPage = () => {
           {error && <p className="text-danger">Error loading movies.</p>}
 
           {!isLoading && !error && movies.length > 0 && (
-            <MoviesGallery
-              filteredMovies={movies}
-              colSizes={{ xs: 12, sm: 6, md: 6, lg: 5, xl: 4, xxl: 3 }}
-            />
+            <MoviesGallery filteredMovies={movies} colSizes={{ xs: 12, sm: 6, md: 6, lg: 5, xl: 4, xxl: 3 }} />
           )}
 
           {!isLoading && !error && movies.length === 0 && shouldFetchMovies && (
