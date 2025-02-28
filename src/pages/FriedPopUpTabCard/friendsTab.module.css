@@ -1,8 +1,8 @@
 /* Friend Pop-up Card */
 .friendPopupCard {
   position: fixed;
-  bottom: 40px;
-  right: 13px;
+  bottom: 10vh; /* 10% of the viewport height */
+  right: 4vw; /* 2% of the viewport width */
   width: auto;
   max-width: 450px;
   min-width: 250px;

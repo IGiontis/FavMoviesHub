@@ -26,7 +26,7 @@ const NavigationFriendButton = memo(() => {
   return (
     <button
       onClick={handleToggleAddFriend}
-      className={`btn btn-link nav-link p-0 border-0 me-4 position-relative ${isAddFriendOpen ? "add-friend-active" : ""}`}
+      className={`btn btn-link nav-link p-0 border-0 me-2 position-relative ${isAddFriendOpen ? "add-friend-active" : ""}`}
     >
       <FontAwesomeIcon icon={faUserPlus} size="sm" />
       <BadgeFriendList requestCount={requestCount} />
