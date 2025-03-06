@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import LandingPage from "@/pages/LandingPage/LandingPage";
-import CreateAccount from "@/pages/SignInCreateNew/CreateAccount";
+import CreateAccount from "@/auth/SignInCreateNew/CreateAccount";
 import PageNotFound from "@/pages/PageNotFound";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import FriendsTab from "../pages/FriendsTab/FriendsTab";

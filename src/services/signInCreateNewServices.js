@@ -23,7 +23,7 @@ const showToast = (toastID, message, type = "info", timeAutoClose = 1000) => {
 export const signInHandler = async (values, dispatch, toggleModal) => {
   const toastID = toast.loading("Please wait...");
   let email = values.usernameEmail.toLowerCase(); // Convert input to lowercase
-  console.log("enters")
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(values.usernameEmail)) {
