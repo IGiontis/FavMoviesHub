@@ -8,14 +8,14 @@
 .inputField {
     border-radius: 8px;
     padding: 10px;
-    padding-right: 30px; /* Added space for the close */
+    padding-right: 30px;
     width: 100%;
     transition: border-color 0.3s ease-in-out;
     outline: none;
-    background-color: white;
     position: relative;
     z-index: 1; /* Keeps the input above the glow */
 }
+
 
 /* Clear (X) button inside input */
 .clearSearch {
