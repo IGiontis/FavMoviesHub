@@ -7,14 +7,14 @@ import { saveUserMovieComment } from "../services/movieComments/movieCommentServ
 
 const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }) => {
   const [comment, setComment] = useState("");
-  const { data: userComments } = useUserMovieComments(userID); // 🔄 Fetch all user comments
+  const { data: userComments } = useUserMovieComments(userID); //  Fetch all user comments
   const queryClient = useQueryClient();
 
   console.log(userComments)
 
   useEffect(() => {
     if (userComments && userComments[movieID]) {
-      setComment(userComments[movieID]); // 🔄 Get specific movie comment
+      setComment(userComments[movieID]); //  Get specific movie comment
     }
   }, [userComments, movieID]);
 
