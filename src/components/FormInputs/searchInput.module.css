@@ -1,0 +1,59 @@
+.searchForm {
+    position: relative;
+    display: inline-block;
+  
+}
+
+/* Input field */
+.inputField {
+    border-radius: 8px;
+    padding: 10px;
+    padding-right: 30px; /* Added space for the close */
+    width: 100%;
+    transition: border-color 0.3s ease-in-out;
+    outline: none;
+    background-color: white;
+    position: relative;
+    z-index: 1; /* Keeps the input above the glow */
+}
+
+/* Clear (X) button inside input */
+.clearSearch {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    font-size: 18px;
+    z-index: 2; /* Ensure it's above everything */
+}
+
+/* Moving Glow Effect */
+.glowBorder {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    border-radius: 8px;
+    border: 1px solid transparent;
+    
+    /* Smoother, longer gradient */
+    background: linear-gradient(90deg, #0055ff, #0088ff, #00ccff, #0088ff, #0055ff);
+    
+    /* Increase background size for smoother transition */
+    background-size: 300% 300%;
+    animation: sparkGlow 4s ease-in-out infinite;
+    
+    z-index: 0; /* Ensure it doesn't cover the input or clear button */
+    filter: blur(3px);
+    pointer-events: none;
+}
+
+/* Smooth Glow Animation */
+@keyframes sparkGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

@@ -17,12 +17,19 @@ const DEFAULT_MOVIES = [
   "The Prestige",
   "Fight Club",
   "The Social Network",
-  "The Avengers",
+  "Avengers",
   "Django Unchained",
   "The Lion King",
   "Whiplash",
   "The Departed",
   "Joker",
+  "John Wick",
+  "Lord of",
+  "Pirates",
+  "Red",
+  "Blue",
+  "White",
+  "Down"
 ];
 
 export const fetchMovies = async (searchTerm = "") => {

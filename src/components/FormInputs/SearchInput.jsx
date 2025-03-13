@@ -1,22 +1,24 @@
 import PropTypes from "prop-types";
 import { Input } from "reactstrap";
+import styles from "./searchInput.module.css";
 
 const SearchInput = ({ ID, searchTerm, handleSearchChange, clearSearch, placeholder = "Type movie name..." }) => {
   return (
-    <div className="search-form">
+    <div className={styles.searchForm}>
       <Input
         type="text"
         id={ID}
+        className={styles.inputField}
         placeholder={placeholder}
         value={searchTerm}
         onChange={handleSearchChange}
-        className="search-input"
       />
       {searchTerm && (
-        <span onClick={clearSearch} className="clear-search">
+        <span onClick={clearSearch} className={styles.clearSearch}>
           ✖
         </span>
       )}
+      <div className={styles.glowBorder}></div> {/* This is the spark effect */}
     </div>
   );
 };

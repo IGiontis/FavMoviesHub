@@ -1,13 +1,19 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Card, CardBody, CardImg, CardTitle, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as solidHeart, faHeart as regularHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import MovieRating from "../../components/MovieRating";
 import defaultImage from "../../assets/movieBackground.jpeg";
 
+import MovieComment from "../../components/MovieComment";
+import MovieCommentsModal from "../../components/MovieCommentsModal";
+
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const posterSrc = movie.Poster !== "N/A" ? movie.Poster : defaultImage;
+
+  const toggleCommentModal = () => setIsCommentModalOpen((prev) => !prev);
 
   return (
     <Card className="position-relative">
@@ -17,7 +23,7 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
           className="position-absolute top-0 end-0 m-2 p-1"
           onClick={() => handleMovieLike(movie)}
           disabled={isProcessing}
-          aria-label={isLiked ? "Unlike Movie" : "Like Movie"} // ✅ Improves accessibility
+          aria-label={isLiked ? "Unlike Movie" : "Like Movie"}
         >
           <FontAwesomeIcon
             icon={isLiked ? solidHeart : regularHeart}
@@ -26,9 +32,26 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
           />
         </Button>
       )}
+
       <CardImg top width="100%" height="400px" src={posterSrc} alt={movie.Title} loading="lazy" />
+
       <CardBody>
-        <CardTitle tag="h5">{movie.Title}</CardTitle>
+        <CardTitle tag="h5" className="d-flex align-items-center justify-content-between">
+          <div>{movie.Title}</div>
+
+          {user && (
+            <span className="ms-3">
+              <Button
+                color="link"
+                className="p-0 border-0 bg-transparent"
+                onClick={toggleCommentModal}
+                aria-label="Comment on Movie"
+              >
+                <FontAwesomeIcon icon={faComment} size="lg" className="text-primary" />
+              </Button>
+            </span>
+          )}
+        </CardTitle>
 
         <div className="d-flex align-items-center justify-content-between">
           <div>
@@ -38,20 +61,28 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
             <p className="mb-0">
               Type: <strong>{movie.Type}</strong>
             </p>
+
+            {user && <MovieComment user={user} movie={movie} />}
           </div>
 
-          {/* ✅ Render rating component only when user is logged in */}
           {user && <MovieRating movieID={movie.imdbID} userID={user.uid} />}
+          {user && (
+            <MovieCommentsModal
+              movieID={movie.imdbID}
+              userID={user.uid}
+              isOpen={isCommentModalOpen}
+              toggleModal={toggleCommentModal}
+              movieTitle={movie.Title}
+            />
+          )}
         </div>
       </CardBody>
     </Card>
   );
 };
 
-// ✅ Use React.memo to prevent unnecessary re-renders if props haven't changed
 export default memo(MovieCard);
 
-// ✅ Improved PropTypes for better validation
 MovieCard.propTypes = {
   movie: PropTypes.shape({
     Poster: PropTypes.string,
@@ -65,5 +96,5 @@ MovieCard.propTypes = {
   handleMovieLike: PropTypes.func.isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
-  }),
+  }), // Optional since the app might be used without login
 };

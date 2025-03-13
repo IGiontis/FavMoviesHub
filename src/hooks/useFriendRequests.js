@@ -2,22 +2,37 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { db } from "../firebase/firebaseConfig";
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 
-//  Fetch friend requests sent by the current user
-export const useFriendRequests = (userId) => {
-  console.log("enters here ") //TODO
+/**
+ * Fetch friend requests for a given user.
+ * Can be used independently of React Query.
+ */
+const fetchFriendRequests = async (userID) => {
+  if (!userID) return [];
+
+  try {
+    const q = query(collection(db, "friend_requests"), where("senderId", "==", userID));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("Error fetching friend requests:", error);
+    throw new Error("Failed to fetch friend requests.");
+  }
+};
+
+/**
+ * React Query hook to get friend requests.
+ */
+export const useFriendRequests = (userID) => {
   return useQuery({
-    queryKey: ["friendRequests", userId],
-    queryFn: async () => {
-      if (!userId) return [];
-      const q = query(collection(db, "friend_requests"), where("senderId", "==", userId));
-      const snapshot = await getDocs(q);
-      return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    },
-    enabled: !!userId, // Don't fetch if there's no user
+    queryKey: ["friendRequests", userID],
+    queryFn: () => fetchFriendRequests(userID),
+    enabled: !!userID, // Prevents fetching if userID is falsy
   });
 };
 
-//  Mutation to send a friend request
+/**
+ * Mutation to send a friend request.
+ */
 export const useSendFriendRequest = () => {
   const queryClient = useQueryClient();
 
@@ -37,7 +52,9 @@ export const useSendFriendRequest = () => {
   });
 };
 
-//  Mutation to delete a friend request
+/**
+ * Mutation to delete a friend request.
+ */
 export const useDeleteFriendRequest = () => {
   const queryClient = useQueryClient();
 
