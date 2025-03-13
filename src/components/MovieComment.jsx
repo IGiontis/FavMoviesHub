@@ -1,17 +1,16 @@
-// components/MovieComment.js
-
 import PropTypes from "prop-types";
-
-import useMovieComment from "../hooks/comments/useMovieComment";
+import useUserMovieComments from "../hooks/comments/useUserMovieComments";
 
 const MovieComment = ({ user, movie }) => {
-  const { data: comment, isLoading, isError } = useMovieComment(user.uid, movie.imdbID);
+  const { data: comments, isLoading, isError } = useUserMovieComments(user.uid);
+
+  const comment = comments?.[movie.imdbID] || null;
 
   return (
     <div>
       <div className="mt-3">
-        {isLoading && <p>Loading comment...</p>}
-        {isError && <p>Error fetching comment.</p>}
+        {isLoading && <p>Loading comments...</p>}
+        {isError && <p>Error fetching comments.</p>}
         {comment ? <p className="mb-0">{comment}</p> : <p className="mb-0">No comment yet.</p>}
       </div>
     </div>

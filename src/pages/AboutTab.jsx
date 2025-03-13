@@ -17,20 +17,22 @@ const AboutTab = () => {
             <label className="fw-bold fs-5">🔍 Τι μπορείτε να κάνετε;</label>
             <ul>
               <li>
-                <span className="fw-semibold">Αναζήτηση ταινιών:</span> Βρείτε πληροφορίες για τις αγαπημένες σας
-                ταινίες εύκολα μέσω του API.
+                <span className="fw-semibold">Αναζήτηση ταινιών:</span> Βρείτε πληροφορίες για τις αγαπημένες σας ταινίες εύκολα μέσω του API, χωρίς να απαιτείται λογαριασμός.
               </li>
               <li>
-                <span className="fw-semibold">Αποθήκευση αγαπημένων:</span> Κρατήστε μια λίστα με τις ταινίες που σας
-                αρέσουν.
+                <span className="fw-semibold">Δημιουργία λογαριασμού:</span> Εγγραφείτε για να αποκτήσετε επιπλέον δυνατότητες!
               </li>
               <li>
-                <span className="fw-semibold">Κοινωνική διάδραση:</span> Βρείτε φίλους μέσω του **Search Friend** tab
-                και δείτε τι ταινίες έχουν προσθέσει στο **Share-Friend**.
+                <span className="fw-semibold">Αποθήκευση αγαπημένων:</span> Κρατήστε μια λίστα με τις αγαπημένες σας ταινίες.
               </li>
               <li>
-                <span className="fw-semibold">Έλεγχος ιδιωτικότητας:</span> Επιλέξτε αν θέλετε να μοιραστείτε δημόσια
-                τις ταινίες σας ή να τις κρατήσετε ιδιωτικές.
+                <span className="fw-semibold">Αξιολόγηση ταινιών:</span> Αφήστε κριτικές και δώστε βαθμολογίες στις ταινίες που έχετε δει.
+              </li>
+              <li>
+                <span className="fw-semibold">Σχόλια:</span> Συζητήστε για τις ταινίες αφήνοντας σχόλια.
+              </li>
+              <li>
+                <span className="fw-semibold">Κοινωνική διάδραση:</span> Προσθέστε φίλους, δείτε τις αγαπημένες τους ταινίες, τις βαθμολογίες και τα σχόλιά τους.
               </li>
             </ul>
           </div>
@@ -39,12 +41,10 @@ const AboutTab = () => {
             <label className="fw-bold fs-5">🛠 Τεχνολογίες που χρησιμοποιήθηκαν</label>
             <ul>
               <li>
-                <span className="fw-semibold">Frontend:</span> React.js, React Router DOM, Reactstrap, Redux Toolkit,
-                React Query (useQuery, useMutation), Bootstrap 5, CSS3
+                <span className="fw-semibold">Frontend:</span> React.js, React Router DOM, Reactstrap, Redux Toolkit, React Query (useQuery, useMutation), CSS Modules, Bootstrap 5, CSS3
               </li>
               <li>
-                <span className="fw-semibold">Backend & Authentication:</span> Firebase για database, authentication και
-                real-time δεδομένα
+                <span className="fw-semibold">Backend & Authentication:</span> Firebase για database, authentication και real-time δεδομένα
               </li>
             </ul>
           </div>

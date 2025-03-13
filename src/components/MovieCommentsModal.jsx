@@ -2,26 +2,28 @@ import { useEffect, useState } from "react";
 import { Modal, ModalHeader, ModalBody, Button, Input, ModalFooter } from "reactstrap";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useMovieComment from "../hooks/comments/useMovieComment";
+import useUserMovieComments from "../hooks/comments/useUserMovieComments"; // 🔄 Updated hook
 import { saveUserMovieComment } from "../services/movieComments/movieCommentService";
 
 const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }) => {
   const [comment, setComment] = useState("");
-  const { data: existingComment } = useMovieComment(userID, movieID);
+  const { data: userComments } = useUserMovieComments(userID); // 🔄 Fetch all user comments
   const queryClient = useQueryClient();
 
+  console.log(userComments)
+
   useEffect(() => {
-    if (existingComment && typeof existingComment === "string") {
-      setComment(existingComment);
+    if (userComments && userComments[movieID]) {
+      setComment(userComments[movieID]); // 🔄 Get specific movie comment
     }
-  }, [existingComment]);
+  }, [userComments, movieID]);
 
   const mutation = useMutation({
     mutationFn: saveUserMovieComment,
     onSuccess: () => {
       setComment("");
       toggleModal();
-      queryClient.invalidateQueries(["movieComment", userID, movieID]);
+      queryClient.invalidateQueries(["userMovieComments", userID]); // 🔄 Invalidate entire user comments cache
     },
     onError: (error) => {
       console.error("Error saving comment:", error);
