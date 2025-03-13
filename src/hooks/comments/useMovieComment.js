@@ -1,6 +1,6 @@
 // hooks/useMovieComment.js
 import { useQuery } from "@tanstack/react-query";
-import { getMovieCommentFromDB } from "../../services/movieComments/getMovieCommentFromDb";
+import { getMovieCommentFromDB} from "../../services/movieComments/getMovieCommentFromDB"
 
 
 const useMovieComment = (userID, movieID) => {
