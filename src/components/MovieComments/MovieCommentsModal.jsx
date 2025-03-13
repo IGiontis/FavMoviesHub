@@ -2,15 +2,13 @@ import { useEffect, useState } from "react";
 import { Modal, ModalHeader, ModalBody, Button, Input, ModalFooter } from "reactstrap";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useUserMovieComments from "../hooks/comments/useUserMovieComments"; // 🔄 Updated hook
-import { saveUserMovieComment } from "../services/movieComments/movieCommentService";
+import useUserMovieComments from "../../hooks/comments/useUserMovieComments"; // 🔄 Updated hook
+import { saveUserMovieComment } from "../../services/movieComments/movieCommentService";
 
 const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }) => {
   const [comment, setComment] = useState("");
   const { data: userComments } = useUserMovieComments(userID); //  Fetch all user comments
   const queryClient = useQueryClient();
-
-  console.log(userComments)
 
   useEffect(() => {
     if (userComments && userComments[movieID]) {

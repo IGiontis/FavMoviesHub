@@ -6,8 +6,9 @@ import PropTypes from "prop-types";
 import MovieRating from "../../components/MovieRating";
 import defaultImage from "../../assets/movieBackground.jpeg";
 
-import MovieComment from "../../components/MovieComment";
-import MovieCommentsModal from "../../components/MovieCommentsModal";
+import MovieComment from "../../components/MovieComments/MovieComment";
+import MovieCommentsModal from "../../components/MovieComments/MovieCommentsModal";
+import FriendsMovieComments from "../../components/MovieComments/FriendsMovieComments";
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -63,9 +64,12 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
             </p>
 
             {user && <MovieComment user={user} movie={movie} />}
+            {user && <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} />}
+
           </div>
 
           {user && <MovieRating movieID={movie.imdbID} userID={user.uid} />}
+
           {user && (
             <MovieCommentsModal
               movieID={movie.imdbID}

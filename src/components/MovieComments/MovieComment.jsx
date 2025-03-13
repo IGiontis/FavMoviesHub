@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import useUserMovieComments from "../hooks/comments/useUserMovieComments";
+import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 
 const MovieComment = ({ user, movie }) => {
   const { data: comments, isLoading, isError } = useUserMovieComments(user.uid);
