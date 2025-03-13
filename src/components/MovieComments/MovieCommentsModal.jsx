@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Modal, ModalHeader, ModalBody, Button, Input, ModalFooter } from "reactstrap";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -11,8 +11,8 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (userComments && userComments[movieID]) {
-      setComment(userComments[movieID]); //  Get specific movie comment
+    if (userComments?.[movieID]) {
+      setComment(userComments[movieID]);
     }
   }, [userComments, movieID]);
 
@@ -28,22 +28,29 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
     },
   });
 
-  const handleSaveComment = async () => {
+  const handleSaveComment = useCallback(async () => {
+    if (comment.trim() === userComments?.[movieID]) return; // Prevent unnecessary API call
     try {
       await mutation.mutateAsync({ userID, movieID, comment });
     } catch (error) {
       console.error("Failed to save comment:", error);
     }
-  };
+  }, [mutation, userID, movieID, comment, userComments]);
+
+  const handleToggle = useCallback(() => {
+    if (!mutation.isPending) {
+      toggleModal();
+    }
+  }, [mutation.isPending, toggleModal]);
 
   return (
     <Modal
       isOpen={isOpen}
-      toggle={mutation.isPending ? undefined : toggleModal}
+      toggle={handleToggle}
       backdrop={mutation.isPending ? "static" : true}
       keyboard={!mutation.isPending}
     >
-      <ModalHeader toggle={mutation.isPending ? undefined : toggleModal}>Comment on {movieTitle}</ModalHeader>
+      <ModalHeader toggle={handleToggle}>Comment on {movieTitle}</ModalHeader>
       <ModalBody>
         <Input
           type="textarea"
