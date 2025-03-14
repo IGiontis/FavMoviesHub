@@ -7,7 +7,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
 import { useCallback } from "react";
 
-// 📌 MovieRating Component
 const MovieRating = ({ movieID, userID }) => {
   const { userRating, isLoading, updateRating } = useMovieRating(movieID, userID);
 
@@ -27,11 +26,11 @@ const MovieRating = ({ movieID, userID }) => {
         <StyledRating
           name="highlight-selected-only"
           value={userRating}
-          highlightSelectedOnly
           onChange={handleRatingChange}
           getLabelText={(value) => customIcons[value]?.label || `${value} Star`}
           slotProps={{
-            icon: { component: CustomIcon },
+            icon: { component: CustomIcon }, // Ensure emojis are used instead of stars
+            emptyIcon: { component: CustomIcon, className: "empty-icon" }, // For empty icons
           }}
         />
       )}
