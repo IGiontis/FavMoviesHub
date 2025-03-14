@@ -8,7 +8,7 @@ import {
   faComments,
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import MovieRating from "../../components/MovieRating";
+import MovieRating from "../../components/MovieRatings/MovieRating";
 import defaultImage from "../../assets/movieBackground.jpeg";
 
 import MovieComment from "../../components/MovieComments/MovieComment";

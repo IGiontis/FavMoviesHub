@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "../firebase/firebaseConfig";
+import { db } from "../../firebase/firebaseConfig";
 import PropTypes from "prop-types";
 import Rating from "@mui/material/Rating";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -111,21 +111,33 @@ const CustomIcon = ({ value, className }) => {
   return <span className={className}>{IconComponent}</span>;
 };
 
-// ✅ Define PropTypes for CustomIcon
+//  Define PropTypes for CustomIcon
 CustomIcon.propTypes = {
   value: PropTypes.number.isRequired,
   className: PropTypes.string,
 };
 
-const StyledRating = styled(Rating)({
-  "& .MuiRating-icon": {
-    margin: "0 4px", // Adds space between icons
-  },
-  "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
-    color: "#888", // Light gray color for better visibility in dark mode
-  },
-  "& .empty-icon": {
-    opacity: 0.3,
-    color: "#888", // Ensures inactive icons remain visible
-  },
-});
+const StyledRating = styled(Rating)`
+  & .MuiRating-icon {
+    margin: 0 4px; /* Adds space between icons */
+  }
+  & .MuiRating-iconEmpty .MuiSvgIcon-root {
+    color: var(--icon-color);
+  }
+  & .empty-icon {
+    opacity: 0.3;
+    color: var(--empty-icon-color);
+  }
+
+  /* Light Theme */
+  [data-theme="light"] & {
+    --icon-color: #444;
+    --empty-icon-color: #444;
+  }
+
+  /* Dark Theme */
+  [data-theme="dark"] & {
+    --icon-color: #888;
+    --empty-icon-color: #888;
+  }
+`;
