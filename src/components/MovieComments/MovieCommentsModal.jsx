@@ -43,6 +43,10 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
     }
   }, [mutation.isPending, toggleModal]);
 
+  const handleCommentChange = useCallback((e) => {
+    setComment(e.target.value.slice(0, 100));
+  }, []);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -52,14 +56,19 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
     >
       <ModalHeader toggle={handleToggle}>Comment on {movieTitle}</ModalHeader>
       <ModalBody>
-        <Input
-          type="textarea"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Enter your comment..."
-          rows="4"
-          disabled={mutation.isPending}
-        />
+        <div>
+          <Input
+            type="textarea"
+            value={comment}
+            onChange={handleCommentChange}
+            placeholder="Enter your comment..."
+            rows="4"
+            disabled={mutation.isPending}
+          />
+
+          <small>{100 - comment.length} characters left</small>
+        </div>
+
         {mutation.isError && <div style={{ color: "red" }}>Error: {mutation.error?.message}</div>}
       </ModalBody>
       <ModalFooter>

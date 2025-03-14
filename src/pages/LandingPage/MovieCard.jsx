@@ -1,7 +1,12 @@
-import { memo, useState } from "react";
-import { Card, CardBody, CardImg, CardTitle, Button } from "reactstrap";
+import { memo, useCallback, useState } from "react";
+import { Card, CardBody, CardImg, CardTitle, Button, Badge } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as solidHeart, faHeart as regularHeart, faComment } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart as solidHeart,
+  faHeart as regularHeart,
+  faComment,
+  faComments,
+} from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import MovieRating from "../../components/MovieRating";
 import defaultImage from "../../assets/movieBackground.jpeg";
@@ -12,9 +17,13 @@ import FriendsMovieComments from "../../components/MovieComments/FriendsMovieCom
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const [isFriendsCommentsShow, setIsFriendsCommentsShow] = useState(false);
+  const [friendsCommentCount, setFriendsCommentCount] = useState(0); // Stores comment count
+
   const posterSrc = movie.Poster !== "N/A" ? movie.Poster : defaultImage;
 
-  const toggleCommentModal = () => setIsCommentModalOpen((prev) => !prev);
+  const toggleCommentModal = useCallback(() => setIsCommentModalOpen((prev) => !prev), []);
+  const toggleShowFriendsComments = useCallback(() => setIsFriendsCommentsShow((prev) => !prev), []);
 
   return (
     <Card className="position-relative">
@@ -39,19 +48,6 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
       <CardBody>
         <CardTitle tag="h5" className="d-flex align-items-center justify-content-between">
           <div>{movie.Title}</div>
-
-          {user && (
-            <span className="ms-3">
-              <Button
-                color="link"
-                className="p-0 border-0 bg-transparent"
-                onClick={toggleCommentModal}
-                aria-label="Comment on Movie"
-              >
-                <FontAwesomeIcon icon={faComment} size="lg" className="text-primary" />
-              </Button>
-            </span>
-          )}
         </CardTitle>
 
         <div className="d-flex align-items-center justify-content-between">
@@ -62,10 +58,6 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
             <p className="mb-0">
               Type: <strong>{movie.Type}</strong>
             </p>
-
-            {user && <MovieComment user={user} movie={movie} />}
-            {user && <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} />}
-
           </div>
 
           {user && <MovieRating movieID={movie.imdbID} userID={user.uid} />}
@@ -80,6 +72,52 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
             />
           )}
         </div>
+
+        {user && (
+          <div className="mt-3">
+            <div className="d-flex align-items-center">
+              <span className="me-4">
+                <Button
+                  color="link"
+                  className="p-0 border-0 bg-transparent position-relative"
+                  onClick={toggleCommentModal}
+                  aria-label="Comment on Movie"
+                >
+                  <FontAwesomeIcon icon={faComment} size="lg" className="text-primary" />
+                </Button>
+              </span>
+              <span>
+                <Button
+                  color="link"
+                  className="p-0 border-0 bg-transparent position-relative"
+                  onClick={toggleShowFriendsComments}
+                  aria-label="Show Friends' Comments"
+                >
+                  <FontAwesomeIcon icon={faComments} size="lg" className="text-primary" />
+                  {friendsCommentCount > 0 && (
+                    <Badge
+                      color="danger"
+                      pill
+                      className="position-absolute top-0 start-100 translate-middle"
+                      style={{ fontSize: "0.75rem", minWidth: "1.25rem", padding: "0.2rem 0.4rem" }}
+                    >
+                      {friendsCommentCount}
+                    </Badge>
+                  )}
+                </Button>
+              </span>
+            </div>
+            <MovieComment user={user} movie={movie} />
+          </div>
+        )}
+
+        {user && isFriendsCommentsShow && (
+          <FriendsMovieComments
+            userID={user.uid}
+            movieID={movie.imdbID}
+            onCommentCountChange={setFriendsCommentCount}
+          />
+        )}
       </CardBody>
     </Card>
   );
