@@ -1,5 +1,6 @@
 import { Container, Card, CardBody, CardTitle, CardFooter } from "reactstrap";
 import GoToHomeButton from "../components/Buttons/GoToHomeButton";
+import { getLastUpdateDate } from "../utils/getLastUpdateDate";
 
 const TermsOfUse = () => {
   return (
@@ -7,7 +8,7 @@ const TermsOfUse = () => {
       <Card>
         <CardBody>
           <CardTitle tag="h2">Όροι Χρήσης</CardTitle>
-          <p>Τελευταία ενημέρωση: Φεβρουάριος 2024</p>
+         <p>Τελευταία ενημέρωση: {getLastUpdateDate()}</p>
           <p>
             Καλώς ήρθατε στον ιστότοπό μας. Με την πρόσβαση και χρήση αυτού του ιστότοπου, αποδέχεστε τους παρακάτω
             όρους χρήσης. Αν δεν συμφωνείτε, παρακαλώ μην χρησιμοποιείτε την υπηρεσία μας.

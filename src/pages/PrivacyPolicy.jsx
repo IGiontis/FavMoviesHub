@@ -1,5 +1,6 @@
 import { Container, Card, CardBody, CardTitle, CardFooter } from "reactstrap";
 import GoToHomeButton from "../components/Buttons/GoToHomeButton";
+import { getLastUpdateDate } from "../utils/getLastUpdateDate";
 
 const PrivacyPolicy = () => {
   return (
@@ -7,7 +8,7 @@ const PrivacyPolicy = () => {
       <Card>
         <CardBody>
           <CardTitle tag="h2">Πολιτική Απορρήτου</CardTitle>
-          <p>Τελευταία ενημέρωση: Φεβρουάριος 2024</p>
+          <p>Τελευταία ενημέρωση: {getLastUpdateDate()}</p>
           <p>
             Αυτή η πολιτική απορρήτου εξηγεί πώς συλλέγουμε, χρησιμοποιούμε και προστατεύουμε τα προσωπικά σας δεδομένα
             κατά τη χρήση του ιστότοπού μας.
