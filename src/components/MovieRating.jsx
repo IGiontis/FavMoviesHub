@@ -117,12 +117,15 @@ CustomIcon.propTypes = {
   className: PropTypes.string,
 };
 
-// 📌 Styled Rating Component
-const StyledRating = styled(Rating)(({ theme }) => ({
+const StyledRating = styled(Rating)({
+  "& .MuiRating-icon": {
+    margin: "0 4px", // Adds space between icons
+  },
   "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
-    color: theme.palette.action.disabled, // Fades out inactive icons
+    color: "#888", // Light gray color for better visibility in dark mode
   },
   "& .empty-icon": {
-    opacity: 0.3, // Makes empty icons appear faded
+    opacity: 0.3,
+    color: "#888", // Ensures inactive icons remain visible
   },
-}));
+});
