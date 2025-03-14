@@ -1,6 +1,5 @@
-
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
@@ -8,9 +7,13 @@ const NavigationLinks = React.memo(
   ({ user, openModal, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen }) => {
     const location = useLocation();
 
-    const isActive = (path) => (location.pathname === path ? "active" : "");
+    // ✅ Memoize isActive function for better performance
+    const isActive = useCallback(
+      (path) => (location.pathname === path ? "active" : ""),
+      [location.pathname]
+    );
 
-    // Handle logout logic
+    // ✅ Handle logout using a button (better accessibility & SEO)
     const handleLogout = (e) => {
       e.preventDefault();
       setIsConfirmationModalOpen(true); // Show confirmation modal
@@ -23,6 +26,7 @@ const NavigationLinks = React.memo(
             Home
           </NavLink>
         </NavItem>
+
         {user && (
           <>
             <NavItem>
@@ -37,16 +41,18 @@ const NavigationLinks = React.memo(
             </NavItem>
           </>
         )}
+
         <NavItem>
           <NavLink tag={Link} to="/about" className={`nav-link ${isActive("/about")}`}>
             About
           </NavLink>
         </NavItem>
+
         {user ? (
           <NavItem>
-            <NavLink className="nav-link" style={{ cursor: "pointer" }} onClick={handleLogout}>
+            <button className="nav-link btn btn-link" style={{ cursor: "pointer" }} onClick={handleLogout}>
               Logout
-            </NavLink>
+            </button>
           </NavItem>
         ) : (
           <NavItem>
@@ -59,10 +65,10 @@ const NavigationLinks = React.memo(
                 Sign In / Register
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem onClick={() => openModal("sign-in")}>
+                <DropdownItem role="button" tabIndex="0" onClick={() => openModal("sign-in")}>
                   Sign In
                 </DropdownItem>
-                <DropdownItem onClick={() => openModal("create-account")}>
+                <DropdownItem role="button" tabIndex="0" onClick={() => openModal("create-account")}>
                   Register
                 </DropdownItem>
               </DropdownMenu>
