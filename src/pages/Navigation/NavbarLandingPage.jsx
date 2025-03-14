@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Navbar, NavbarBrand, Nav, Collapse, NavbarToggler, Modal } from "reactstrap";
+import { Navbar, NavbarBrand, Nav, Collapse, NavbarToggler, Modal, NavItem } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
@@ -48,8 +48,11 @@ const NavbarLandingPage = () => {
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ms-auto d-flex flex-wrap align-items-center justify-content-between flex-row gap-2" navbar>
-            <div className="d-flex align-items-center gap-2">
+          <Nav
+            className="ms-auto d-flex flex-wrap align-items-center justify-content-between flex-row gap-2 navbar-nav"
+            navbar
+          >
+            <NavItem>
               <button
                 onClick={toggleTheme}
                 className="btn btn-link nav-link p-0 border-0 me-2"
@@ -62,10 +65,15 @@ const NavbarLandingPage = () => {
                   <FontAwesomeIcon icon={faMoon} size="lg" fixedWidth />
                 )}
               </button>
+            </NavItem>
 
-              {user && <NavigationFriendButton />}
-            </div>
-            {/* NavigationLinks is already memoized with React.memo */}
+            {user && (
+              <NavItem>
+                <NavigationFriendButton />
+              </NavItem>
+            )}
+
+            {/* Proper list structure */}
             <NavigationLinks
               user={user}
               openModal={openModal}

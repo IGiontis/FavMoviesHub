@@ -4,14 +4,14 @@ import { db } from "../firebase/firebaseConfig";
 import PropTypes from "prop-types";
 import Rating from "@mui/material/Rating";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 
 //  MovieRating Component
 const MovieRating = ({ movieID = "", userID = "" }) => {
   const { userRating, isLoading, updateRating } = useMovieRating(movieID, userID);
+  const [hoverRating, setHoverRating] = useState(0);
 
-  // 🔹 Memoized rating change handler
   const handleRatingChange = useCallback(
     (_, newValue) => {
       if (newValue !== userRating) updateRating(newValue);
@@ -26,10 +26,11 @@ const MovieRating = ({ movieID = "", userID = "" }) => {
       ) : (
         <Rating
           name="movie-rating"
-          value={userRating || 0}
+          value={hoverRating || userRating || 0}
           onChange={handleRatingChange}
           precision={0.5} // Allows half-star ratings
-          
+          onChangeActive={(_, newHoverValue) => setHoverRating(newHoverValue)} // Show on hover/touch
+          onMouseLeave={() => setHoverRating(0)} // Reset on leave
         />
       )}
     </div>
