@@ -53,6 +53,7 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
       toggle={handleToggle}
       backdrop={mutation.isPending ? "static" : true}
       keyboard={!mutation.isPending}
+      centered
     >
       <ModalHeader toggle={handleToggle}>Comment on {movieTitle}</ModalHeader>
       <ModalBody>
