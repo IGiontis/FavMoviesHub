@@ -52,7 +52,7 @@ const NavbarLandingPage = () => {
             className="ms-auto d-flex flex-wrap align-items-center justify-content-between flex-row gap-2 navbar-nav"
             navbar
           >
-            <NavItem>
+            <NavItem className="d-flex align-items-center gap-2">
               <button
                 onClick={toggleTheme}
                 className="btn btn-link nav-link p-0 border-0 me-2"
@@ -65,13 +65,9 @@ const NavbarLandingPage = () => {
                   <FontAwesomeIcon icon={faMoon} size="lg" fixedWidth />
                 )}
               </button>
-            </NavItem>
 
-            {user && (
-              <NavItem>
-                <NavigationFriendButton />
-              </NavItem>
-            )}
+              {user && <NavigationFriendButton />}
+            </NavItem>
 
             {/* Proper list structure */}
             <NavigationLinks
