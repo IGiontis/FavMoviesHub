@@ -54,6 +54,7 @@ const NavbarLandingPage = () => {
                 onClick={toggleTheme}
                 className="btn btn-link nav-link p-0 border-0 me-2"
                 style={{ background: "none", cursor: "pointer" }}
+                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
               >
                 {isDarkMode ? (
                   <FontAwesomeIcon icon={faSun} size="lg" fixedWidth />

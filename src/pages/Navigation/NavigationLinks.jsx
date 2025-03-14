@@ -16,20 +16,19 @@ const NavigationLinks = React.memo(
           </NavLink>
         </NavItem>
         {user && (
-          <NavItem>
-            <NavLink tag={Link} to="/friends" className={`nav-link ${isActive("/friends")}`}>
-              Friends
-            </NavLink>
-          </NavItem>
+          <>
+            <NavItem>
+              <NavLink tag={Link} to="/friends" className={`nav-link ${isActive("/friends")}`}>
+                Friends
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/profile" className={`nav-link ${isActive("/profile")}`}>
+                Profile
+              </NavLink>
+            </NavItem>
+          </>
         )}
-        {user && (
-          <NavItem>
-            <NavLink tag={Link} to="/profile" className={`nav-link ${isActive("/profile")}`}>
-              Profile
-            </NavLink>
-          </NavItem>
-        )}
-
         <NavItem>
           <NavLink tag={Link} to="/about" className={`nav-link ${isActive("/about")}`}>
             About
@@ -38,9 +37,14 @@ const NavigationLinks = React.memo(
         {user ? (
           <NavItem>
             <NavLink
-              onClick={() => setIsConfirmationModalOpen(true)}
+              tag={Link}
+              to="/logout"
               className="nav-link"
               style={{ cursor: "pointer" }}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsConfirmationModalOpen(true);
+              }}
             >
               Logout
             </NavLink>
@@ -56,8 +60,12 @@ const NavigationLinks = React.memo(
                 Sign In / Register
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem onClick={() => openModal("sign-in")}>Sign In</DropdownItem>
-                <DropdownItem onClick={() => openModal("create-account")}>Register</DropdownItem>
+                <DropdownItem tag={Link} to="/login" onClick={() => openModal("sign-in")}>
+                  Sign In
+                </DropdownItem>
+                <DropdownItem tag={Link} to="/register" onClick={() => openModal("create-account")}>
+                  Register
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </NavItem>
