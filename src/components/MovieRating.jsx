@@ -7,6 +7,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
 import { useCallback } from "react";
 
+// MUI Icons
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
+import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+
 const MovieRating = ({ movieID, userID }) => {
   const { userRating, isLoading, updateRating } = useMovieRating(movieID, userID);
 
@@ -27,11 +34,9 @@ const MovieRating = ({ movieID, userID }) => {
           name="highlight-selected-only"
           value={userRating}
           onChange={handleRatingChange}
+          IconContainerComponent={IconContainer}
           getLabelText={(value) => customIcons[value]?.label || `${value} Star`}
-          slotProps={{
-            icon: { component: CustomIcon }, // Ensure emojis are used instead of stars
-            emptyIcon: { component: CustomIcon, className: "empty-icon" }, // For empty icons
-          }}
+          highlightSelectedOnly
         />
       )}
     </div>
@@ -43,10 +48,10 @@ MovieRating.propTypes = {
   userID: PropTypes.string.isRequired,
 };
 
+// Firebase Hook for Fetching & Updating Rating
 const useMovieRating = (movieID, userID) => {
   const queryClient = useQueryClient();
 
-  // Fetch user rating from Firestore
   const { data: userRating = 0, isLoading } = useQuery({
     queryKey: ["movieRating", userID, movieID],
     queryFn: async () => {
@@ -60,10 +65,9 @@ const useMovieRating = (movieID, userID) => {
         return 0;
       }
     },
-    staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
+    staleTime: 1000 * 60 * 5,
   });
 
-  // Mutation for updating rating
   const mutation = useMutation({
     mutationFn: async (rating) => {
       if (!userID || !movieID) return;
@@ -89,26 +93,29 @@ const useMovieRating = (movieID, userID) => {
 
 export default MovieRating;
 
-// 🎨 Custom Icons & Labels
+// 🎨 MUI Custom Icons & Labels
 const customIcons = {
-  1: { label: "Very Dissatisfied", icon: "😡" },
-  2: { label: "Dissatisfied", icon: "☹️" },
-  3: { label: "Neutral", icon: "😐" },
-  4: { label: "Satisfied", icon: "🙂" },
-  5: { label: "Very Satisfied", icon: "🤩" },
+  1: { label: "Very Dissatisfied", icon: <SentimentVeryDissatisfiedIcon color="error" /> },
+  2: { label: "Dissatisfied", icon: <SentimentDissatisfiedIcon color="error" /> },
+  3: { label: "Neutral", icon: <SentimentSatisfiedIcon color="warning" /> },
+  4: { label: "Satisfied", icon: <SentimentSatisfiedAltIcon color="success" /> },
+  5: { label: "Very Satisfied", icon: <SentimentVerySatisfiedIcon color="success" /> },
 };
 
 // 📌 Custom Icon Component
-const CustomIcon = ({ value, className }) => <span className={className}>{customIcons[value]?.icon || "☆"}</span>;
+function IconContainer(props) {
+  const { value, ...other } = props;
+  return <span {...other}>{customIcons[value]?.icon}</span>;
+}
 
-// ✅ Fix ESLint: Define PropTypes for CustomIcon
-CustomIcon.propTypes = {
+// 📌 Styled Rating Component
+const StyledRating = styled(Rating)(({ theme }) => ({
+  "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
+    color: theme.palette.action.disabled,
+  },
+}));
+
+// ✅ Define PropTypes for IconContainer
+IconContainer.propTypes = {
   value: PropTypes.number.isRequired,
-  className: PropTypes.string,
 };
-
-// 📌 Styled Rating
-const StyledRating = styled(Rating)({
-  "& .MuiRating-iconFilled": { color: "#ff6d75" },
-  "& .MuiRating-iconHover": { color: "#ff3d47" },
-});
