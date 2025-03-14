@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Modal, ModalHeader, ModalBody, Button, Input, ModalFooter } from "reactstrap";
+import { Modal, ModalBody, Button, Input, ModalFooter } from "reactstrap";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useUserMovieComments from "../../hooks/comments/useUserMovieComments"; // 🔄 Updated hook
@@ -55,7 +55,11 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
       keyboard={!mutation.isPending}
       centered
     >
-      <ModalHeader toggle={handleToggle}>Comment on {movieTitle}</ModalHeader>
+      <div className="p-3 d-flex  align-items-start justify-content-between">
+        <h5 className="me-3 mb-0">Comment on: {movieTitle}</h5>
+
+        <Button close aria-label="Close" onClick={handleToggle}></Button>
+      </div>
       <ModalBody>
         <div>
           <Input
