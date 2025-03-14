@@ -4,14 +4,14 @@ import { db } from "../firebase/firebaseConfig";
 import PropTypes from "prop-types";
 import Rating from "@mui/material/Rating";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useCallback, useState } from "react";
+import { styled } from "@mui/material/styles";
+import { useCallback } from "react";
 
-
-//  MovieRating Component
-const MovieRating = ({ movieID = "", userID = "" }) => {
+// 📌 MovieRating Component
+const MovieRating = ({ movieID, userID }) => {
   const { userRating, isLoading, updateRating } = useMovieRating(movieID, userID);
-  const [hoverRating, setHoverRating] = useState(0);
 
+  // Memoized rating change handler
   const handleRatingChange = useCallback(
     (_, newValue) => {
       if (newValue !== userRating) updateRating(newValue);
@@ -24,31 +24,37 @@ const MovieRating = ({ movieID = "", userID = "" }) => {
       {isLoading ? (
         <CircularProgress size={30} color="warning" />
       ) : (
-        <Rating
-          name="movie-rating"
-          value={hoverRating || userRating || 0}
+        <StyledRating
+          name="highlight-selected-only"
+          value={userRating}
+          highlightSelectedOnly
           onChange={handleRatingChange}
-          precision={0.5} // Allows half-star ratings
-          onChangeActive={(_, newHoverValue) => setHoverRating(newHoverValue)} // Show on hover/touch
-          onMouseLeave={() => setHoverRating(0)} // Reset on leave
+          getLabelText={(value) => customIcons[value]?.label || `${value} Star`}
+          slotProps={{
+            icon: { component: CustomIcon },
+          }}
         />
       )}
     </div>
   );
 };
 
-//  Custom Hook: Encapsulates fetching & mutation logic
+MovieRating.propTypes = {
+  movieID: PropTypes.string.isRequired,
+  userID: PropTypes.string.isRequired,
+};
+
 const useMovieRating = (movieID, userID) => {
   const queryClient = useQueryClient();
 
-  // 🔹 Fetch user rating from Firestore
-  const { data: userRating = 0, isLoading, refetch } = useQuery({
+  // Fetch user rating from Firestore
+  const { data: userRating = 0, isLoading } = useQuery({
     queryKey: ["movieRating", userID, movieID],
     queryFn: async () => {
       if (!userID || !movieID) return 0;
       try {
         const ratingRef = doc(db, "movieRatings", `${userID}_${movieID}`);
-        const ratingSnap = await getDoc(ratingRef, { source: "cache" }).catch(() => getDoc(ratingRef));
+        const ratingSnap = await getDoc(ratingRef);
         return ratingSnap.exists() ? ratingSnap.data().rating : 0;
       } catch (error) {
         console.error("🔥 Firebase Fetch Error:", error);
@@ -75,17 +81,35 @@ const useMovieRating = (movieID, userID) => {
       queryClient.setQueryData(["movieRating", userID, movieID], context?.previousRating);
     },
     onSuccess: () => {
-      refetch(); // Refresh only this query instead of invalidating all queries
+      queryClient.invalidateQueries(["movieRating", userID, movieID]);
     },
   });
 
   return { userRating, isLoading, updateRating: mutation.mutate };
 };
 
+export default MovieRating;
 
-MovieRating.propTypes = {
-  movieID: PropTypes.string.isRequired,
-  userID: PropTypes.string.isRequired,
+// 🎨 Custom Icons & Labels
+const customIcons = {
+  1: { label: "Very Dissatisfied", icon: "😡" },
+  2: { label: "Dissatisfied", icon: "☹️" },
+  3: { label: "Neutral", icon: "😐" },
+  4: { label: "Satisfied", icon: "🙂" },
+  5: { label: "Very Satisfied", icon: "🤩" },
 };
 
-export default MovieRating;
+// 📌 Custom Icon Component
+const CustomIcon = ({ value, className }) => <span className={className}>{customIcons[value]?.icon || "☆"}</span>;
+
+// ✅ Fix ESLint: Define PropTypes for CustomIcon
+CustomIcon.propTypes = {
+  value: PropTypes.number.isRequired,
+  className: PropTypes.string,
+};
+
+// 📌 Styled Rating
+const StyledRating = styled(Rating)({
+  "& .MuiRating-iconFilled": { color: "#ff6d75" },
+  "& .MuiRating-iconHover": { color: "#ff3d47" },
+});
