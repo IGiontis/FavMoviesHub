@@ -43,7 +43,15 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
         </Button>
       )}
 
-      <CardImg top width="100%" height="400px" src={posterSrc} alt={movie.Title} loading="lazy" />
+      <CardImg
+        top
+        width="100%"
+        height="400px"
+        src={posterSrc}
+        alt={movie.Title}
+        loading="lazy"
+        style={{ objectFit: "cover" }}
+      />
 
       <CardBody>
         <CardTitle tag="h5" className="d-flex align-items-center justify-content-between">

@@ -9,7 +9,6 @@ import { db } from "../../firebase/firebaseConfig";
 export const getAllUserMovieComments = async (userID) => {
   if (!userID) throw new Error("Missing userID");
 
-  console.log("how many times")
   const userRef = collection(db, "users", userID, "movieComments");
   const snapshot = await getDocs(userRef);
 

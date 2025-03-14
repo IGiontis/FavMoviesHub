@@ -9,24 +9,24 @@ import MovieCard from "../LandingPage/MovieCard";
 import FriendsList from "./FriendsList";
 
 const FriendsTab = () => {
-  // ✅ Fetch user data
+  //  Fetch user data
   const currentUser = useSelector((state) => state.auth.user);
   const userId = currentUser?.uid;
 
-  // ✅ Fetch friends and their usernames
+  //  Fetch friends and their usernames
   const { data: friends = [], isLoading: isFriendsLoading } = useFriends(userId);
   const userIds = useMemo(() => friends.map((friend) => friend.user2), [friends]);
   const usernames = useFetchUsernames(userIds);
 
-  // ✅ Fetch my liked movies
+  //  Fetch my liked movies
   const { data: myLikedMovies = [] } = useLikedMovies(userId);
   const { addMovieMutation, removeMovieMutation } = useLikedMoviesActions(userId);
 
-  // ✅ Manage selected friend
+  //  Manage selected friend
   const [selectedFriend, setSelectedFriend] = useState(null);
   const { data: friendsLikedMovies = [], isLoading: isMoviesLoading } = useLikedMovies(selectedFriend);
 
-  // ✅ Handle friend selection
+  //  Handle friend selection
   const handleFriendSelection = useCallback(
     (friendId) => {
       if (friendId !== selectedFriend) {
@@ -37,13 +37,13 @@ const FriendsTab = () => {
     [selectedFriend]
   );
 
-  // ✅ Check if a movie is liked by me
+  //  Check if a movie is liked by me
   const isLikedByMe = useCallback(
     (movie) => myLikedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID),
     [myLikedMovies]
   );
 
-  // ✅ Handle liking/unliking movies
+  //  Handle liking/unliking movies
   const handleMovieLike = useCallback(
     (movie) => {
       isLikedByMe(movie)
@@ -53,7 +53,7 @@ const FriendsTab = () => {
     [isLikedByMe, removeMovieMutation, addMovieMutation]
   );
 
-  // ✅ Render Friends List Section
+  //  Render Friends List Section
   const renderFriendsList = () => {
     if (isFriendsLoading) return <Spinner />;
     if (friends.length === 0) return <p>No friends yet.</p>;
@@ -68,7 +68,7 @@ const FriendsTab = () => {
     );
   };
 
-  // ✅ Render Liked Movies Section
+  //  Render Liked Movies Section
   const renderLikedMovies = () => {
     if (!selectedFriend) return null;
 

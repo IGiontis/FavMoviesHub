@@ -1,3 +1,4 @@
+
 import PropTypes from "prop-types";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -6,7 +7,14 @@ import { NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem 
 const NavigationLinks = React.memo(
   ({ user, openModal, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen }) => {
     const location = useLocation();
+
     const isActive = (path) => (location.pathname === path ? "active" : "");
+
+    // Handle logout logic
+    const handleLogout = (e) => {
+      e.preventDefault();
+      setIsConfirmationModalOpen(true); // Show confirmation modal
+    };
 
     return (
       <div className="d-flex align-items-center gap-2">
@@ -36,16 +44,7 @@ const NavigationLinks = React.memo(
         </NavItem>
         {user ? (
           <NavItem>
-            <NavLink
-              tag={Link}
-              to="/logout"
-              className="nav-link"
-              style={{ cursor: "pointer" }}
-              onClick={(e) => {
-                e.preventDefault();
-                setIsConfirmationModalOpen(true);
-              }}
-            >
+            <NavLink className="nav-link" style={{ cursor: "pointer" }} onClick={handleLogout}>
               Logout
             </NavLink>
           </NavItem>
@@ -60,10 +59,10 @@ const NavigationLinks = React.memo(
                 Sign In / Register
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem tag={Link} to="/login" onClick={() => openModal("sign-in")}>
+                <DropdownItem onClick={() => openModal("sign-in")}>
                   Sign In
                 </DropdownItem>
-                <DropdownItem tag={Link} to="/register" onClick={() => openModal("create-account")}>
+                <DropdownItem onClick={() => openModal("create-account")}>
                   Register
                 </DropdownItem>
               </DropdownMenu>

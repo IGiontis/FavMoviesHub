@@ -17,7 +17,7 @@ export const listenToFriendsMovieComments = (friends, movieID, callback) => {
 
     return onSnapshot(commentRef, async (commentSnap) => {
       if (commentSnap.exists()) {
-        // 🔹 Fetch the friend's username from Firestore
+        // Fetch the friend's username from Firestore
         const userSnap = await getDoc(userRef);
         const friendUsername = userSnap.exists() ? userSnap.data().username || "Unknown User" : "Unknown User"; // Try "username"
 
