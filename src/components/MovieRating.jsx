@@ -34,9 +34,12 @@ const MovieRating = ({ movieID, userID }) => {
           name="highlight-selected-only"
           value={userRating}
           onChange={handleRatingChange}
-          IconContainerComponent={IconContainer}
           getLabelText={(value) => customIcons[value]?.label || `${value} Star`}
           highlightSelectedOnly
+          slotProps={{
+            icon: { component: CustomIcon },
+            emptyIcon: { component: CustomIcon, className: "empty-icon" }, // Ensures inactive icons appear faded
+          }}
         />
       )}
     </div>
@@ -103,19 +106,23 @@ const customIcons = {
 };
 
 // 📌 Custom Icon Component
-function IconContainer(props) {
-  const { value, ...other } = props;
-  return <span {...other}>{customIcons[value]?.icon}</span>;
-}
+const CustomIcon = ({ value, className }) => {
+  const IconComponent = customIcons[value]?.icon || "☆";
+  return <span className={className}>{IconComponent}</span>;
+};
+
+// ✅ Define PropTypes for CustomIcon
+CustomIcon.propTypes = {
+  value: PropTypes.number.isRequired,
+  className: PropTypes.string,
+};
 
 // 📌 Styled Rating Component
 const StyledRating = styled(Rating)(({ theme }) => ({
   "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
-    color: theme.palette.action.disabled,
+    color: theme.palette.action.disabled, // Fades out inactive icons
+  },
+  "& .empty-icon": {
+    opacity: 0.3, // Makes empty icons appear faded
   },
 }));
-
-// ✅ Define PropTypes for IconContainer
-IconContainer.propTypes = {
-  value: PropTypes.number.isRequired,
-};
