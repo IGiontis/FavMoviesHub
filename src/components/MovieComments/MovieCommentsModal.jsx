@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Modal, ModalBody, Button, Input, ModalFooter } from "reactstrap";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useUserMovieComments from "../../hooks/comments/useUserMovieComments"; 
+import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 import { saveUserMovieComment } from "../../services/movieComments/movieCommentService";
 
 const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }) => {
@@ -12,7 +12,9 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
 
   useEffect(() => {
     if (userComments?.[movieID]) {
-      setComment(userComments[movieID]);
+      setComment(userComments[movieID]); // If comment exists, set it
+    } else {
+      setComment(""); // If deleted, reset the state
     }
   }, [userComments, movieID]);
 

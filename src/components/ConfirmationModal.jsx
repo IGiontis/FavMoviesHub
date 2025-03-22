@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 
 const ConfirmationModal = ({
   isOpen,
-  title = "Are you sure?",
-  message,
+  message="Are you sure?",
   confirmLabel = "Yes",
   cancelLabel = "No",
   onConfirm,

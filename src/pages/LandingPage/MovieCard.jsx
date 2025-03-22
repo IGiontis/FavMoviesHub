@@ -1,19 +1,14 @@
 import { memo, useCallback, useState } from "react";
-import { Card, CardBody, CardImg, CardTitle, Button, Badge } from "reactstrap";
+import { Card, CardBody, CardImg, CardTitle, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart as solidHeart,
-  faHeart as regularHeart,
-  faComment,
-  faComments,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import MovieRating from "../../components/MovieRatings/MovieRating";
 import defaultImage from "../../assets/movieBackground.jpeg";
 
-import MovieComment from "../../components/MovieComments/MovieComment";
 import MovieCommentsModal from "../../components/MovieComments/MovieCommentsModal";
 import FriendsMovieComments from "../../components/MovieComments/FriendsMovieComments";
+import MovieInteractionButtons from "../../components/MovieComments/MovieInteractionButtons";
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -69,8 +64,18 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
           </div>
 
           {user && <MovieRating movieID={movie.imdbID} userID={user.uid} />}
+        </div>
 
-          {user && (
+        {user && (
+          <>
+            <MovieInteractionButtons
+              toggleCommentModal={toggleCommentModal}
+              toggleShowFriendsComments={toggleShowFriendsComments}
+              friendsCommentCount={friendsCommentCount}
+              user={user}
+              movie={movie}
+            />
+
             <MovieCommentsModal
               movieID={movie.imdbID}
               userID={user.uid}
@@ -78,45 +83,7 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
               toggleModal={toggleCommentModal}
               movieTitle={movie.Title}
             />
-          )}
-        </div>
-
-        {user && (
-          <div className="mt-3">
-            <div className="d-flex align-items-center">
-              <span className="me-4">
-                <Button
-                  color="link"
-                  className="p-0 border-0 bg-transparent position-relative"
-                  onClick={toggleCommentModal}
-                  aria-label="Comment on Movie"
-                >
-                  <FontAwesomeIcon icon={faComment} size="lg" className="text-primary" />
-                </Button>
-              </span>
-              <span>
-                <Button
-                  color="link"
-                  className="p-0 border-0 bg-transparent position-relative"
-                  onClick={toggleShowFriendsComments}
-                  aria-label="Show Friends' Comments"
-                >
-                  <FontAwesomeIcon icon={faComments} size="lg" className="text-primary" />
-                  {friendsCommentCount > 0 && (
-                    <Badge
-                      color="danger"
-                      pill
-                      className="position-absolute top-0 start-100 translate-middle"
-                      style={{ fontSize: "0.75rem", minWidth: "1.25rem", padding: "0.2rem 0.4rem" }}
-                    >
-                      {friendsCommentCount}
-                    </Badge>
-                  )}
-                </Button>
-              </span>
-            </div>
-            <MovieComment user={user} movie={movie} />
-          </div>
+          </>
         )}
 
         {user && isFriendsCommentsShow && (

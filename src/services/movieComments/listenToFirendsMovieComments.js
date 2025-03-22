@@ -9,22 +9,25 @@ import { db } from "../../firebase/firebaseConfig";
  * @returns {function} - Unsubscribe function to stop listening.
  */
 export const listenToFriendsMovieComments = (friends, movieID, callback) => {
-  if (!friends || friends.length === 0 || !movieID) return undefined;
+  if (!friends || friends.length === 0 || !movieID) return () => {};
 
   const unsubscribeFunctions = friends.map(({ user2: friendID }) => {
     const commentRef = doc(db, "users", friendID, "movieComments", movieID);
-    const userRef = doc(db, "users", friendID); // Reference to get user's username
+    const userRef = doc(db, "users", friendID); // Fetch username
 
     return onSnapshot(commentRef, async (commentSnap) => {
       if (commentSnap.exists()) {
-        // Fetch the friend's username from Firestore
+        //  Fetch friend's username
         const userSnap = await getDoc(userRef);
-        const friendUsername = userSnap.exists() ? userSnap.data().username || "Unknown User" : "Unknown User"; // Try "username"
+        const friendUsername = userSnap.exists() ? userSnap.data().username || "Unknown User" : "Unknown User";
 
         callback((prevComments) => {
           const updatedComments = prevComments.filter((c) => c.friendID !== friendID);
           return [...updatedComments, { friendID, friendUsername, comment: commentSnap.data().comment }];
         });
+      } else {
+        //  Handle comment deletion in real-time
+        callback((prevComments) => prevComments.filter((c) => c.friendID !== friendID));
       }
     });
   });
