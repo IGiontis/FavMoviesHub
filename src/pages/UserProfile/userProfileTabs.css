@@ -6,7 +6,7 @@
   height: 80dvh; 
   min-width: 200px;
   max-width: 500px;
-  z-index: 10000;
+  z-index: 1000;
 }
 
 /* Fix for Smaller Screens */

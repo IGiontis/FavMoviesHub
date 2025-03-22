@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Modal, ModalBody, Button, Input, ModalFooter } from "reactstrap";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useUserMovieComments from "../../hooks/comments/useUserMovieComments"; // 🔄 Updated hook
+import useUserMovieComments from "../../hooks/comments/useUserMovieComments"; 
 import { saveUserMovieComment } from "../../services/movieComments/movieCommentService";
 
 const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }) => {
@@ -21,7 +21,7 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
     onSuccess: () => {
       setComment("");
       toggleModal();
-      queryClient.invalidateQueries(["userMovieComments", userID]); // 🔄 Invalidate entire user comments cache
+      queryClient.invalidateQueries(["userMovieComments", userID]); //  Invalidate entire user comments cache
     },
     onError: (error) => {
       console.error("Error saving comment:", error);
@@ -69,9 +69,10 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
             placeholder="Enter your comment..."
             rows="4"
             disabled={mutation.isPending}
+            className="no-resize"
           />
 
-          <small>{100 - comment.length} characters left</small>
+          <small className="d-flex justify-content-end mt-1">{100 - comment.length} characters left</small>
         </div>
 
         {mutation.isError && <div style={{ color: "red" }}>Error: {mutation.error?.message}</div>}
