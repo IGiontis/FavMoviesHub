@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Col, Container, Label, Row } from "reactstrap";
 import getPersonalInfoViewSchema from "./schema/personalInfoViewSchema";
+import valueOrDashUtil from "../../utils/valueOrDashUtil";
 
 
 const ProfileInfo = () => {
@@ -15,7 +16,7 @@ const ProfileInfo = () => {
             <Label>{field.label}</Label>
           </Col>
           <Col>
-            <Label>{field?.value}</Label>
+            <Label>{valueOrDashUtil(field?.value)}</Label>
           </Col>
         </Row>
       ))}

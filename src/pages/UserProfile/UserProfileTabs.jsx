@@ -6,8 +6,8 @@ import FavMovies from "./FavMovies";
 
 const tabs = [
   { ID: "1", title: "Fav Movies", content: <FavMovies /> },
-  { ID: "2", title: "Settings", content: "User settings content goes here." },
-  { ID: "3", title: "Profile Info", content: <ProfileInfo /> },
+  // { ID: "2", title: "Settings", content: "User settings content goes here." },
+  { ID: "2", title: "Profile Info", content: <ProfileInfo /> },
 ];
 
 const UserProfileTabs = () => {

@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import LandingPage from "@/pages/LandingPage/LandingPage";
-import CreateAccount from "@/auth/SignInCreateNew/CreateAccount";
 import PageNotFound from "@/pages/PageNotFound";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import FriendsTab from "../pages/FriendsTab/FriendsTab";
@@ -15,7 +14,6 @@ const AppRoutes = () => (
   <Suspense fallback={<div>Loading...</div>}>
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/register" element={<CreateAccount />} />
       <Route path="/about" element={<AboutTab />} />
       <Route path="/terms" element={<TermsOfUse />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
