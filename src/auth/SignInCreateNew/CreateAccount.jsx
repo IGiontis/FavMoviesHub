@@ -10,10 +10,25 @@ import { createNewAccount } from "@/services/signInCreateNewServices";
 import HeaderCloseBtn from "@/components/FormInputs/HeaderCloseBtn";
 import PropTypes from "prop-types";
 
-const CreateAccount = ({ toggleModal }) => {
+const CreateAccount = ({ toggleModal, openSignIn }) => {
   const schema = useMemo(() => getCreateAccountSchema(), []);
+  const validationSchema = useMemo(() => generateValidationForm(schema), [schema]);
 
-  const validationSchema = useMemo(() =>generateValidationForm(schema),[schema]);
+  const handleSuccess = useCallback(() => {
+    toggleModal();
+    openSignIn();
+  }, [toggleModal, openSignIn]);
+
+  const handleCreateAccount = useCallback(
+    async (values, formik) => {
+      try {
+        await createNewAccount(values, formik, handleSuccess);
+      } catch (error) {
+        console.error("Account creation failed:", error);
+      }
+    },
+    [handleSuccess]
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -26,18 +41,23 @@ const CreateAccount = ({ toggleModal }) => {
       confirmPassword: "",
     },
     validationSchema,
-    onSubmit: (values) => handleCreateAccount(values, formik, toggleModal),
+    onSubmit: async (values, { setSubmitting }) => {
+      setSubmitting(true);
+      try {
+        await handleCreateAccount(values, formik);
+      } catch (err) {
+        console.error("Error during account creation:", err);
+      } finally {
+        setSubmitting(false);
+      }
+    },
   });
 
-  // ✅ Memoizing the function to avoid re-creation on every render
-  const handleCreateAccount = useCallback((values, formik, toggleModal) => {
-    createNewAccount(values, formik, toggleModal);
-  }, []);
-
   const handleCancel = useCallback(() => {
-    console.log("Cancel clicked");
-    toggleModal();
-  }, [toggleModal]);
+    if (!formik.isSubmitting) {
+      toggleModal();
+    }
+  }, [toggleModal, formik.isSubmitting]);
 
   return (
     <Card style={{ maxWidth: "600px" }}>
@@ -55,14 +75,15 @@ const CreateAccount = ({ toggleModal }) => {
       </CardBody>
 
       <CardFooter>
-        <CancelSaveButtons onSave={formik.handleSubmit} onCancel={handleCancel} />
+        <CancelSaveButtons onSave={formik.handleSubmit} onCancel={handleCancel} disabled={formik.isSubmitting} />
       </CardFooter>
     </Card>
   );
 };
 
 CreateAccount.propTypes = {
-  toggleModal: PropTypes.func,
+  toggleModal: PropTypes.func.isRequired,
+  openSignIn: PropTypes.func.isRequired,
 };
 
 export default CreateAccount;

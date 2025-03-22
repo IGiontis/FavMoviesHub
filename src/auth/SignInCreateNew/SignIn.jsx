@@ -28,10 +28,19 @@ const SignIn = ({ toggleModal }) => {
     validateOnBlur: true,
     validateOnChange: false,
     onSubmit: async (values, { setSubmitting }) => {
-      setSubmitting(true);
-      await signInHandler(values, dispatch, toggleModal);
-      setSubmitting(false);
+      try {
+        setSubmitting(true);
+        await signInHandler(values, dispatch, toggleModal);
+      } catch (error) {
+        console.error("Login error:", error.message);
+        // No need to throw an error again since it's already handled in signInHandler
+      } finally {
+        setSubmitting(false); // Ensure submitting state resets
+      }
     },
+    
+    
+    
   });
 
   const handleSave = () => {
@@ -39,11 +48,16 @@ const SignIn = ({ toggleModal }) => {
       if (Object.keys(errors).length === 0) {
         formik.handleSubmit();
       } else {
-        console.log("Validation errors:", errors);
+        formik.setTouched(
+          Object.keys(errors).reduce((acc, key) => {
+            acc[key] = true;
+            return acc;
+          }, {})
+        );
       }
     });
   };
-
+  
   return (
     <Card style={{ maxWidth: "600px" }}>
       <CardHeader>
@@ -57,7 +71,7 @@ const SignIn = ({ toggleModal }) => {
         <CancelSaveButtons
           onSave={handleSave}
           onCancel={toggleModal}
-          disabled={formik.isSubmitting} //  Disables buttons instead of removing handlers
+          disabled={formik.isSubmitting} 
         />
       </CardFooter>
     </Card>

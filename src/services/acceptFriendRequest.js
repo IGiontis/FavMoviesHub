@@ -11,7 +11,7 @@ export const acceptFriendRequest = async (request, onSuccess) => {
   try {
     const friendsRef = collection(db, "friends");
 
-    // ✅ Store friendship for both users
+    //  Store friendship for both users
     const friendshipData = {
       since: new Date().toISOString(),
     };
@@ -19,13 +19,13 @@ export const acceptFriendRequest = async (request, onSuccess) => {
     await addDoc(friendsRef, { user1: request.senderId, user2: request.recipientId, ...friendshipData });
     await addDoc(friendsRef, { user1: request.recipientId, user2: request.senderId, ...friendshipData });
 
-    // ✅ Remove friend request after accepting
+    //  Remove friend request after accepting
     await deleteDoc(doc(db, "friend_requests", request.id));
 
-    // ✅ Call success callback (e.g., invalidate queries)
+    //  Call success callback (e.g., invalidate queries)
     if (onSuccess) onSuccess();
 
-    console.log("Friend request accepted successfully!");
+
   } catch (error) {
     console.error("Error accepting friend request:", error);
     throw error; // Propagate error so UI can handle it

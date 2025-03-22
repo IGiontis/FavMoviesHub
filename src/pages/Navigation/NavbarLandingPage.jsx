@@ -39,6 +39,7 @@ const NavbarLandingPage = () => {
 
   const toggleNavbar = useCallback(() => setIsOpen((prev) => !prev), []);
   const toggleDropdown = useCallback(() => setIsDropdownOpen((prev) => !prev), []);
+  const openSignIn = useCallback(() => openModal("sign-in"), [openModal]);
 
   return (
     <>
@@ -84,7 +85,7 @@ const NavbarLandingPage = () => {
       {/* Modal using consolidated state */}
       <Modal isOpen={modalState.isOpen} toggle={closeModal} centered>
         {modalState.type === "sign-in" && <SignIn toggleModal={closeModal} />}
-        {modalState.type === "create-account" && <CreateAccount toggleModal={closeModal} />}
+        {modalState.type === "create-account" && <CreateAccount toggleModal={closeModal} openSignIn={openSignIn} />}
       </Modal>
 
       <ConfirmationModal
