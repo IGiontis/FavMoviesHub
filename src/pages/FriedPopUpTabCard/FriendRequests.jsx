@@ -12,15 +12,15 @@ const FriendRequests = () => {
   const { data: receivedRequests = [] } = useReceivedFriendRequests(currentUser?.uid);
   const queryClient = useQueryClient();
 
-  // ✅ Optimize performance using useMemo
+  //  Optimize performance using useMemo
   const userIds = useMemo(() => receivedRequests.map((request) => request.senderId), [receivedRequests]);
   const usernames = useFetchUsernames(userIds);
 
-  // ✅ Track loading state for each request
+  //  Track loading state for each request
   const [loadingRequests, setLoadingRequests] = useState({});
 
   const handleAcceptRequest = async (request) => {
-    setLoadingRequests((prev) => ({ ...prev, [request.senderId]: true })); // ✅ Use senderId
+    setLoadingRequests((prev) => ({ ...prev, [request.senderId]: true })); //  Use senderId
 
     try {
       await acceptFriendRequest(request, () => {
@@ -33,7 +33,7 @@ const FriendRequests = () => {
     } catch (error) {
       toast.error("Failed to accept friend request. Please try again.");
     } finally {
-      setLoadingRequests((prev) => ({ ...prev, [request.senderId]: false })); // ✅ Reset after processing
+      setLoadingRequests((prev) => ({ ...prev, [request.senderId]: false })); //  Reset after processing
     }
   };
 
@@ -41,7 +41,7 @@ const FriendRequests = () => {
     <div>
       <h5>Friend Requests</h5>
       {receivedRequests.length === 0 && <p>No friend requests 😞</p>}
-      <ListGroup>
+      <ListGroup className="friends-max-height-tab">
         {receivedRequests.map((request, index) => (
           <ListGroupItem key={request.id} className="d-flex align-items-center g-3 px-2 justify-content-between">
             <span>
@@ -52,7 +52,7 @@ const FriendRequests = () => {
                 color="success"
                 size="sm"
                 onClick={() => handleAcceptRequest(request)}
-                disabled={!!loadingRequests[request.senderId]} // ✅ Ensure it's a boolean
+                disabled={!!loadingRequests[request.senderId]} //  Ensure it's a boolean
               >
                 {loadingRequests[request.senderId] ? "Accepting..." : "Accept"}
               </Button>

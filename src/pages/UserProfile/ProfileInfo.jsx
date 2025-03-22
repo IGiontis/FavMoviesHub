@@ -7,8 +7,6 @@ const ProfileInfo = () => {
   const user = useSelector((state) => state.auth.user);
   const schema = getPersonalInfoViewSchema(user);
 
-  console.log(user)
-  console.log(schema);
   return (
     <Container fluid className="pt-4">
       {schema.fields.map((field, index) => (

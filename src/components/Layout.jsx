@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import NavbarLandingPage from "../pages/Navigation/NavbarLandingPage";
 import { ToastContainer, Zoom } from "react-toastify";
-import FriendPopUpTabCard from "@/pages/FriedPopUpTabCard/AddFriendCard";
+import FriendPopUpTabCard from "@/pages/FriedPopUpTabCard/FriendPopUpTabCard";
 import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {

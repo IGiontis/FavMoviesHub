@@ -1,3 +1,8 @@
 .container-height {
   height: calc(100vh - 57px);
 }
+
+.friends-max-height-tab {
+  max-height: 50vh;
+  overflow-y: auto;
+}

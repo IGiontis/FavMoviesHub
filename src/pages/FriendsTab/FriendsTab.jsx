@@ -30,7 +30,6 @@ const FriendsTab = () => {
   const handleFriendSelection = useCallback(
     (friendId) => {
       if (friendId !== selectedFriend) {
-        console.log("Selected Friend ID:", friendId);
         setSelectedFriend(friendId);
       }
     },

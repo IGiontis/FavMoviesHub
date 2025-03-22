@@ -15,7 +15,7 @@ const FriendSearchTab = () => {
   const debouncedSearch = useDebounce(searchTerm, 500);
   const currentUser = useSelector((state) => state.auth.user);
 
-  // ✅ Search only if input is 3+ letters
+  //  Search only if input is 3+ letters
   const {
     data: users = [],
     isLoading,
@@ -26,7 +26,6 @@ const FriendSearchTab = () => {
   const { data: friends = [] } = useFriends(currentUser?.uid);
   const sendFriendRequest = useSendFriendRequest();
 
-  console.log("this is friends", friends);
 
   const sentRequestsSet = useMemo(() => new Set(sentRequests?.map((req) => req.recipientId)), [sentRequests]);
   const friendsSet = useMemo(() => new Set(friends?.flatMap(({ user1, user2 }) => [user1, user2])), [friends]);
@@ -84,9 +83,9 @@ const FriendSearchTab = () => {
       {users.length > 0 && debouncedSearch.length >= 3 && (
         <>
           <div className="fw-bold mb-2">Users Found:</div>
-          <ListGroup>
+          <ListGroup className="friends-max-height-tab">
             {users
-              .filter((user) => !sentRequestsSet.has(user.id)) // ✅ Exclude users with pending friend requests
+              .filter((user) => !sentRequestsSet.has(user.id)) //  Exclude users with pending friend requests
               .map((user) => {
                 const status = getFriendStatus(user.id);
 
