@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import PropTypes from "prop-types";
-import {  useCallback } from "react";
+import { useCallback } from "react";
 import { Box, CircularProgress, Rating } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 
@@ -29,10 +29,7 @@ const MovieRating = ({ movieID, userID }) => {
     onSuccess: () => queryClient.invalidateQueries(["movieRating", userID, movieID]),
   });
 
-  const handleRatingChange = useCallback(
-    (_, newValue) => mutation.mutate(newValue),
-    [mutation]
-  );
+  const handleRatingChange = useCallback((_, newValue) => mutation.mutate(newValue), [mutation]);
 
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -44,8 +41,7 @@ const MovieRating = ({ movieID, userID }) => {
           value={userRating}
           precision={0.5}
           onChange={handleRatingChange}
-      
-          emptyIcon={<StarIcon style={{ opacity: 0.3 }} fontSize="inherit" />}
+          emptyIcon={<StarIcon className="star-empty" fontSize="inherit" />}
         />
       )}
     </Box>

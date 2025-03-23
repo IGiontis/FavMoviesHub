@@ -10,6 +10,8 @@
   --bg-color-user-profile-sidebar-light: #c5d0da; /* Light mode background */
   --bg-color-user-profile-sidebar-dark: #565b5f; /* Dark mode background */
   --nav-height: 57px; /* Adjust based on your actual navbar height */
+  --star-empty-light: rgba(0, 0, 0, 0.3); /* Light mode empty star */
+  --star-empty-dark: rgba(255, 255, 255, 0.3); /* Dark mode empty star */
 }
 
 [data-theme="light"] {

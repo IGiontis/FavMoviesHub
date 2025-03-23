@@ -6,3 +6,12 @@
   max-height: 50vh;
   overflow-y: auto;
 }
+
+.star-empty {
+  color: var(--star-empty-light);
+}
+
+/* Dark Mode */
+[data-theme="dark"] .star-empty {
+  color: var(--star-empty-dark);
+}
