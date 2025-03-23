@@ -22,7 +22,8 @@ const FriendsMovieComments = ({ userID, movieID, onCommentCountChange }) => {
 
   return (
     <div className="mt-3">
-      <h6>Friends Comments:</h6>
+     <h6>Friends&apos; Comments:</h6>
+
       {commentCount > 0 ? (
         <ul className="list-unstyled">
           {friendsComments.map(({ friendID, friendUsername, comment }) => (

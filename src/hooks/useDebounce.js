@@ -5,7 +5,7 @@ export const useDebounce = (value, delay = 500) => {
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(value.toLowerCase()); // ✅ Always store lowercase
+      setDebouncedValue(value.toLowerCase()); //  Always store lowercase
     }, delay);
 
     return () => clearTimeout(handler); // Cleanup timeout on value change

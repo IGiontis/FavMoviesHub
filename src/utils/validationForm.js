@@ -3,7 +3,7 @@ import { doc, getDoc, query, collection, where, getDocs } from "firebase/firesto
 import { db } from "../firebase/firebaseConfig";
 
 // Utility function to debounce async validation to reduce Firestore calls
-const debounceAsyncValidation = (func, delay = 100) => {
+const debounceAsyncValidation = (func, delay = 400) => {
   let timer;
   return (...args) =>
     new Promise((resolve) => {
