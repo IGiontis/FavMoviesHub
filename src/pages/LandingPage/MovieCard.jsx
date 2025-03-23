@@ -9,13 +9,17 @@ import defaultImage from "../../assets/movieBackground.jpeg";
 import MovieCommentsModal from "../../components/MovieComments/MovieCommentsModal";
 import FriendsMovieComments from "../../components/MovieComments/FriendsMovieComments";
 import MovieInteractionButtons from "../../components/MovieComments/MovieInteractionButtons";
+import useFriendsMovieComments from "../../hooks/comments/useFriendsMovieComments"; // Import the hook
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [isFriendsCommentsShow, setIsFriendsCommentsShow] = useState(false);
-  const [friendsCommentCount, setFriendsCommentCount] = useState(0); // Stores comment count
 
   const posterSrc = movie.Poster !== "N/A" ? movie.Poster : defaultImage;
+
+  //  Fetch friends' comments immediately
+  const { data: friendsComments = [] } = useFriendsMovieComments(user?.uid, movie.imdbID);
+  const friendsCommentCount = friendsComments.length; // Count comments directly
 
   const toggleCommentModal = useCallback(() => setIsCommentModalOpen((prev) => !prev), []);
   const toggleShowFriendsComments = useCallback(() => setIsFriendsCommentsShow((prev) => !prev), []);
@@ -68,10 +72,11 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
 
         {user && (
           <>
+            {/*  The button now shows the correct comment count immediately */}
             <MovieInteractionButtons
               toggleCommentModal={toggleCommentModal}
               toggleShowFriendsComments={toggleShowFriendsComments}
-              friendsCommentCount={friendsCommentCount}
+              friendsCommentCount={friendsCommentCount} 
               user={user}
               movie={movie}
             />
@@ -86,12 +91,9 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
           </>
         )}
 
+        {/*  Show Friends Comments when toggled */}
         {user && isFriendsCommentsShow && (
-          <FriendsMovieComments
-            userID={user.uid}
-            movieID={movie.imdbID}
-            onCommentCountChange={setFriendsCommentCount}
-          />
+          <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} friendsComments={friendsComments} />
         )}
       </CardBody>
     </Card>
