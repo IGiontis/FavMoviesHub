@@ -1,3 +1,4 @@
+import { useCallback, useState,memo } from "react";
 import PropTypes from "prop-types";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -5,7 +6,6 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 import useDeleteUserComment from "../../hooks/comments/useDeleteUserComment";
 import ConfirmationModal from "../ConfirmationModal";
-import { useCallback, useState } from "react";
 
 const MovieUserComment = ({ user, movie }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,4 +65,4 @@ MovieUserComment.propTypes = {
   }).isRequired,
 };
 
-export default MovieUserComment;
+export default memo(MovieUserComment);
