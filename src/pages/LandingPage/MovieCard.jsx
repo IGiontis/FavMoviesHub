@@ -49,7 +49,7 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
         src={posterSrc}
         alt={movie.Title}
         loading="lazy"
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "fill" }}
       />
 
       <CardBody>
