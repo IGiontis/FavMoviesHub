@@ -4,8 +4,9 @@ import classNames from "classnames"; //  Import classnames
 import { toggleAddFriend } from "../../redux/friendSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { useListenForFriendRequests, useReceivedFriendRequests } from "../../hooks/useReceivedFriendRequests";
+import { useListenForFriendRequests } from "../../hooks/useReceivedFriendRequests";
 import BadgeFriendList from "../../components/BadgeFriendList";
+import { useFriendRequestCount } from "../../hooks/useFriendRequestCount";
 
 const NavigationFriendButton = memo(() => {
   const dispatch = useDispatch();
@@ -13,11 +14,10 @@ const NavigationFriendButton = memo(() => {
   const currentUser = useSelector((state) => state.auth.user);
 
   //  Fetch friend requests only when user is logged in
-  const { data: receivedRequests = [] } = useReceivedFriendRequests(currentUser?.uid);
   useListenForFriendRequests(currentUser?.uid); // Auto-updates on new requests
+  const requestCount = useFriendRequestCount(currentUser?.uid); // Use the custom hook
 
-  //  Store request count to avoid unnecessary recalculations
-  const requestCount = receivedRequests.length;
+
 
   //  Memoized handler to prevent unnecessary re-renders
   const handleToggleAddFriend = useCallback(() => {

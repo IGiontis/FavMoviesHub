@@ -17,7 +17,7 @@ const useDeleteUserComment = () => {
       queryClient.invalidateQueries(["userMovieComments", userID]); 
     },
     onError: (error) => {
-      console.error("❌ Error deleting comment:", error);
+      console.error(" Error deleting comment:", error);
     },
   });
 };

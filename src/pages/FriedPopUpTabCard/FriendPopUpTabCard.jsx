@@ -3,22 +3,38 @@ import { Card, CardBody, CardHeader, Nav, Navbar, NavItem, NavLink, TabContent, 
 import FriendSearchTab from "./FriendSearchTab";
 import FriendRequests from "./FriendRequests";
 import styles from "./friendsTab.module.css";
-import {toggleAddFriend} from "../../redux/friendSlice"
-import { useDispatch } from "react-redux";
+import { toggleAddFriend } from "../../redux/friendSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useListenForFriendRequests } from "../../hooks/useReceivedFriendRequests";
+import { useFriendRequestCount } from "../../hooks/useFriendRequestCount";
+import BadgeFriendList from "../../components/BadgeFriendList";
+import classNames from "classnames";
 
 const FriendPopUpTabCard = () => {
   const [activeTab, setActiveTab] = useState("search");
+
+  const currentUser = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
+  useListenForFriendRequests(currentUser?.uid);
+  const requestCount = useFriendRequestCount(currentUser?.uid);
+  console.log(requestCount);
+
   return (
     <Card className={styles.friendPopupCard}>
       <CardHeader className={styles.friendPopupHeader}>
         <Navbar color="dark" dark expand="md" className={`${styles.friendPopupNavbar} pt-4`}>
-          <Nav className=" d-flex flex-wrap align-items-center flex-row gap-4" navbar>
+          <Nav
+            className={classNames(
+              "d-flex flex-wrap align-items-center flex-row gap-4",
+              { "pt-2": requestCount > 0 }
+            )}
+            navbar
+          >
             <NavItem>
               <NavLink
                 className={activeTab === "search" ? "active" : ""}
@@ -32,9 +48,12 @@ const FriendPopUpTabCard = () => {
               <NavLink
                 className={activeTab === "requests" ? "active" : ""}
                 onClick={() => toggleTab("requests")}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", position: "relative" }}
               >
-                Friend Requests
+                <div className="position-relative">
+                  Friend Requests
+                  <BadgeFriendList requestCount={requestCount} />
+                </div>
               </NavLink>
             </NavItem>
           </Nav>
@@ -50,7 +69,9 @@ const FriendPopUpTabCard = () => {
           </TabPane>
         </TabContent>
       </CardBody>
-      <div className={styles.friendPopupClose} onClick={() => dispatch(toggleAddFriend())}>✖</div>
+      <div className={styles.friendPopupClose} onClick={() => dispatch(toggleAddFriend())}>
+        ✖
+      </div>
     </Card>
   );
 };

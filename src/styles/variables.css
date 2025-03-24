@@ -15,13 +15,13 @@
 }
 
 [data-theme="light"] {
-  --bg-color: var(--color-light-gray); /* Soft light gray */
-  --text-color: var(--text-dark-gray); /* Dark gray text */
+  --bg-color: var(--color-light-gray);
+  --text-color: var(--text-dark-gray);
   --bg-color-user-profile: var(--bg-color-user-profile-light);
 }
 
 [data-theme="dark"] {
-  --bg-color: var(--color-dark-slate); /* Deep slate instead of black */
-  --text-color: var(--text-soft-white); /* Soft white instead of pure white */
+  --bg-color: var(--color-dark-slate);
+  --text-color: var(--text-soft-white); 
   --bg-color-user-profile: var(--bg-color-user-profile-dark);
 }

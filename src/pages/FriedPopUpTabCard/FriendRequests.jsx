@@ -1,41 +1,16 @@
 import { useSelector } from "react-redux";
 import { ListGroup, ListGroupItem, Button } from "reactstrap";
-import { useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
 import { useReceivedFriendRequests } from "../../hooks/useReceivedFriendRequests";
 import { useFetchUsernames } from "../../hooks/useFetchUsernames";
-import { acceptFriendRequest } from "../../services/acceptFriendRequest";
-import { toast } from "react-toastify";
+import { useHandleFriendRequest } from "../../hooks/useHandleFriendRequest"; 
 
 const FriendRequests = () => {
   const currentUser = useSelector((state) => state.auth.user);
   const { data: receivedRequests = [] } = useReceivedFriendRequests(currentUser?.uid);
-  const queryClient = useQueryClient();
+  const { handleAcceptRequest, loadingRequests } = useHandleFriendRequest(currentUser?.uid);
 
-  //  Optimize performance using useMemo
-  const userIds = useMemo(() => receivedRequests.map((request) => request.senderId), [receivedRequests]);
+  const userIds = receivedRequests.map((request) => request.senderId);
   const usernames = useFetchUsernames(userIds);
-
-  //  Track loading state for each request
-  const [loadingRequests, setLoadingRequests] = useState({});
-
-  const handleAcceptRequest = async (request) => {
-    setLoadingRequests((prev) => ({ ...prev, [request.senderId]: true })); //  Use senderId
-
-    try {
-      await acceptFriendRequest(request, () => {
-        queryClient.invalidateQueries(["friendRequests"]);
-        queryClient.invalidateQueries(["friends", currentUser?.uid]);
-      });
-
-      toast.success("Friend request accepted!");
-      // eslint-disable-next-line no-unused-vars
-    } catch (error) {
-      toast.error("Failed to accept friend request. Please try again.");
-    } finally {
-      setLoadingRequests((prev) => ({ ...prev, [request.senderId]: false })); //  Reset after processing
-    }
-  };
 
   return (
     <div>
@@ -52,7 +27,7 @@ const FriendRequests = () => {
                 color="success"
                 size="sm"
                 onClick={() => handleAcceptRequest(request)}
-                disabled={!!loadingRequests[request.senderId]} //  Ensure it's a boolean
+                disabled={!!loadingRequests[request.senderId]}
               >
                 {loadingRequests[request.senderId] ? "Accepting..." : "Accept"}
               </Button>
