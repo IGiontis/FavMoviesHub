@@ -14,4 +14,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"), // Change "firebase" to "src" for better structure
     },
   },
+  test: {
+    globals: true, 
+    environment: "jsdom", //
+    setupFiles: "./src/setupTests.js",
+  },
+  
 });

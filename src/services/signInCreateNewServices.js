@@ -4,7 +4,7 @@ import { toast, Zoom } from "react-toastify";
 import { auth, db } from "@/firebase/firebaseConfig";
 import { setUser } from "@/redux/authSlice";
 
-const showToast = (toastID, message, type = "info", timeAutoClose = 1000) => {
+const showToast = (toastID, message, type = "info", timeAutoClose = 2000) => {
   toast.update(toastID, {
     render: message,
     type,
@@ -26,29 +26,29 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!emailRegex.test(values.usernameEmail)) {
-    // Convert username to lowercase before checking in Firestore
-    const usernameRef = doc(db, "usernames", values.usernameEmail.toLowerCase());
-    const usernameSnap = await getDoc(usernameRef);
+  try {
+    if (!emailRegex.test(values.usernameEmail)) {
+      const usernameRef = doc(db, "usernames", values.usernameEmail.toLowerCase());
+      const usernameSnap = await getDoc(usernameRef);
 
-    if (usernameSnap.exists()) {
+      if (!usernameSnap.exists()) {
+        showToast(toastID, "The username or password isn't correct.", "error");
+        throw new Error("The username or password isn't correct.");
+      }
+
       const userId = usernameSnap.data().userId;
       const userRef = doc(db, "users", userId);
       const userSnap = await getDoc(userRef);
 
-      if (userSnap.exists()) {
-        email = userSnap.data().email; // Email is already stored in lowercase
-      } else {
+      if (!userSnap.exists()) {
         showToast(toastID, "The username or password isn't correct.", "error");
-        return;
+        throw new Error("The username or password isn't correct.");
       }
-    } else {
-      showToast(toastID, "The username or password isn't correct.", "error");
-      return;
-    }
-  }
 
-  try {
+      email = userSnap.data().email; // Email is already stored in lowercase
+    }
+
+    // Attempt to sign in with email and password
     const userCredential = await signInWithEmailAndPassword(auth, email, values.password);
     const userRef = doc(db, "users", userCredential.user.uid);
     const responseData = await getDoc(userRef);
@@ -64,14 +64,25 @@ export const signInHandler = async (values, dispatch, toggleModal) => {
 
     showToast(toastID, "Login successful!", "success");
     toggleModal();
-    // eslint-disable-next-line no-unused-vars
   } catch (err) {
-    // Always show a generic error message for incorrect username/password
-    showToast(toastID, "The username or password isn't correct.", "error", 2000);
+    
+    const errorCode = err?.code || err?.message || ""; // Ensure we capture the actual error code
+
+    if (
+      errorCode.includes("auth/wrong-password") ||
+      errorCode.includes("auth/user-not-found") ||
+      errorCode.includes("auth/invalid-credential") 
+    ) {
+      showToast(toastID, "The username or password isn't correct.", "error", 3000);
+      return; 
+    }
+
+    // Default fallback for unexpected errors
+    showToast(toastID, "No username Or password existing", "error", 3000);
   }
 };
 
-export const createNewAccount = async (values, formik, toggleModal) => {
+export const createNewAccount = async (values, formik, onSuccess) => {
   const toastID = toast.loading("Please wait...");
 
   try {
@@ -108,9 +119,9 @@ export const createNewAccount = async (values, formik, toggleModal) => {
     showToast(toastID, "Registration successful! Redirecting to login...", "success");
 
     formik.resetForm();
-    toggleModal();
+    onSuccess();
   } catch (error) {
-    console.error("Error during account creation:", error); // Log the full error for debugging
+    console.error("Error during account creation:", error);
     let errorMessage = "An error occurred during registration.";
     if (error.code === "auth/email-already-in-use") {
       errorMessage = "This email is already in use. Please use a different email.";
