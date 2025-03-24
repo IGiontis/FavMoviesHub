@@ -1,22 +1,23 @@
-import { useState, useCallback } from "react";
-import { Navbar, NavbarBrand, Nav, Collapse, NavbarToggler, Modal, NavItem } from "reactstrap";
+import { useState, useCallback, useMemo } from "react";
+import { Navbar, NavbarBrand, Nav, Collapse, NavbarToggler, Modal } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/authSlice";
 import SignIn from "../../auth/SignInCreateNew/SignIn";
 import CreateAccount from "../../auth/SignInCreateNew/CreateAccount";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import NavigationLinks from "./NavigationLinks";
-import useTheme from "../../hooks/useTheme";
 
-import NavigationFriendButton from "./NavigationFriendButton";
+import { memo } from "react";
+
+import LanguageSwitcher from "../../components/LanguageSwitcher";
+import NavigationButtons from "./NavigationButtons";
 
 const NavbarLandingPage = () => {
-  const { isDarkMode, toggleTheme } = useTheme();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const memoizedUser = useMemo(() => user, [user]);
 
   const navigate = useNavigate();
 
@@ -44,8 +45,9 @@ const NavbarLandingPage = () => {
   return (
     <>
       <Navbar color="dark" dark expand="md">
-        <NavbarBrand tag={Link} to="/" className="me-auto">
-          Fav Movies Share
+        <NavbarBrand tag={Link} to="/" className="me-auto d-flex align-items-center justify-content-between">
+          <span className="me-3">Fav Movies Share</span>
+          <LanguageSwitcher />
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
@@ -53,26 +55,9 @@ const NavbarLandingPage = () => {
             className="ms-auto d-flex flex-wrap align-items-center justify-content-between flex-row gap-2 navbar-nav"
             navbar
           >
-            <NavItem className="d-flex align-items-center gap-2">
-              <button
-                onClick={toggleTheme}
-                className="btn btn-link nav-link p-0 border-0 me-2"
-                style={{ background: "none", cursor: "pointer" }}
-                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-              >
-                {isDarkMode ? (
-                  <FontAwesomeIcon icon={faSun} size="lg" fixedWidth />
-                ) : (
-                  <FontAwesomeIcon icon={faMoon} size="lg" fixedWidth />
-                )}
-              </button>
-
-              {user && <NavigationFriendButton />}
-            </NavItem>
-
-            {/* Proper list structure */}
+            <NavigationButtons user={memoizedUser} />;
             <NavigationLinks
-              user={user}
+              user={memoizedUser}
               openModal={openModal}
               toggleDropdown={toggleDropdown}
               isDropdownOpen={isDropdownOpen}
@@ -98,4 +83,4 @@ const NavbarLandingPage = () => {
   );
 };
 
-export default NavbarLandingPage;
+export default memo(NavbarLandingPage);

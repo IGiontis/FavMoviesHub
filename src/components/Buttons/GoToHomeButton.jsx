@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 
 const GoToHomeButton = () => {
-  const navigate = useNavigate(); // No "navigation", it's "navigate"
+  const navigate = useNavigate();
 
   const handleNavBtn = () => {
-    navigate("/"); // ✅ Correct way in React Router v6
+    navigate("/"); 
   };
 
   return (
