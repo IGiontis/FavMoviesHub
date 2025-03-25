@@ -1,12 +1,14 @@
 import { useState, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { Col, Container, Row, Spinner } from "reactstrap";
+import {  Col, Container, Row, Spinner } from "reactstrap";
 import { useFriends } from "../../hooks/useFriends";
 import { useFetchUsernames } from "../../hooks/useFetchUsernames";
 import { useLikedMovies } from "../../hooks/useFetchLikedMovies";
 import useLikedMoviesActions from "@/hooks/useLikedMoviesActions";
 import MovieCard from "../LandingPage/MovieCard";
 import FriendsList from "./FriendsList";
+import TranslatedText from "../../components/Language/TranslatedText";
+import FriendTitleButton from "./FriendTitleButton";
 
 const FriendsTab = () => {
   //  Fetch user data
@@ -45,9 +47,7 @@ const FriendsTab = () => {
   //  Handle liking/unliking movies
   const handleMovieLike = useCallback(
     (movie) => {
-      isLikedByMe(movie)
-        ? removeMovieMutation.mutate(movie.imdbID)
-        : addMovieMutation.mutate(movie);
+      isLikedByMe(movie) ? removeMovieMutation.mutate(movie.imdbID) : addMovieMutation.mutate(movie);
     },
     [isLikedByMe, removeMovieMutation, addMovieMutation]
   );
@@ -70,13 +70,23 @@ const FriendsTab = () => {
   //  Render Liked Movies Section
   const renderLikedMovies = () => {
     if (!selectedFriend) return null;
-
+    console.log("isMoviesLoading", isMoviesLoading);
     return (
       <Row className="pt-5">
         <Col>
-          <h5>Liked Movies of Selected Friend</h5>
-          {isMoviesLoading && <p>Loading movies...</p>}
-          {!isMoviesLoading && friendsLikedMovies.length === 0 && <p>No liked movies.</p>}
+          <h5>
+            <TranslatedText text="likedMoviesOfSelectedFriend" ns="friendsTab" />
+          </h5>
+          {isMoviesLoading && (
+            <p>
+              <TranslatedText text="loadingMovies" ns="friendsTab" />
+            </p>
+          )}
+          {!isMoviesLoading && friendsLikedMovies.length === 0 && (
+            <p>
+              <TranslatedText text="noLikedMovies" ns="friendsTab" />
+            </p>
+          )}
           {!isMoviesLoading && friendsLikedMovies.length > 0 && (
             <Row className="g-3">
               {friendsLikedMovies.map((movie) => (
@@ -101,7 +111,7 @@ const FriendsTab = () => {
     <Container fluid className="pt-3 px-4">
       <Row>
         <Col>
-          <h4 className="mb-4">My Friends</h4>
+          <FriendTitleButton/>
         </Col>
       </Row>
       {renderFriendsList()}
