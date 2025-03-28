@@ -27,7 +27,7 @@ const FriendTitleButton = () => {
         aria-label="Open friend requests"
         onClick={handleToggleAddFriend}
       >
-        Add Friend
+        <TranslatedText text="addFriend" ns="friendsPopup" />
       </Button>
     </div>
   );

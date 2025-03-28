@@ -11,7 +11,7 @@ import NavigationLinks from "./NavigationLinks";
 
 import { memo } from "react";
 
-import LanguageSwitcher from "../../components/LanguageSwitcher";
+import LanguageSwitcher from "../../components/Language/LanguageSwitcher";
 import NavigationButtons from "./NavigationButtons";
 
 const NavbarLandingPage = () => {
@@ -47,7 +47,10 @@ const NavbarLandingPage = () => {
       <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={Link} to="/" className="me-auto d-flex align-items-center justify-content-between">
           <span className="me-3">Fav Movies Share</span>
-          <LanguageSwitcher />
+          <div className="me-3">
+            <LanguageSwitcher />
+          </div>
+          <NavigationButtons user={memoizedUser} />
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
@@ -55,7 +58,6 @@ const NavbarLandingPage = () => {
             className="ms-auto d-flex flex-wrap align-items-center justify-content-between flex-row gap-2 navbar-nav"
             navbar
           >
-            <NavigationButtons user={memoizedUser} />;
             <NavigationLinks
               user={memoizedUser}
               openModal={openModal}

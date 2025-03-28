@@ -1,0 +1,17 @@
+{
+  "searchFriend": "Αναζήτηση φίλου",
+  "friendRequest": "Αίτημα φίλου",
+  "searchUsername": "Αναζήτηση Χρήστη",
+  "friendsRequests": "Αιτήματα φιλίας",
+  "searchUsernamePlaceholder": "Αναζήτηση χρήστη...",
+  "errorFetchingUsers": "Σφάλμα κατά την αναζήτηση χρηστών",
+  "noUsersFound": "Δεν βρέθηκαν χρήστες",
+  "usersFound": "Βρέθηκαν Χρήστες",
+  "friend": "Φίλος",
+  "pending": "Εκκρεμεί",
+  "addFriend": "Προσθήκη Φίλου",
+  "friendRequests": "Αιτήματα Φίλων",
+  "noFriendRequests": "Δεν υπάρχουν αιτήματα φίλων 😞",
+  "accept": "Αποδοχή",
+  "accepting": "Αποδοχή..."
+}

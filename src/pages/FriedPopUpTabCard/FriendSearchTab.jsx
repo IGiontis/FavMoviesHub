@@ -9,12 +9,14 @@ import { useFriendRequests, useSendFriendRequest } from "../../hooks/useFriendRe
 import { useFriends } from "../../hooks/useFriends";
 import { toast } from "react-toastify";
 import SearchInput from "../../components/FormInputs/SearchInput";
+import TranslatedText from "../../components/Language/TranslatedText";
+import { useTranslation } from "react-i18next";
 
 const FriendSearchTab = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 500);
   const currentUser = useSelector((state) => state.auth.user);
-
+  const { t } = useTranslation();
   //  Search only if input is 3+ letters
   const {
     data: users = [],
@@ -25,7 +27,6 @@ const FriendSearchTab = () => {
   const { data: sentRequests = [] } = useFriendRequests(currentUser?.uid);
   const { data: friends = [] } = useFriends(currentUser?.uid);
   const sendFriendRequest = useSendFriendRequest();
-
 
   const sentRequestsSet = useMemo(() => new Set(sentRequests?.map((req) => req.recipientId)), [sentRequests]);
   const friendsSet = useMemo(() => new Set(friends?.flatMap(({ user1, user2 }) => [user1, user2])), [friends]);
@@ -59,14 +60,14 @@ const FriendSearchTab = () => {
     <div>
       <FormGroup className="d-flex   flex-column">
         <Label htmlFor="search-input" className="fw-bold">
-          Search Username
+          <TranslatedText text="searchUsername" ns="friendsPopup" />
         </Label>
         <SearchInput
           ID="search-input"
           searchTerm={searchTerm}
           handleSearchChange={handleSearchChange}
           clearSearch={clearSearch}
-          placeholder="Search a username"
+          placeholder={t("searchUsernamePlaceholder", { ns: "friendsPopup" })}
         />
       </FormGroup>
 
@@ -75,14 +76,22 @@ const FriendSearchTab = () => {
           <Spinner size="sm" />
         </div>
       )}
-      {isError && <Alert color="danger">Error fetching users</Alert>}
+      {isError && (
+        <Alert color="danger">
+          <TranslatedText text="errorFetchingUsers" ns="friendsPopup" />
+        </Alert>
+      )}
       {!isLoading && !isError && debouncedSearch.length >= 3 && users.length === 0 && (
-        <Alert color="info">No users found</Alert>
+        <Alert color="info">
+          <TranslatedText text="noUsersFound" ns="friendsPopup" />
+        </Alert>
       )}
 
       {users.length > 0 && debouncedSearch.length >= 3 && (
         <>
-          <div className="fw-bold mb-2">Users Found:</div>
+          <div className="fw-bold mb-2">
+            <TranslatedText text="usersFound" ns="friendsPopup" />
+          </div>
           <ListGroup className="friends-max-height-tab">
             {users
               .filter((user) => !sentRequestsSet.has(user.id)) //  Exclude users with pending friend requests
@@ -97,15 +106,15 @@ const FriendSearchTab = () => {
 
                     {status === "friend" ? (
                       <Button color="secondary" size="sm" className="ms-3" disabled>
-                        <FontAwesomeIcon icon={faUserCheck} /> Friend
+                        <FontAwesomeIcon icon={faUserCheck} /> <TranslatedText text="friend" ns="friendsPopup" />
                       </Button>
                     ) : status === "pending" ? (
                       <Button color="secondary" size="sm" className="ms-3" disabled>
-                        <FontAwesomeIcon icon={faClock} /> Pending
+                        <FontAwesomeIcon icon={faClock} /> <TranslatedText text="pending" ns="friendsPopup" />
                       </Button>
                     ) : (
                       <Button color="success" size="sm" className="ms-3" onClick={() => handleSendRequest(user.id)}>
-                        <FontAwesomeIcon icon={faUserPlus} /> Add Friend
+                        <FontAwesomeIcon icon={faUserPlus} /> <TranslatedText text="addFriend" ns="friendsPopup" />
                       </Button>
                     )}
                   </ListGroupItem>

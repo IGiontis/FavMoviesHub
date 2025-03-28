@@ -8,12 +8,17 @@ import MovieCard from "./MovieCard";
 const MoviesGallery = ({ filteredMovies, colSizes }) => {
   const user = useSelector((state) => state.auth.user);
 
-  const { data: likedMovies = [], isLoading, error } = useLikedMovies(user?.uid);
+  // Correctly using useLikedMovies hook
+  const { likedMovies, isLoading, error } = useLikedMovies(user?.uid);
   const { addMovieMutation, removeMovieMutation } = useLikedMoviesActions(user?.uid);
 
+  console.log("Liked Movies:", likedMovies);
+
   const handleMovieLike = (movie) => {
-    if (likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID)) {
-      removeMovieMutation.mutate(movie.imdbID);
+    const likedMovie = likedMovies.find((likedMovie) => likedMovie.imdbID === movie.imdbID);
+
+    if (likedMovie) {
+      removeMovieMutation.mutate(likedMovie.id); // Pass the Firestore document ID for deletion
     } else {
       addMovieMutation.mutate(movie);
     }
@@ -23,34 +28,35 @@ const MoviesGallery = ({ filteredMovies, colSizes }) => {
   if (error) return <p>Error loading liked movies</p>;
 
   return (
-    <>
-      <Container fluid>
-        <Row>
-          {filteredMovies.length > 0 ? (
-            filteredMovies.map((movie) => {
-              const isLiked = likedMovies.some((likedMovie) => likedMovie.imdbID === movie.imdbID);
-              const isProcessing = addMovieMutation.isPending || removeMovieMutation.isPending;
+    <Container fluid>
+      <Row>
+        {filteredMovies.length > 0 ? (
+          filteredMovies.map((movie) => {
+            const likedMovie = likedMovies.find((likedMovie) => likedMovie.imdbID === movie.imdbID);
+            const isLiked = !!likedMovie;
+            const isProcessing = 
+              addMovieMutation.variables?.imdbID === movie.imdbID && addMovieMutation.isPending ||
+              removeMovieMutation.variables?.imdbID === movie.imdbID && removeMovieMutation.isPending;
 
-              return (
-                <Col key={movie.imdbID} {...colSizes} className="mb-4">
-                  <MovieCard
-                    movie={movie}
-                    isLiked={isLiked}
-                    isProcessing={isProcessing}
-                    handleMovieLike={handleMovieLike}
-                    user={user}
-                  />
-                </Col>
-              );
-            })
-          ) : (
-            <Col>
-              <p>No movies found</p>
-            </Col>
-          )}
-        </Row>
-      </Container>
-    </>
+            return (
+              <Col key={movie.imdbID} {...colSizes} className="mb-4">
+                <MovieCard
+                  movie={movie}
+                  isLiked={isLiked}
+                  isProcessing={isProcessing}
+                  handleMovieLike={handleMovieLike}
+                  user={user}
+                />
+              </Col>
+            );
+          })
+        ) : (
+          <Col>
+            <p>No movies found</p>
+          </Col>
+        )}
+      </Row>
+    </Container>
   );
 };
 

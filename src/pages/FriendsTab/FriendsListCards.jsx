@@ -4,15 +4,16 @@ import classNames from "classnames";
 import { memo } from "react";
 import styles from "./friendsTab.module.css"; 
 
-const FriendsListCards = ({ handleFriendSelection, friend, selectedFriend, usernames, index }) => {
-  const { user2 } = friend; // Destructure for better readability
+const FriendsListCards = ({ handleFriendSelection, friend, selectedFriend, usernames, index, isDisabled }) => {
+  const { user2 } = friend; 
   const isSelected = selectedFriend === user2;
   
   return (
     <Card
-      onClick={() => handleFriendSelection(user2)}
+      onClick={() => !isDisabled && handleFriendSelection(user2)}
       className={classNames("shadow-sm text-center", styles.friendCard, { [styles.active]: isSelected })}
-      role="button" // Improves accessibility
+      role="button" 
+      style={{ pointerEvents: isDisabled ? "none" : "auto", opacity: isDisabled ? 0.6 : 1 }} // Disable clicking
     >
       <CardBody className="p-2">
         {index + 1}: <strong>{usernames[index]?.username || <Spinner size="sm" />}</strong>
@@ -21,11 +22,10 @@ const FriendsListCards = ({ handleFriendSelection, friend, selectedFriend, usern
   );
 };
 
-// Better PropTypes Definition
 FriendsListCards.propTypes = {
   handleFriendSelection: PropTypes.func.isRequired,
   friend: PropTypes.shape({
-    user2: PropTypes.string.isRequired, // Enforce structure
+    user2: PropTypes.string.isRequired,
   }).isRequired,
   selectedFriend: PropTypes.string,
   usernames: PropTypes.arrayOf(
@@ -34,7 +34,7 @@ FriendsListCards.propTypes = {
     })
   ).isRequired,
   index: PropTypes.number.isRequired,
+  isDisabled: PropTypes.bool.isRequired, 
 };
 
-// Use React.memo to prevent unnecessary re-renders
 export default memo(FriendsListCards);

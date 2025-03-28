@@ -9,6 +9,7 @@ import { useListenForFriendRequests } from "../../hooks/useReceivedFriendRequest
 import { useFriendRequestCount } from "../../hooks/useFriendRequestCount";
 import BadgeFriendList from "../../components/BadgeFriendList";
 import classNames from "classnames";
+import TranslatedText from "../../components/Language/TranslatedText";
 
 const FriendPopUpTabCard = () => {
   const [activeTab, setActiveTab] = useState("search");
@@ -22,17 +23,14 @@ const FriendPopUpTabCard = () => {
 
   useListenForFriendRequests(currentUser?.uid);
   const requestCount = useFriendRequestCount(currentUser?.uid);
-  console.log(requestCount);
+
 
   return (
     <Card className={styles.friendPopupCard}>
       <CardHeader className={styles.friendPopupHeader}>
         <Navbar color="dark" dark expand="md" className={`${styles.friendPopupNavbar} pt-4`}>
           <Nav
-            className={classNames(
-              "d-flex flex-wrap align-items-center flex-row gap-4",
-              { "pt-2": requestCount > 0 }
-            )}
+            className={classNames("d-flex flex-wrap align-items-center flex-row gap-4", { "pt-2": requestCount > 0 })}
             navbar
           >
             <NavItem>
@@ -41,7 +39,7 @@ const FriendPopUpTabCard = () => {
                 onClick={() => toggleTab("search")}
                 style={{ cursor: "pointer" }}
               >
-                Search Friend
+                <TranslatedText text="searchFriend" ns="friendsPopup" />
               </NavLink>
             </NavItem>
             <NavItem>
@@ -51,7 +49,7 @@ const FriendPopUpTabCard = () => {
                 style={{ cursor: "pointer", position: "relative" }}
               >
                 <div className="position-relative">
-                  Friend Requests
+                  <TranslatedText text="friendsRequests" ns="friendsPopup" />
                   <BadgeFriendList requestCount={requestCount} />
                 </div>
               </NavLink>

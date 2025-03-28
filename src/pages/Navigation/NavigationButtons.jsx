@@ -18,9 +18,9 @@ const NavigationButtons = ({ user }) => {
         aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
       >
         {isDarkMode ? (
-          <FontAwesomeIcon icon={faSun} size="lg" fixedWidth />
+          <FontAwesomeIcon icon={faSun} size="sm" fixedWidth />
         ) : (
-          <FontAwesomeIcon icon={faMoon} size="lg" fixedWidth />
+          <FontAwesomeIcon icon={faMoon} size="sm" fixedWidth />
         )}
       </button>
 

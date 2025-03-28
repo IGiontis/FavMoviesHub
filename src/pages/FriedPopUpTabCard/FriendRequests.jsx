@@ -2,9 +2,12 @@ import { useSelector } from "react-redux";
 import { ListGroup, ListGroupItem, Button } from "reactstrap";
 import { useReceivedFriendRequests } from "../../hooks/useReceivedFriendRequests";
 import { useFetchUsernames } from "../../hooks/useFetchUsernames";
-import { useHandleFriendRequest } from "../../hooks/useHandleFriendRequest"; 
+import { useHandleFriendRequest } from "../../hooks/useHandleFriendRequest";
+import { useTranslation } from "react-i18next";
+import TranslatedText from "../../components/Language/TranslatedText";
 
 const FriendRequests = () => {
+  const { t } = useTranslation();
   const currentUser = useSelector((state) => state.auth.user);
   const { data: receivedRequests = [] } = useReceivedFriendRequests(currentUser?.uid);
   const { handleAcceptRequest, loadingRequests } = useHandleFriendRequest(currentUser?.uid);
@@ -14,8 +17,15 @@ const FriendRequests = () => {
 
   return (
     <div>
-      <h5>Friend Requests</h5>
-      {receivedRequests.length === 0 && <p>No friend requests 😞</p>}
+      <h5>
+        <TranslatedText text="friendRequests" ns="friendsPopup" />
+      </h5>
+      {receivedRequests.length === 0 && (
+        <p>
+          {" "}
+          <TranslatedText text="noFriendRequests" ns="friendsPopup" />
+        </p>
+      )}
       <ListGroup className="friends-max-height-tab">
         {receivedRequests.map((request, index) => (
           <ListGroupItem key={request.id} className="d-flex align-items-center g-3 px-2 justify-content-between">
@@ -29,7 +39,7 @@ const FriendRequests = () => {
                 onClick={() => handleAcceptRequest(request)}
                 disabled={!!loadingRequests[request.senderId]}
               >
-                {loadingRequests[request.senderId] ? "Accepting..." : "Accept"}
+                {loadingRequests[request.senderId] ? t("accepting") : t("accept")}
               </Button>
             </div>
           </ListGroupItem>

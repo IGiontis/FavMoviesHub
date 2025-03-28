@@ -1,0 +1,17 @@
+{
+  "searchFriend": "Search friend",
+  "friendsRequests": "Friend requests",
+  "friendRequest": "Friend request",
+  "searchUsername": "Search Friend",
+  "searchUsernamePlaceholder": "Search username...",
+  "errorFetchingUsers": "Error fetching users",
+  "noUsersFound": "No users found",
+  "usersFound": "Users Found",
+  "friend": "Friend",
+  "pending": "Pending",
+  "addFriend": "Add Friend",
+  "friendRequests": "Friend Requests",
+  "noFriendRequests": "No friend requests 😞",
+  "accept": "Accept",
+  "accepting": "Accepting..."
+}

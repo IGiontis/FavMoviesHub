@@ -2,18 +2,16 @@ import PropTypes from "prop-types";
 import React, { useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
+import TranslatedText from "../../components/Language/TranslatedText";
 
 const NavigationLinks = React.memo(
   ({ user, openModal, toggleDropdown, isDropdownOpen, setIsConfirmationModalOpen }) => {
     const location = useLocation();
 
-    // ✅ Memoize isActive function for better performance
-    const isActive = useCallback(
-      (path) => (location.pathname === path ? "active" : ""),
-      [location.pathname]
-    );
+    //  Memoize isActive function for better performance
+    const isActive = useCallback((path) => (location.pathname === path ? "active" : ""), [location.pathname]);
 
-    // ✅ Handle logout using a button (better accessibility & SEO)
+    //  Handle logout using a button (better accessibility & SEO)
     const handleLogout = (e) => {
       e.preventDefault();
       setIsConfirmationModalOpen(true); // Show confirmation modal
@@ -23,7 +21,7 @@ const NavigationLinks = React.memo(
       <div className="d-flex align-items-center gap-2">
         <NavItem>
           <NavLink tag={Link} to="/" className={`nav-link ${isActive("/")}`}>
-            Home
+            <TranslatedText text="home" ns="nav" />
           </NavLink>
         </NavItem>
 
@@ -31,12 +29,12 @@ const NavigationLinks = React.memo(
           <>
             <NavItem>
               <NavLink tag={Link} to="/friends" className={`nav-link ${isActive("/friends")}`}>
-                Friends
+                <TranslatedText text="friends" ns="nav" />
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to="/profile" className={`nav-link ${isActive("/profile")}`}>
-                Profile
+                <TranslatedText text="profile" ns="nav" />
               </NavLink>
             </NavItem>
           </>
@@ -44,14 +42,14 @@ const NavigationLinks = React.memo(
 
         <NavItem>
           <NavLink tag={Link} to="/about" className={`nav-link ${isActive("/about")}`}>
-            About
+            <TranslatedText text="about" ns="nav" />
           </NavLink>
         </NavItem>
 
         {user ? (
           <NavItem>
             <button className="nav-link btn btn-link" style={{ cursor: "pointer" }} onClick={handleLogout}>
-              Logout
+              <TranslatedText text="logout" ns="nav" />
             </button>
           </NavItem>
         ) : (
@@ -62,14 +60,14 @@ const NavigationLinks = React.memo(
                 className="nav-link p-0 border-0 bg-transparent"
                 style={{ backgroundColor: "transparent", border: "none" }}
               >
-                Sign In / Register
+                <TranslatedText text="signInRegister" ns="nav" />
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem role="button" tabIndex="0" onClick={() => openModal("sign-in")}>
-                  Sign In
+                  <TranslatedText text="signIn" ns="nav" />
                 </DropdownItem>
                 <DropdownItem role="button" tabIndex="0" onClick={() => openModal("create-account")}>
-                  Register
+                  <TranslatedText text="register" ns="nav" />
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

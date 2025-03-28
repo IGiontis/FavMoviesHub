@@ -1,0 +1,11 @@
+{
+  "home": "Home",
+  "profile": "Profile",
+  "friends": "Friends",
+  "about": "About",
+  "signin": "Sign In / Create Account",
+  "logout": "Logout",
+  "signIn": "Sign In",
+  "register": "Register",
+  "signInRegister": "Sign In / Register"
+}
