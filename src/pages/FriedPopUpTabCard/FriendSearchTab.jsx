@@ -1,7 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
-import { ListGroup, ListGroupItem, Spinner, Alert, Button, Label, FormGroup } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus, faClock, faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import { Spinner, Alert, Label, FormGroup } from "reactstrap";
+
 import { useSearchUsers } from "../../hooks/useSearchUsers";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useSelector } from "react-redux";
@@ -11,13 +10,14 @@ import { toast } from "react-toastify";
 import SearchInput from "../../components/FormInputs/SearchInput";
 import TranslatedText from "../../components/Language/TranslatedText";
 import { useTranslation } from "react-i18next";
+import FriendUserList from "./FriendUserList";
 
 const FriendSearchTab = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 500);
   const currentUser = useSelector((state) => state.auth.user);
   const { t } = useTranslation();
-  //  Search only if input is 3+ letters
+
   const {
     data: users = [],
     isLoading,
@@ -92,35 +92,13 @@ const FriendSearchTab = () => {
           <div className="fw-bold mb-2">
             <TranslatedText text="usersFound" ns="friendsPopup" />
           </div>
-          <ListGroup className="friends-max-height-tab">
-            {users
-              .filter((user) => !sentRequestsSet.has(user.id)) //  Exclude users with pending friend requests
-              .map((user) => {
-                const status = getFriendStatus(user.id);
 
-                return (
-                  <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center flex-wrap">
-                    <span className="text-truncate flex-grow-1" style={{ wordBreak: "break-word", minWidth: "0" }}>
-                      {user.username}
-                    </span>
-
-                    {status === "friend" ? (
-                      <Button color="secondary" size="sm" className="ms-3" disabled>
-                        <FontAwesomeIcon icon={faUserCheck} /> <TranslatedText text="friend" ns="friendsPopup" />
-                      </Button>
-                    ) : status === "pending" ? (
-                      <Button color="secondary" size="sm" className="ms-3" disabled>
-                        <FontAwesomeIcon icon={faClock} /> <TranslatedText text="pending" ns="friendsPopup" />
-                      </Button>
-                    ) : (
-                      <Button color="success" size="sm" className="ms-3" onClick={() => handleSendRequest(user.id)}>
-                        <FontAwesomeIcon icon={faUserPlus} /> <TranslatedText text="addFriend" ns="friendsPopup" />
-                      </Button>
-                    )}
-                  </ListGroupItem>
-                );
-              })}
-          </ListGroup>
+          <FriendUserList
+            users={users}
+            sentRequestsSet={sentRequestsSet}
+            getFriendStatus={getFriendStatus}
+            handleSendRequest={handleSendRequest}
+          />
         </>
       )}
     </div>

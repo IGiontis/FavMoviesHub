@@ -12,8 +12,6 @@ const MoviesGallery = ({ filteredMovies, colSizes }) => {
   const { likedMovies, isLoading, error } = useLikedMovies(user?.uid);
   const { addMovieMutation, removeMovieMutation } = useLikedMoviesActions(user?.uid);
 
-  console.log("Liked Movies:", likedMovies);
-
   const handleMovieLike = (movie) => {
     const likedMovie = likedMovies.find((likedMovie) => likedMovie.imdbID === movie.imdbID);
 
@@ -34,9 +32,9 @@ const MoviesGallery = ({ filteredMovies, colSizes }) => {
           filteredMovies.map((movie) => {
             const likedMovie = likedMovies.find((likedMovie) => likedMovie.imdbID === movie.imdbID);
             const isLiked = !!likedMovie;
-            const isProcessing = 
-              addMovieMutation.variables?.imdbID === movie.imdbID && addMovieMutation.isPending ||
-              removeMovieMutation.variables?.imdbID === movie.imdbID && removeMovieMutation.isPending;
+            const isProcessing =
+              (addMovieMutation.variables?.imdbID === movie.imdbID && addMovieMutation.isPending) ||
+              (removeMovieMutation.variables?.imdbID === movie.imdbID && removeMovieMutation.isPending);
 
             return (
               <Col key={movie.imdbID} {...colSizes} className="mb-4">

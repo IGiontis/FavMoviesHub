@@ -11,6 +11,9 @@ import grFriendsPopup from "./locales/gr/friendsPopup.json";
 import enFriendsTab from "./locales/en/friendsTab.json"
 import grFriendsTabs from "./locales/gr/friendsTab.json"
 
+import enHome from "./locales/en/home.json"
+import grHome from "./locales/gr/home.json"
+
 // Add other namespaces if necessary
 // import enCommon from "./locales/en/common.json";
 // import grCommon from "./locales/gr/common.json";
@@ -19,13 +22,16 @@ const resources = {
   en: {
     nav: enNav,
     friendsPopup: enFriendsPopup,
-    friendsTab:enFriendsTab
+    friendsTab:enFriendsTab,
+    home:enHome
     // common: enCommon, // Add other namespaces as needed
   },
   gr: {
     nav: grNav,
     friendsPopup: grFriendsPopup,
     friendsTab: grFriendsTabs,
+    home: grHome,
+  
     // common: grCommon, // Add other namespaces as needed
   },
 };
