@@ -3,13 +3,23 @@ import { Col, Row, Container, Spinner } from "reactstrap";
 import MoviesGallery from "./MoviesGallery";
 import { useMovies } from "@/hooks/useMovies";
 import { useDebounce } from "../../hooks/useDebounce";
-import { toast } from "react-toastify";
 import SearchInput from "../../components/FormInputs/SearchInput";
 import TranslatedText from "../../components/Language/TranslatedText";
-import { t } from "i18next";
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+
+  // Function to restrict input to English characters
+  const handleSearchChange = useCallback((e) => {
+    const input = e.target.value;
+
+    // Regex to allow only English letters, numbers, and basic punctuation
+    const regex = /^[A-Za-z0-9 .,?!]*$/;
+
+    if (regex.test(input)) {
+      setSearchTerm(input); // Update search term only if valid
+    }
+  }, []);
 
   // Use useMemo to avoid unnecessary calculations
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -17,31 +27,6 @@ const LandingPage = () => {
   // Avoid API calls unless necessary (empty search should not fetch)
   const shouldFetchMovies = useMemo(() => debouncedSearchTerm.trim().length >= 3, [debouncedSearchTerm]);
   const { data: movies = [], isLoading, error } = useMovies(shouldFetchMovies ? debouncedSearchTerm : "");
-
-  // Throttle invalid input check
-  const [lastToastTime, setLastToastTime] = useState(0);
-
-  // Handle search input change
-  const handleSearchChange = useCallback(
-    (e) => {
-      const input = e.target.value;
-
-      // Regex to allow only English letters, numbers, and basic punctuation
-      const regex = /^[A-Za-z0-9 .,?!]*$/;
-      const currentTime = Date.now();
-
-      if (regex.test(input)) {
-        setSearchTerm(input);
-      } else {
-        // If the toast has been shown less than 8 seconds ago, don't show it again
-        if (currentTime - lastToastTime > 8000) {
-          toast.error(t("searchAMovieInEnglish", { ns: "home" }));
-          setLastToastTime(currentTime); // Update lastToastTime to avoid showing it again too soon
-        }
-      }
-    },
-    [lastToastTime]
-  );
 
   const clearSearch = useCallback(() => setSearchTerm(""), []);
 
@@ -56,9 +41,10 @@ const LandingPage = () => {
             <SearchInput
               ID="search-input"
               searchTerm={searchTerm}
-              handleSearchChange={handleSearchChange} // Call the new handleSearchChange
+              handleSearchChange={handleSearchChange}
               clearSearch={clearSearch}
-              placeholder={t("searchAMovie", { ns: "home" })}
+              placeholderKey="searchAMovieInEnglish"
+              ns="home"
             />
           </div>
 

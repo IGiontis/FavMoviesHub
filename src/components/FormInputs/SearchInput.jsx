@@ -1,8 +1,14 @@
 import PropTypes from "prop-types";
 import { Input } from "reactstrap";
+import { useTranslation } from 'react-i18next';  // Import useTranslation
 import styles from "./searchInput.module.css";
 
-const SearchInput = ({ ID, searchTerm, handleSearchChange, clearSearch, placeholder = "Type movie name..." }) => {
+const SearchInput = ({ ID, searchTerm, handleSearchChange, clearSearch, placeholderKey, ns }) => {
+  const { t } = useTranslation(ns);  // Get the translation function for the given namespace
+
+  // Translate the placeholder using the provided key
+  const placeholder = t(placeholderKey);
+
   return (
     <div className={styles.searchForm}>
       <Input
@@ -28,7 +34,8 @@ SearchInput.propTypes = {
   ID: PropTypes.string,
   handleSearchChange: PropTypes.func.isRequired,
   clearSearch: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
+  placeholderKey: PropTypes.string.isRequired,  // The key for the placeholder
+  ns: PropTypes.string.isRequired,  // The namespace for translation
 };
 
 export default SearchInput;

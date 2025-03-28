@@ -9,14 +9,13 @@ import { useFriends } from "../../hooks/useFriends";
 import { toast } from "react-toastify";
 import SearchInput from "../../components/FormInputs/SearchInput";
 import TranslatedText from "../../components/Language/TranslatedText";
-import { useTranslation } from "react-i18next";
 import FriendUserList from "./FriendUserList";
 
 const FriendSearchTab = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 500);
   const currentUser = useSelector((state) => state.auth.user);
-  const { t } = useTranslation();
+
 
   const {
     data: users = [],
@@ -67,7 +66,8 @@ const FriendSearchTab = () => {
           searchTerm={searchTerm}
           handleSearchChange={handleSearchChange}
           clearSearch={clearSearch}
-          placeholder={t("searchUsernamePlaceholder", { ns: "friendsPopup" })}
+          placeholderKey="searchUsernamePlaceholder" // Pass the key for translation
+          ns="friendsPopup" // Pass the namespace
         />
       </FormGroup>
 
