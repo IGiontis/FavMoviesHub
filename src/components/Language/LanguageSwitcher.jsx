@@ -16,11 +16,16 @@ const LanguageSwitcher = () => {
   );
 
   return (
-    <IconButton onClick={toggleLanguage} color="primary" className="p-0">
+    <IconButton
+      onClick={toggleLanguage}
+      color="primary"
+      className="p-0"
+      aria-label={i18n.language === "en" ? "Switch to Greek" : "Switch to English"}
+    >
       {i18n.language === "en" ? (
-        <Flag code="GR" style={{ width: 20, height: 15 }} />
+        <Flag code="GR" style={{ width: 20, height: 15 }} alt="Greek Flag" />
       ) : (
-        <Flag code="US" style={{ width: 20, height: 15 }} />
+        <Flag code="US" style={{ width: 20, height: 15 }} alt="English Flag" />
       )}
     </IconButton>
   );
