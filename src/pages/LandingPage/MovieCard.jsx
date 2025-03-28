@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from "react";
-import { Card, CardBody, CardImg, CardTitle, Button, Spinner } from "reactstrap";
+import { Card, CardBody, CardImg, CardTitle, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
@@ -19,9 +19,9 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   const posterSrc = movie.Poster !== "N/A" ? movie.Poster : defaultImage;
 
   //  Fetch friends' comments immediately
-  const { data: friendsComments = [], isLoading } = useFriendsMovieComments(user?.uid, movie.imdbID);
+  const { data: friendsComments = [] } = useFriendsMovieComments(user?.uid, movie.imdbID);
   const friendsCommentCount = friendsComments.length; // Count comments directly
-  console.log(isLoading);
+
   const toggleCommentModal = useCallback(() => setIsCommentModalOpen((prev) => !prev), []);
   const toggleShowFriendsComments = useCallback(() => setIsFriendsCommentsShow((prev) => !prev), []);
 
@@ -81,17 +81,13 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
 
         {user && (
           <>
-            {isLoading ? (
-              <Spinner className="text-primary" />
-            ) : (
-              <MovieInteractionButtons
-                toggleCommentModal={toggleCommentModal}
-                toggleShowFriendsComments={toggleShowFriendsComments}
-                friendsCommentCount={friendsCommentCount}
-                user={user}
-                movie={movie}
-              />
-            )}
+            <MovieInteractionButtons
+              toggleCommentModal={toggleCommentModal}
+              toggleShowFriendsComments={toggleShowFriendsComments}
+              friendsCommentCount={friendsCommentCount}
+              user={user}
+              movie={movie}
+            />
 
             <MovieCommentsModal
               movieID={movie.imdbID}
