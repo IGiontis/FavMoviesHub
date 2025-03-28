@@ -14,9 +14,13 @@ const useFriendToggleListener = () => {
   const requestCount = useFriendRequestCount(currentUser?.uid); // Use the custom hook
 
   //  Memoized handler to prevent unnecessary re-renders
-  const handleToggleAddFriend = useCallback(() => {
-    dispatch(toggleAddFriend());
-  }, [dispatch]);
+  const handleToggleAddFriend = useCallback(
+    (e) => {
+      e.preventDefault(); // Prevent form submission
+      dispatch(toggleAddFriend());
+    },
+    [dispatch]
+  );
 
   return { isAddFriendOpen, requestCount, handleToggleAddFriend };
 };

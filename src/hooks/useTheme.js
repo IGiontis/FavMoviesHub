@@ -6,12 +6,14 @@ const useTheme = () => {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", isDarkMode ? "dark" : "light");
-    document.documentElement.setAttribute("data-theme", isDarkMode ? "dark" : "light"); 
+    document.documentElement.setAttribute("data-theme", isDarkMode ? "dark" : "light");
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
-  
 
-  const toggleTheme = () => setIsDarkMode((prevMode) => !prevMode);
+  const toggleTheme = (e) => {
+    e.preventDefault();
+    setIsDarkMode((prevMode) => !prevMode);
+  };
 
   return { isDarkMode, toggleTheme };
 };
