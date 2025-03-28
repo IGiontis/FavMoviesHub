@@ -18,7 +18,7 @@ const NavigationLinks = React.memo(
     };
 
     return (
-      <div className="d-flex align-items-center justify-content-center gap-2">
+      <div className="d-flex flex-wrap align-items-center justify-content-center gap-3">
         <NavItem>
           <NavLink tag={Link} to="/" className={`nav-link ${isActive("/")}`}>
             <TranslatedText text="home" ns="nav" />
