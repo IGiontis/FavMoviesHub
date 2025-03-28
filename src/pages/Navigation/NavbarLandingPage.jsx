@@ -54,10 +54,7 @@ const NavbarLandingPage = () => {
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav
-            className="ms-auto d-flex flex-wrap align-items-center justify-content-between flex-row gap-2 navbar-nav"
-            navbar
-          >
+          <Nav className="ms-auto d-flex flex-wrap align-items-center  navbar-nav" navbar>
             <NavigationLinks
               user={memoizedUser}
               openModal={openModal}
