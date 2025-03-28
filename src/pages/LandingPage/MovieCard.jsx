@@ -5,11 +5,9 @@ import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/fre
 import PropTypes from "prop-types";
 import MovieRating from "../../components/MovieRatings/MovieRating";
 import defaultImage from "../../assets/movieBackground.jpeg";
-
 import MovieCommentsModal from "../../components/MovieComments/MovieCommentsModal";
-import FriendsMovieComments from "../../components/MovieComments/FriendsMovieComments";
 import MovieInteractionButtons from "../../components/MovieComments/MovieInteractionButtons";
-import useFriendsMovieComments from "../../hooks/comments/useFriendsMovieComments"; // Import the hook
+import useFriendsMovieComments from "../../hooks/comments/useFriendsMovieComments";
 import TranslatedText from "../../components/Language/TranslatedText";
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
@@ -87,6 +85,8 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
               friendsCommentCount={friendsCommentCount}
               user={user}
               movie={movie}
+              isFriendsCommentsShow={isFriendsCommentsShow}
+              friendsComments={friendsComments}
             />
 
             <MovieCommentsModal
@@ -97,11 +97,6 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
               movieTitle={movie.Title}
             />
           </>
-        )}
-
-        {/*  Show Friends Comments when toggled */}
-        {user && isFriendsCommentsShow && (
-          <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} friendsComments={friendsComments} />
         )}
       </CardBody>
     </Card>

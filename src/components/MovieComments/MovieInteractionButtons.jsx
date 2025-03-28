@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faComments } from "@fortawesome/free-solid-svg-icons";
 import MovieUserComment from "./MovieUserComment";
 import PropTypes from "prop-types";
+import FriendsMovieComments from "./FriendsMovieComments";
 
 const MovieInteractionButtons = ({
   toggleCommentModal,
@@ -10,10 +11,12 @@ const MovieInteractionButtons = ({
   friendsCommentCount,
   user,
   movie,
+  isFriendsCommentsShow,
+  friendsComments,
 }) => {
   return (
     <div className="mt-3">
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center border-bottom pb-2">
         <span className="me-4">
           <Button
             color="link"
@@ -45,7 +48,13 @@ const MovieInteractionButtons = ({
           </Button>
         </span>
       </div>
+
+
       <MovieUserComment user={user} movie={movie} />
+
+      {isFriendsCommentsShow && (
+        <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} friendsComments={friendsComments} />
+      )}
     </div>
   );
 };
@@ -56,6 +65,8 @@ MovieInteractionButtons.propTypes = {
   friendsCommentCount: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
   movie: PropTypes.object.isRequired,
+  isFriendsCommentsShow: PropTypes.bool,
+  friendsComments: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default MovieInteractionButtons;
