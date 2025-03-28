@@ -1,0 +1,9 @@
+{
+  "year": "Year: ",
+  "type": "Type: ",
+  "movie": "Movie",
+  "series": "Series",
+  "noComments": "No Comment yet.",
+  "friendsComments": "Firend's Comments:",
+  "noFriendsComments": "No Friends Comments yet."
+}

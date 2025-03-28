@@ -1,4 +1,4 @@
-import { useCallback, useState,memo } from "react";
+import { useCallback, useState, memo } from "react";
 import PropTypes from "prop-types";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,11 +6,12 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 import useDeleteUserComment from "../../hooks/comments/useDeleteUserComment";
 import ConfirmationModal from "../ConfirmationModal";
+import TranslatedText from "../Language/TranslatedText";
 
 const MovieUserComment = ({ user, movie }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: comments, isLoading, isError } = useUserMovieComments(user.uid);
-  const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteUserComment(); 
+  const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteUserComment();
 
   const comment = comments?.[movie.imdbID] || null;
 
@@ -20,8 +21,8 @@ const MovieUserComment = ({ user, movie }) => {
 
   const handleConfirm = useCallback(async () => {
     try {
-      await deleteComment({ userID: user.uid, movieID: movie.imdbID }); 
-      toggleModal(); 
+      await deleteComment({ userID: user.uid, movieID: movie.imdbID });
+      toggleModal();
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -46,7 +47,9 @@ const MovieUserComment = ({ user, movie }) => {
           </Button>
         </div>
       ) : (
-        <p className="mb-0">No comment yet.</p>
+        <p className="mb-0">
+          <TranslatedText text="noComments" ns="movie" />
+        </p>
       )}
       <ConfirmationModal
         isOpen={isModalOpen}

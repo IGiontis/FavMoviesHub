@@ -8,11 +8,14 @@ import grNav from "./locales/gr/nav.json";
 import enFriendsPopup from "./locales/en/friendsPopup.json";
 import grFriendsPopup from "./locales/gr/friendsPopup.json";
 
-import enFriendsTab from "./locales/en/friendsTab.json"
-import grFriendsTabs from "./locales/gr/friendsTab.json"
+import enFriendsTab from "./locales/en/friendsTab.json";
+import grFriendsTabs from "./locales/gr/friendsTab.json";
 
-import enHome from "./locales/en/home.json"
-import grHome from "./locales/gr/home.json"
+import enHome from "./locales/en/home.json";
+import grHome from "./locales/gr/home.json";
+
+import enMovie from "./locales/en/movie.json";
+import grMovie from "./locales/gr/movie.json";
 
 // Add other namespaces if necessary
 // import enCommon from "./locales/en/common.json";
@@ -22,8 +25,9 @@ const resources = {
   en: {
     nav: enNav,
     friendsPopup: enFriendsPopup,
-    friendsTab:enFriendsTab,
-    home:enHome
+    friendsTab: enFriendsTab,
+    home: enHome,
+    movie: enMovie,
     // common: enCommon, // Add other namespaces as needed
   },
   gr: {
@@ -31,7 +35,8 @@ const resources = {
     friendsPopup: grFriendsPopup,
     friendsTab: grFriendsTabs,
     home: grHome,
-  
+    movie: grMovie,
+
     // common: grCommon, // Add other namespaces as needed
   },
 };

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 
 import { useMemo } from "react";
+import TranslatedText from "../Language/TranslatedText";
 
 const FriendsMovieComments = ({ friendsComments }) => {
   // Memoize the count to prevent unnecessary calculations
@@ -8,7 +9,9 @@ const FriendsMovieComments = ({ friendsComments }) => {
 
   return (
     <div className="mt-3">
-      <h6>Friends&apos; Comments:</h6>
+      <h6>
+        <TranslatedText text="friendsComments" ns="movie" />
+      </h6>
 
       {commentCount > 0 ? (
         <ul className="list-unstyled">
@@ -19,7 +22,9 @@ const FriendsMovieComments = ({ friendsComments }) => {
           ))}
         </ul>
       ) : (
-        <p>No comments from friends yet.</p>
+        <p>
+          <TranslatedText text="noFriendsComments" ns="movie" />
+        </p>
       )}
     </div>
   );

@@ -10,6 +10,7 @@ import MovieCommentsModal from "../../components/MovieComments/MovieCommentsModa
 import FriendsMovieComments from "../../components/MovieComments/FriendsMovieComments";
 import MovieInteractionButtons from "../../components/MovieComments/MovieInteractionButtons";
 import useFriendsMovieComments from "../../hooks/comments/useFriendsMovieComments"; // Import the hook
+import TranslatedText from "../../components/Language/TranslatedText";
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -60,10 +61,18 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
         <div className="d-flex align-items-center justify-content-between">
           <div>
             <p className="mb-0 mt-4">
-              Year: <strong>{movie.Year}</strong>
+              <TranslatedText text="year" ns="movie" />
+              <strong>{movie.Year}</strong>
             </p>
             <p className="mb-0">
-              Type: <strong>{movie.Type}</strong>
+              <TranslatedText text="type" ns="movie" />{" "}
+              <strong>
+                {movie.Type === "movie" ? (
+                  <TranslatedText text="movie" ns="movie" />
+                ) : (
+                  <TranslatedText text="series" ns="movie" />
+                )}
+              </strong>
             </p>
           </div>
 
