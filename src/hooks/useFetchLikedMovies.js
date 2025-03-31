@@ -19,23 +19,25 @@ const fetchLikedMovies = async (userID) => {
 export const useLikedMovies = (userID) => {
   const queryClient = useQueryClient();
   const [likedMovies, setLikedMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Manage loading state
+  const [isLoading, setIsLoading] = useState(!!userID); // Set false if no userID
 
   // Fetch initial liked movies data using React Query
   const { data: initialLikedMovies } = useQuery({
-    queryKey: ["likedMovies", userID], // queryKey
-    queryFn: () => fetchLikedMovies(userID), // Use the fetchLikedMovies function here
-    enabled: !!userID, // Only fetch when userID is present
-    staleTime: 0, // Ensure data is always fresh (could be changed to suit your needs)
+    queryKey: ["likedMovies", userID],
+    queryFn: () => fetchLikedMovies(userID),
+    enabled: !!userID,
+    staleTime: 0,
   });
 
   // Set initial liked movies after fetching data
   useEffect(() => {
-    if (initialLikedMovies) {
+    if (userID && initialLikedMovies) {
       setLikedMovies(initialLikedMovies);
-      setIsLoading(false); // Mark loading as done after data is fetched
+      setIsLoading(false);
+    } else if (!userID) {
+      setIsLoading(false); // Immediately set to false if no user
     }
-  }, [initialLikedMovies]);
+  }, [userID, initialLikedMovies]);
 
   // Real-time listener for updates using onSnapshot
   useEffect(() => {
@@ -45,17 +47,16 @@ export const useLikedMovies = (userID) => {
 
     const unsubscribe = onSnapshot(moviesRef, (snapshot) => {
       const movies = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setLikedMovies(movies); // Update local state with new data
-      queryClient.setQueryData(["likedMovies", userID], movies); // Update React Query cache
+      setLikedMovies(movies);
+      queryClient.setQueryData(["likedMovies", userID], movies);
     });
 
     return () => {
-      unsubscribe(); // Clean up listener on component unmount or userID change
-      setLikedMovies([]); // Reset state when switching friends
-      setIsLoading(true); // Reset loading state
+      unsubscribe();
+      setLikedMovies([]);
+      setIsLoading(!!userID); // Only set true if user exists
     };
   }, [userID, queryClient]);
 
-  // Return the likedMovies state and isLoading status
   return { likedMovies, isLoading };
 };
