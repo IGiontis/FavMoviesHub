@@ -4,6 +4,7 @@ import LandingPage from "@/pages/LandingPage/LandingPage";
 import PageNotFound from "@/pages/PageNotFound";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import FriendsTab from "../pages/FriendsTab/FriendsTab";
+import LoaderSpinner from "../components/LoaderSpinner";
 
 const UserProfileTabs = lazy(() => import("@/pages/UserProfile/UserProfileTabs"));
 const AboutTab = lazy(() => import("@/pages/AboutTab"));
@@ -11,7 +12,7 @@ const TermsOfUse = lazy(() => import("../pages/TermsOfUse"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 
 const AppRoutes = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<LoaderSpinner/>}>
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/about" element={<AboutTab />} />

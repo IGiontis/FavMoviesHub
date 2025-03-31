@@ -5,6 +5,7 @@ import { useFetchUsernames } from "../../hooks/useFetchUsernames";
 import { useHandleFriendRequest } from "../../hooks/useHandleFriendRequest";
 import { useTranslation } from "react-i18next";
 import TranslatedText from "../../components/Language/TranslatedText";
+import LoaderSpinner from "../../components/LoaderSpinner";
 
 const FriendRequests = () => {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const FriendRequests = () => {
         {receivedRequests.map((request, index) => (
           <ListGroupItem key={request.id} className="d-flex align-items-center g-3 px-2 justify-content-between">
             <span>
-              <strong>{usernames[index]?.isLoading ? "Loading..." : usernames[index]?.username || "Unknown"}</strong>
+              <strong>{usernames[index]?.isLoading ?<LoaderSpinner text="Loading..."/> : usernames[index]?.username || "Unknown"}</strong>
             </span>
             <div>
               <Button

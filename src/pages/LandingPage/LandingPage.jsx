@@ -1,10 +1,11 @@
 import { useState, useCallback, useMemo } from "react";
-import { Col, Row, Container, Spinner } from "reactstrap";
+import { Col, Row, Container } from "reactstrap";
 import MoviesGallery from "./MoviesGallery";
 import { useMovies } from "@/hooks/useMovies";
 import { useDebounce } from "../../hooks/useDebounce";
 import SearchInput from "../../components/FormInputs/SearchInput";
 import TranslatedText from "../../components/Language/TranslatedText";
+import LoaderSpinner from "../../components/LoaderSpinner";
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,10 +50,7 @@ const LandingPage = () => {
           </div>
 
           {isLoading && (
-            <div className="text-center">
-              <p>Loading...</p>
-              <Spinner />
-            </div>
+           <LoaderSpinner text="Loading movies..."/>
           )}
 
           {error && <p className="text-danger">Error loading movies.</p>}

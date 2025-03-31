@@ -6,36 +6,40 @@ import { faUserPlus, faClock, faUserCheck } from "@fortawesome/free-solid-svg-ic
 import TranslatedText from "../../components/Language/TranslatedText";
 import PropTypes from "prop-types";
 
-const FriendUserList = ({ users, sentRequestsSet, getFriendStatus, handleSendRequest }) => {
+const FriendUserList = ({ users, getFriendStatus, handleSendRequest, sendingUserId }) => {
   return (
     <ListGroup className="friends-max-height-tab">
-      {users
-        .filter((user) => !sentRequestsSet.has(user.id)) // Exclude users with pending friend requests
-        .map((user) => {
-          const status = getFriendStatus(user.id);
+      {users.map((user) => {
+        const status = getFriendStatus(user.id);
 
-          return (
-            <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center flex-wrap">
-              <span className="text-truncate flex-grow-1" style={{ wordBreak: "break-word", minWidth: "0" }}>
-                {user.username}
-              </span>
+        return (
+          <ListGroupItem key={user.id} className="d-flex justify-content-between align-items-center flex-wrap">
+            <span className="text-truncate flex-grow-1" style={{ wordBreak: "break-word", minWidth: "0" }}>
+              {user.username}
+            </span>
 
-              {status === "friend" ? (
-                <Button color="secondary" size="sm" className="ms-3" disabled>
-                  <FontAwesomeIcon icon={faUserCheck} /> <TranslatedText text="friend" ns="friendsPopup" />
-                </Button>
-              ) : status === "pending" ? (
-                <Button color="secondary" size="sm" className="ms-3" disabled>
-                  <FontAwesomeIcon icon={faClock} /> <TranslatedText text="pending" ns="friendsPopup" />
-                </Button>
-              ) : (
-                <Button color="success" size="sm" className="ms-3" onClick={() => handleSendRequest(user.id)}>
-                  <FontAwesomeIcon icon={faUserPlus} /> <TranslatedText text="addFriend" ns="friendsPopup" />
-                </Button>
-              )}
-            </ListGroupItem>
-          );
-        })}
+            {status === "friend" ? (
+              <Button color="secondary" size="sm" className="ms-3" disabled>
+                <FontAwesomeIcon icon={faUserCheck} /> <TranslatedText text="friend" ns="friendsPopup" />
+              </Button>
+            ) : status === "pending" ? (
+              <Button color="secondary" size="sm" className="ms-3" disabled>
+                <FontAwesomeIcon icon={faClock} /> <TranslatedText text="pending" ns="friendsPopup" />
+              </Button>
+            ) : (
+              <Button
+                color="success"
+                size="sm"
+                className="ms-3"
+                onClick={() => handleSendRequest(user.id)}
+                disabled={sendingUserId === user.id}
+              >
+                <FontAwesomeIcon icon={faUserPlus} /> <TranslatedText text="addFriend" ns="friendsPopup" />
+              </Button>
+            )}
+          </ListGroupItem>
+        );
+      })}
     </ListGroup>
   );
 };
@@ -47,9 +51,10 @@ FriendUserList.propTypes = {
       username: PropTypes.string.isRequired,
     })
   ).isRequired,
-  sentRequestsSet: PropTypes.instanceOf(Set).isRequired,
   getFriendStatus: PropTypes.func.isRequired,
   handleSendRequest: PropTypes.func.isRequired,
+  sendingUserId: PropTypes.string,
 };
+
 
 export default FriendUserList;

@@ -13,16 +13,16 @@ import FriendUserList from "./FriendUserList";
 
 const FriendSearchTab = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [sendingUserId, setSendingUserId] = useState(null);
+  const [localPendingRequests, setLocalPendingRequests] = useState(new Set());
   const debouncedSearch = useDebounce(searchTerm, 500);
   const currentUser = useSelector((state) => state.auth.user);
-
 
   const {
     data: users = [],
     isLoading,
     isError,
   } = useSearchUsers(debouncedSearch.length >= 3 ? debouncedSearch.trim() : "", currentUser?.uid);
-
   const { data: sentRequests = [] } = useFriendRequests(currentUser?.uid);
   const { data: friends = [] } = useFriends(currentUser?.uid);
   const sendFriendRequest = useSendFriendRequest();
@@ -33,41 +33,52 @@ const FriendSearchTab = () => {
   const getFriendStatus = useCallback(
     (userId) => {
       if (friendsSet.has(userId)) return "friend";
-      if (sentRequestsSet.has(userId)) return "pending";
+      if (sentRequestsSet.has(userId) || localPendingRequests.has(userId)) return "pending";
       return "none";
     },
-    [friendsSet, sentRequestsSet]
+    [friendsSet, sentRequestsSet, localPendingRequests]
   );
 
   const handleSendRequest = useCallback(
     (userId) => {
+      setSendingUserId(userId);
+      setLocalPendingRequests((prev) => new Set([...prev, userId]));
+
       sendFriendRequest.mutate(
         { senderId: currentUser?.uid, recipientId: userId },
         {
-          onSuccess: () => toast.success("Friend request sent successfully!"),
-          onError: (error) => toast.error("Error sending friend request: " + error.message),
+          onSuccess: () => {
+            toast.success("Friend request sent successfully!");
+            setSendingUserId(null);
+          },
+          onError: (error) => {
+            toast.error("Error sending friend request: " + error.message);
+            setSendingUserId(null);
+            setLocalPendingRequests((prev) => {
+              const newSet = new Set(prev);
+              newSet.delete(userId);
+              return newSet;
+            });
+          },
         }
       );
     },
     [currentUser?.uid, sendFriendRequest]
   );
 
-  const handleSearchChange = useCallback((e) => setSearchTerm(e.target.value), []);
-  const clearSearch = useCallback(() => setSearchTerm(""), []);
-
   return (
     <div>
-      <FormGroup className="d-flex   flex-column">
+      <FormGroup className="d-flex flex-column">
         <Label htmlFor="search-input" className="fw-bold">
           <TranslatedText text="searchUsername" ns="friendsPopup" />
         </Label>
         <SearchInput
           ID="search-input"
           searchTerm={searchTerm}
-          handleSearchChange={handleSearchChange}
-          clearSearch={clearSearch}
-          placeholderKey="searchUsernamePlaceholder" // Pass the key for translation
-          ns="friendsPopup" // Pass the namespace
+          handleSearchChange={(e) => setSearchTerm(e.target.value)}
+          clearSearch={() => setSearchTerm("")}
+          placeholderKey="searchUsernamePlaceholder"
+          ns="friendsPopup"
         />
       </FormGroup>
 
@@ -82,7 +93,7 @@ const FriendSearchTab = () => {
         </Alert>
       )}
       {!isLoading && !isError && debouncedSearch.length >= 3 && users.length === 0 && (
-        <Alert color="info">
+        <Alert color="warning">
           <TranslatedText text="noUsersFound" ns="friendsPopup" />
         </Alert>
       )}
@@ -92,12 +103,11 @@ const FriendSearchTab = () => {
           <div className="fw-bold mb-2">
             <TranslatedText text="usersFound" ns="friendsPopup" />
           </div>
-
           <FriendUserList
             users={users}
-            sentRequestsSet={sentRequestsSet}
             getFriendStatus={getFriendStatus}
             handleSendRequest={handleSendRequest}
+            sendingUserId={sendingUserId}
           />
         </>
       )}

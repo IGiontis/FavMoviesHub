@@ -7,6 +7,7 @@ import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 import useDeleteUserComment from "../../hooks/comments/useDeleteUserComment";
 import ConfirmationModal from "../ConfirmationModal";
 import TranslatedText from "../Language/TranslatedText";
+import LoaderSpinner from "../LoaderSpinner";
 
 const MovieUserComment = ({ user, movie }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +31,7 @@ const MovieUserComment = ({ user, movie }) => {
 
   return (
     <div className="mt-3">
-      {isLoading && <p>Loading comments...</p>}
+      {isLoading && <LoaderSpinner text="Loading comments..."/>}
       {isError && <p>Error fetching comments.</p>}
       {comment ? (
         <div className="d-flex align-items-center justify-content-between">

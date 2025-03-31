@@ -7,7 +7,6 @@ import { toggleAddFriend } from "../../redux/friendSlice";
 import { useDispatch } from "react-redux";
 
 const FriendTitleButton = () => {
-  console.log("renders");
   const dispatch = useDispatch();
 
   const handleToggleAddFriend = useCallback(() => {

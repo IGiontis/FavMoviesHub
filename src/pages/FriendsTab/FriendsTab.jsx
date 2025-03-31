@@ -29,8 +29,6 @@ const FriendsTab = () => {
   const [isFriendSelectionDisabled, setIsFriendSelectionDisabled] = useState(false);
   const { likedMovies: friendsLikedMovies = [], isLoading: isMoviesLoading } = useLikedMovies(selectedFriend);
 
-  console.log(friendsLikedMovies);
-
   // Handle friend selection (disable selection until data loads)
   const handleFriendSelection = useCallback(
     (friendId) => {
