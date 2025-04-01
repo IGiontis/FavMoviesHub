@@ -9,6 +9,7 @@ import MovieCard from "../LandingPage/MovieCard";
 import FriendsList from "./FriendsList";
 import TranslatedText from "../../components/Language/TranslatedText";
 import FriendTitleButton from "./FriendTitleButton";
+import LoaderSpinner from "../../components/LoaderSpinner";
 
 const FriendsTab = () => {
   // Fetch user data
@@ -88,9 +89,7 @@ const FriendsTab = () => {
             <TranslatedText text="likedMoviesOfSelectedFriend" ns="friendsTab" />
           </h5>
           {isMoviesLoading && (
-            <p>
-              <TranslatedText text="loadingMovies" ns="friendsTab" />
-            </p>
+           <LoaderSpinner text="Loading movies..."/>
           )}
           {!isMoviesLoading && friendsLikedMovies.length === 0 && (
             <p>
