@@ -46,10 +46,10 @@ const NavbarLandingPage = () => {
     <>
       <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={Link} to="/" className="me-auto d-flex align-items-center justify-content-between">
-          <span className="me-3">Fav Movies Share</span>
-          <div className="me-3">
+          <span className="">Fav Movies Share</span>
+          
             <LanguageSwitcher />
-          </div>
+        
           <NavigationButtons user={memoizedUser} />
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} />

@@ -4,10 +4,13 @@ import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 import { saveUserMovieComment } from "../../services/movieComments/movieCommentService";
+import TranslatedText from "../Language/TranslatedText";
+import { useTranslation } from "react-i18next";
 
 const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }) => {
+  const { t } = useTranslation("commentsModal");
   const [comment, setComment] = useState("");
-  const { data: userComments } = useUserMovieComments(userID); //  Fetch all user comments
+  const { data: userComments } = useUserMovieComments(userID);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
     onSuccess: () => {
       setComment("");
       toggleModal();
-      queryClient.invalidateQueries(["userMovieComments", userID]); //  Invalidate entire user comments cache
+      queryClient.invalidateQueries(["userMovieComments", userID]); // Invalidate entire user comments cache
     },
     onError: (error) => {
       console.error("Error saving comment:", error);
@@ -49,6 +52,8 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
     setComment(e.target.value.slice(0, 100));
   }, []);
 
+  const placeholderText = t("enterYourComment");
+
   return (
     <Modal
       isOpen={isOpen}
@@ -58,7 +63,10 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
       centered
     >
       <div className="p-3 d-flex  align-items-start justify-content-between">
-        <h5 className="me-3 mb-0">Comment on: {movieTitle}</h5>
+        <h5 className="me-3 mb-0">
+          <TranslatedText text="commentOn" ns="commentsModal" />
+          {movieTitle}
+        </h5>
 
         <Button close aria-label="Close" onClick={handleToggle}></Button>
       </div>
@@ -68,23 +76,29 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
             type="textarea"
             value={comment}
             onChange={handleCommentChange}
-            placeholder="Enter your comment..."
+            placeholder={placeholderText}
             rows="4"
             disabled={mutation.isPending}
             className="no-resize"
           />
 
-          <small className="d-flex justify-content-end mt-1">{100 - comment.length} characters left</small>
+          <small className="d-flex justify-content-end mt-1">
+            {100 - comment.length} <TranslatedText text="charactersLeft" ns="commentsModal" />
+          </small>
         </div>
 
         {mutation.isError && <div style={{ color: "red" }}>Error: {mutation.error?.message}</div>}
       </ModalBody>
       <ModalFooter>
-        <Button color="secondary" onClick={toggleModal} disabled={mutation.isPending}>
-          Cancel
+        <Button className="custom-transparent-btn" onClick={toggleModal} disabled={mutation.isPending}>
+          <TranslatedText text="cancel" ns="commentsModal" />
         </Button>
-        <Button color="primary" onClick={handleSaveComment} disabled={mutation.isPending || !comment.trim()}>
-          {mutation.isPending ? "Saving..." : "Save Comment"}
+        <Button  color="primary" onClick={handleSaveComment} disabled={mutation.isPending || !comment.trim()}>
+          {mutation.isPending ? (
+            <TranslatedText text="saving" ns="commentsModal" />
+          ) : (
+            <TranslatedText text="saveComment" ns="commentsModal" />
+          )}
         </Button>
       </ModalFooter>
     </Modal>

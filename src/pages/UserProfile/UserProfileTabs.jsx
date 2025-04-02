@@ -3,11 +3,12 @@ import { Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 
 import ProfileInfo from "./ProfileInfo";
 import "./userProfileTabs.css";
 import FavMovies from "./FavMovies";
+import TranslatedText from "../../components/Language/TranslatedText";
 
 const tabs = [
-  { ID: "1", title: "Fav Movies", content: <FavMovies /> },
+  { ID: "1", title:  <TranslatedText text='favMovies' ns="profile" />, content: <FavMovies /> },
   // { ID: "2", title: "Settings", content: "User settings content goes here." },
-  { ID: "2", title: "Profile Info", content: <ProfileInfo /> },
+  { ID: "2", title: <TranslatedText text='profileInfo' ns="profile" /> , content: <ProfileInfo /> },
 ];
 
 const UserProfileTabs = () => {

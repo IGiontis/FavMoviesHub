@@ -10,7 +10,6 @@ const FriendRequestButton = ({ status, onClick, isLoading, disabled }) => {
   let buttonContent;
   let buttonColor;
   let buttonDisabled = disabled || isLoading;
-console.log(status)
 
   switch (status) {
     case "friend":

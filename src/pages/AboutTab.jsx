@@ -1,61 +1,144 @@
 import { Col, Container, Row } from "reactstrap";
+import TranslatedText from "../components/Language/TranslatedText";
 
 const AboutTab = () => {
   return (
-    <Container fluid className="pt-4">
+    <Container fluid className="pt-4 px-4">
       <Row>
         <Col>
           <div className="mb-4">
-            <label className="fw-bold fs-4">Καλώς ήρθατε στο Fav Movies Share 🎬</label>
+            <label className="fw-bold fs-4">
+              <TranslatedText text="favMoviesShare" ns="about" />
+            </label>
             <p>
-              Μια εφαρμογή που σας επιτρέπει να ανακαλύψετε ταινίες, να τις αποθηκεύσετε στα αγαπημένα σας και να
-              συνδεθείτε με φίλους για να μοιραστείτε τις προτιμήσεις σας!
+              <TranslatedText text="aboutText" ns="about" />
             </p>
           </div>
 
           <div className="mb-4">
-            <label className="fw-bold fs-5">🔍 Τι μπορείτε να κάνετε;</label>
+            <label className="fw-bold fs-5">
+              <TranslatedText text="whatYouCanDo" ns="about" />
+            </label>
             <ul>
               <li>
-                <span className="fw-semibold">Αναζήτηση ταινιών:</span> Βρείτε πληροφορίες για τις αγαπημένες σας ταινίες εύκολα μέσω του API, χωρίς να απαιτείται λογαριασμός.
+                <span className="fw-semibold">
+                  <TranslatedText text="searchMovies" ns="about" />
+                </span>{" "}
+                <TranslatedText text="searchMoviesDescription" ns="about" />
               </li>
               <li>
-                <span className="fw-semibold">Δημιουργία λογαριασμού:</span> Εγγραφείτε για να αποκτήσετε επιπλέον δυνατότητες!
+                <span className="fw-semibold">
+                  <TranslatedText text="createAccount" ns="about" />
+                </span>{" "}
+                <TranslatedText text="createAccountDescription" ns="about" />
               </li>
               <li>
-                <span className="fw-semibold">Αποθήκευση αγαπημένων:</span> Κρατήστε μια λίστα με τις αγαπημένες σας ταινίες.
+                <span className="fw-semibold">
+                  <TranslatedText text="saveFavorites" ns="about" />
+                </span>{" "}
+                <TranslatedText text="saveFavoritesDescription" ns="about" />
               </li>
               <li>
-                <span className="fw-semibold">Αξιολόγηση ταινιών:</span> Αφήστε κριτικές και δώστε βαθμολογίες στις ταινίες που έχετε δει.
+                <span className="fw-semibold">
+                  <TranslatedText text="rateMovies" ns="about" />
+                </span>{" "}
+                <TranslatedText text="rateMoviesDescription" ns="about" />
               </li>
               <li>
-                <span className="fw-semibold">Σχόλια:</span> Συζητήστε για τις ταινίες αφήνοντας σχόλια.
+                <span className="fw-semibold">
+                  <TranslatedText text="comments" ns="about" />
+                </span>{" "}
+                <TranslatedText text="commentsDescription" ns="about" />
               </li>
               <li>
-                <span className="fw-semibold">Κοινωνική διάδραση:</span> Προσθέστε φίλους, δείτε τις αγαπημένες τους ταινίες, τις βαθμολογίες και τα σχόλιά τους.
+                <span className="fw-semibold">
+                  <TranslatedText text="socialInteraction" ns="about" />
+                </span>{" "}
+                <TranslatedText text="socialInteractionDescription" ns="about" />
               </li>
             </ul>
           </div>
 
           <div className="mb-4">
-            <label className="fw-bold fs-5">🛠 Τεχνολογίες που χρησιμοποιήθηκαν</label>
+            <label className="fw-bold fs-5">
+              <TranslatedText text="technologiesUsed" ns="about" />
+            </label>
             <ul>
               <li>
-                <span className="fw-semibold">Frontend:</span> React.js, React Router DOM, Reactstrap, Redux Toolkit, React Query (useQuery, useMutation), CSS Modules, Bootstrap 5, CSS3
+                <span className="fw-semibold">
+                  <TranslatedText text="frontend" ns="about" />
+                </span>{" "}
+                <TranslatedText text="frontendDescription" ns="about" />
               </li>
               <li>
-                <span className="fw-semibold">Backend & Authentication:</span> Firebase για database, authentication και real-time δεδομένα
+                <span className="fw-semibold">
+                  <TranslatedText text="backendAndAuth" ns="about" />
+                </span>{" "}
+                <TranslatedText text="backendAndAuthDescription" ns="about" />
+              </li>
+              <li>
+                <span className="fw-semibold">
+                  <TranslatedText text="hosting" ns="about" />
+                </span>{" "}
+                <TranslatedText text="hostingDescription" ns="about" />
+              </li>
+              <li>
+                <span className="fw-semibold">
+                  <TranslatedText text="multiLanguageSupport" ns="about" />
+                </span>{" "}
+                <TranslatedText text="multiLanguageSupportDescription" ns="about" />
               </li>
             </ul>
           </div>
 
           <div className="mb-4">
-            <label className="fw-bold fs-5">🎯 Στόχος του Project</label>
-            <p>
-              Αυτό το project δημιουργήθηκε ως showcase των δεξιοτήτων μου στην ανάπτυξη σύγχρονων web εφαρμογών με
-              React και Firebase. Στόχος μου είναι να κατασκευάζω λειτουργικές, διαδραστικές και καλοσχεδιασμένες
-              εφαρμογές που προσφέρουν μια μοναδική εμπειρία χρήστη.
-            </p>
+            <label className="fw-bold fs-5">
+              <TranslatedText text="projectGoal" ns="about" />
+            </label>
+
+            <ul>
+              <li>
+                <TranslatedText text="projectGoalText" ns="about" />
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-4">
+            <label className="fw-bold fs-5">
+              <TranslatedText text="mainFeatures" ns="about" />
+            </label>
+            <ul>
+              <li>
+                <span className="fw-semibold">
+                  <TranslatedText text="searchAndSaveMovies" ns="about" />
+                </span>{" "}
+                <TranslatedText text="searchAndSaveMoviesDescription" ns="about" />
+              </li>
+              <li>
+                <span className="fw-semibold">
+                  <TranslatedText text="socialInteractionOnlyWithFriends" ns="about" />
+                </span>{" "}
+                <TranslatedText text="socialInteractionOnlyWithFriendsDescription" ns="about" />
+              </li>
+              <li>
+                <span className="fw-semibold">
+                  <TranslatedText text="realTimeInteraction" ns="about" />
+                </span>{" "}
+                <TranslatedText text="realTimeInteractionDescription" ns="about" />
+              </li>
+              <li>
+                <span className="fw-semibold">
+                  <TranslatedText text="friendsAndProtectedAccounts" ns="about" />
+                </span>{" "}
+                <TranslatedText text="friendsAndProtectedAccountsDescription" ns="about" />
+              </li>
+              <li>
+                <span className="fw-semibold">
+                  <TranslatedText text="favoriteMoviesWithFriends" ns="about" />
+                </span>{" "}
+                <TranslatedText text="favoriteMoviesWithFriendsDescription" ns="about" />
+              </li>
+            </ul>
           </div>
         </Col>
       </Row>

@@ -17,6 +17,16 @@ import grHome from "./locales/gr/home.json";
 import enMovie from "./locales/en/movie.json";
 import grMovie from "./locales/gr/movie.json";
 
+import enCommentsModal from "./locales/en/commentsModal.json";
+import grCommentsModal from "./locales/gr/commentsModal.json";
+
+
+import enAbout from "./locales/en/about.json";
+import grAbout from "./locales/gr/about.json";
+
+import enProfile from "./locales/en/profile.json";
+import grProfile from "./locales/gr/profile.json";
+
 // Add other namespaces if necessary
 // import enCommon from "./locales/en/common.json";
 // import grCommon from "./locales/gr/common.json";
@@ -28,6 +38,9 @@ const resources = {
     friendsTab: enFriendsTab,
     home: enHome,
     movie: enMovie,
+    commentsModal: enCommentsModal,
+    about: enAbout,
+    profile: enProfile,
     // common: enCommon, // Add other namespaces as needed
   },
   gr: {
@@ -36,7 +49,9 @@ const resources = {
     friendsTab: grFriendsTabs,
     home: grHome,
     movie: grMovie,
-
+    commentsModal: grCommentsModal,
+    about: grAbout,
+    profile: grProfile,
     // common: grCommon, // Add other namespaces as needed
   },
 };

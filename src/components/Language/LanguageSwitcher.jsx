@@ -19,7 +19,7 @@ const LanguageSwitcher = () => {
     <IconButton
       onClick={toggleLanguage}
       color="primary"
-      className="p-0"
+      className="px-3"
       aria-label={i18n.language === "en" ? "Switch to Greek" : "Switch to English"}
     >
       {i18n.language === "en" ? (

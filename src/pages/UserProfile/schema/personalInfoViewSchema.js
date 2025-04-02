@@ -2,7 +2,7 @@ const getPersonalInfoViewSchema = (user) => {
   const schema = {
     fields: [
       {
-        label: "First Name",
+        label: "firstName", // Translation key
         type: "string",
         fieldType: "textfield",
         value: user.firstName,
@@ -10,7 +10,7 @@ const getPersonalInfoViewSchema = (user) => {
         editable: true,
       },
       {
-        label: "Username",
+        label: "userName",
         type: "string",
         fieldType: "textfield",
         value: user.username,
@@ -18,7 +18,7 @@ const getPersonalInfoViewSchema = (user) => {
         editable: true,
       },
       {
-        label: "Last Name",
+        label: "lastName",
         type: "string",
         fieldType: "textfield",
         value: user.lastName,
@@ -26,7 +26,7 @@ const getPersonalInfoViewSchema = (user) => {
         editable: true,
       },
       {
-        label: "Email",
+        label: "email",
         type: "string",
         fieldType: "email",
         value: user.email,
@@ -34,20 +34,13 @@ const getPersonalInfoViewSchema = (user) => {
         editable: true,
       },
       {
-        label: "Phone Number",
+        label: "phoneNumber",
         type: "number",
         fieldType: "textfield",
         value: user.phoneNumber,
         attribute: "phoneNumber",
         editable: true,
       },
-      //   {
-      //     label: "Password",
-      //     type: "string",
-      //     fieldType: "password",
-      //     attribute: "password",
-      //     editable: true,
-      //   },
     ],
   };
   return schema;

@@ -3,7 +3,7 @@
   "friendRequest": "Αίτημα φίλου",
   "searchUsername": "Αναζήτηση Χρήστη",
   "friendsRequests": "Αιτήματα φιλίας",
-  "searchUsernamePlaceholder": "Αναζήτηση χρήστη...",
+  "searchUsernamePlaceholder": "Παράδειγμα: Liakos",
   "errorFetchingUsers": "Σφάλμα κατά την αναζήτηση χρηστών",
   "noUsersFound": "Δεν βρέθηκαν χρήστες",
   "usersFound": "Βρέθηκαν Χρήστες",
