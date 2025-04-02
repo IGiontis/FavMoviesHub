@@ -10,6 +10,7 @@ import FriendsList from "./FriendsList";
 import TranslatedText from "../../components/Language/TranslatedText";
 import FriendTitleButton from "./FriendTitleButton";
 import LoaderSpinner from "../../components/LoaderSpinner";
+import "../UserProfile/userProfileTabs.css";
 
 const FriendsTab = () => {
   // Fetch user data
