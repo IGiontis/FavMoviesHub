@@ -78,6 +78,13 @@ const AboutTab = () => {
               </li>
               <li>
                 <span className="fw-semibold">
+                  <TranslatedText text="movieAPI" ns="about" />
+                </span>
+                <TranslatedText text="movieAPIDescription" ns="about" />
+              </li>
+
+              <li>
+                <span className="fw-semibold">
                   <TranslatedText text="hosting" ns="about" />
                 </span>{" "}
                 <TranslatedText text="hostingDescription" ns="about" />

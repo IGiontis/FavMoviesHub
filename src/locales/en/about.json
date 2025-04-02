@@ -22,7 +22,7 @@
   "hosting": "Build Tools and Hosting:",
   "hostingDescription": "The project is built with Vite and hosted on Netlify for a fast and reliable experience.",
   "multiLanguageSupport": "Bilingual Support:",
-  "multiLanguageSupportDescription": "Supports multiple languages, allowing customization to the user's preferred language.",
+  "multiLanguageSupportDescription": "Supports two languages, allowing customization to the user's preferred language.",
   "projectGoal": "🎯 Project Goal",
   "projectGoalText": "This project was created to showcase my skills in web application development while providing an interactive and social movie experience. The goal was to build an application that combines both personal use and social interaction, allowing users to discover, rate, and share movies with their friends.",
   "mainFeatures": "👥 Main Features",
@@ -35,5 +35,7 @@
   "friendsAndProtectedAccounts": "Friends and Protected Accounts:",
   "friendsAndProtectedAccountsDescription": "Keep your information private with protected accounts.",
   "favoriteMoviesWithFriends": "Favorite Movies with Friends:",
-  "favoriteMoviesWithFriendsDescription": "Share and compare your favorite movies with friends."
+  "favoriteMoviesWithFriendsDescription": "Share and compare your favorite movies with friends.",
+  "movieAPI": "Movie API: ",
+  "movieAPIDescription": "Uses the OMDb API to fetch movie data."
 }
