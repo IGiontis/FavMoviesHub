@@ -73,7 +73,7 @@ const FriendsTab = () => {
         handleFriendSelection={handleFriendSelection}
         selectedFriend={selectedFriend}
         usernames={usernames}
-        isFriendSelectionDisabled={isFriendSelectionDisabled} 
+        isFriendSelectionDisabled={isFriendSelectionDisabled}
       />
     );
   };
@@ -83,23 +83,21 @@ const FriendsTab = () => {
     if (!selectedFriend) return null;
 
     return (
-      <Row className="pt-5">
+      <Row className="pt-3">
         <Col>
-          <h5>
+          <h4>
             <TranslatedText text="likedMoviesOfSelectedFriend" ns="friendsTab" />
-          </h5>
-          {isMoviesLoading && (
-           <LoaderSpinner text="Loading movies..."/>
-          )}
+          </h4>
+          {isMoviesLoading && <LoaderSpinner text="Loading movies..." />}
           {!isMoviesLoading && friendsLikedMovies.length === 0 && (
             <p>
               <TranslatedText text="noLikedMovies" ns="friendsTab" />
             </p>
           )}
           {!isMoviesLoading && friendsLikedMovies.length > 0 && (
-            <Row className="g-3">
+            <Row>
               {friendsLikedMovies.map((movie) => (
-                <Col key={movie.id} xs={12} sm={6} md={6} lg={5} xl={4} xxl={3}>
+                <Col className="mb-4" key={movie.id} xs={12} sm={6} md={6} lg={5} xl={4} xxl={3}>
                   <MovieCard
                     movie={movie}
                     isLiked={isLikedByMe(movie)}
@@ -117,15 +115,21 @@ const FriendsTab = () => {
   };
 
   return (
-    <Container fluid className="pt-3 px-4">
-      <Row>
-        <Col>
-          <FriendTitleButton />
-        </Col>
-      </Row>
-      {renderFriendsList()}
-      {renderLikedMovies()}
-    </Container>
+    <>
+      <Container fluid className="pt-3 px-4">
+        <Row>
+          <Col>
+            <FriendTitleButton />
+          </Col>
+        </Row>
+        {renderFriendsList()}
+        {/* {renderLikedMovies()} */}
+      </Container>
+
+      <Container fluid className=" pt-0  px-4 content-container" >
+        {renderLikedMovies()}
+      </Container>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import FriendsListCards from "./FriendsListCards";
 import PropTypes from "prop-types";
 
 const FriendsList = ({ friends, handleFriendSelection, selectedFriend, usernames, isFriendSelectionDisabled }) => (
-  <Row className="g-3">
+  <Row className="g-3 pb-4">
     {friends.map((friend, index) => (
       <Col key={friend.id} xs="auto">
         <FriendsListCards
