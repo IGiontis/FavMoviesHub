@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Col, Container, Row, Spinner } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import { useFriends } from "../../hooks/useFriends";
 import { useFetchUsernames } from "../../hooks/useFetchUsernames";
 import { useLikedMovies } from "../../hooks/useFetchLikedMovies";
@@ -10,6 +10,7 @@ import FriendsList from "./FriendsList";
 import TranslatedText from "../../components/Language/TranslatedText";
 import FriendTitleButton from "./FriendTitleButton";
 import LoaderSpinner from "../../components/LoaderSpinner";
+import { Skeleton } from "@mui/material"; // Import Skeleton from Material UI
 import "../UserProfile/userProfileTabs.css";
 
 const FriendsTab = () => {
@@ -65,7 +66,7 @@ const FriendsTab = () => {
 
   // Render Friends List Section
   const renderFriendsList = () => {
-    if (isFriendsLoading) return <Spinner />;
+    if (isFriendsLoading) return <LoaderSpinner />; // Change spinner to a loader component if needed
     if (friends.length === 0) return <p>No friends yet.</p>;
 
     return (
@@ -79,7 +80,7 @@ const FriendsTab = () => {
     );
   };
 
-  // Render Liked Movies Section
+  // Render Liked Movies Section with Skeleton Loader
   const renderLikedMovies = () => {
     if (!selectedFriend) return null;
 
@@ -89,7 +90,16 @@ const FriendsTab = () => {
           <h4>
             <TranslatedText text="likedMoviesOfSelectedFriend" ns="friendsTab" />
           </h4>
-          {isMoviesLoading && <LoaderSpinner text="Loading movies..." />}
+          {isMoviesLoading && (
+            <Row>
+              {/* Skeleton loader for the MovieCards */}
+              {[...Array(6)].map((_, index) => (
+                <Col key={index} className="mb-4" xs={12} sm={6} md={6} lg={5} xl={4} xxl={3}>
+                  <Skeleton variant="rectangular" height={400} />
+                </Col>
+              ))}
+            </Row>
+          )}
           {!isMoviesLoading && friendsLikedMovies.length === 0 && (
             <p>
               <TranslatedText text="noLikedMovies" ns="friendsTab" />
@@ -124,10 +134,9 @@ const FriendsTab = () => {
           </Col>
         </Row>
         {renderFriendsList()}
-        {/* {renderLikedMovies()} */}
       </Container>
 
-      <Container fluid className=" pt-0  px-4 content-container" >
+      <Container fluid className=" pt-0  px-4 content-container">
         {renderLikedMovies()}
       </Container>
     </>

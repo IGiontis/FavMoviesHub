@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useLikedMovies } from "../../hooks/useFetchLikedMovies";
 import useLikedMoviesActions from "@/hooks/useLikedMoviesActions";
 import MovieCard from "./MovieCard";
-import LoaderSpinner from "../../components/LoaderSpinner";
+import { Skeleton } from "@mui/material";
 
 const MoviesGallery = ({ filteredMovies, colSizes }) => {
   const user = useSelector((state) => state.auth.user);
@@ -23,7 +23,19 @@ const MoviesGallery = ({ filteredMovies, colSizes }) => {
     }
   };
 
-  if (isLoading) return <LoaderSpinner text='Loading movies...'/>;
+  if (isLoading) {
+    return (
+      <Container fluid>
+        <Row>
+          {[...Array(6)].map((_, index) => (
+            <Col key={index} {...colSizes} className="mb-4">
+              <Skeleton variant="rectangular" height={400} />
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    );
+  }
   if (error) return <p>Error loading liked movies</p>;
 
   return (
