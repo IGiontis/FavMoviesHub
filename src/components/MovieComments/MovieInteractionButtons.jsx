@@ -17,9 +17,10 @@ const MovieInteractionButtons = ({
   isFriendsCommentsShow,
   friendsComments,
 }) => {
-  const hasFriendsComments = friendsComments && friendsComments.length > 0;
+  const hasFriendsComments = friendsComments?.length > 0;
   const { data: comments, isLoading, isError } = useUserMovieComments(user.uid);
   const userComment = comments?.[movie.imdbID] || null;
+
   return (
     <div className="mt-3">
       <div className="d-flex align-items-center border-bottom pb-2">
@@ -69,9 +70,19 @@ const MovieInteractionButtons = ({
 
       <MovieUserComment user={user} movie={movie} comment={userComment} isLoading={isLoading} isError={isError} />
 
-      {isFriendsCommentsShow && (
-        <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} friendsComments={friendsComments} />
-      )}
+      {/* Apply fade transition with CSS classes */}
+      <div
+        className={classnames({
+          [styles.fadeEnter]: !isFriendsCommentsShow,
+          [styles.fadeEnterActive]: isFriendsCommentsShow,
+          [styles.fadeExit]: isFriendsCommentsShow,
+          [styles.fadeExitActive]: !isFriendsCommentsShow,
+        })}
+      >
+        {isFriendsCommentsShow && (
+          <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} friendsComments={friendsComments} />
+        )}
+      </div>
     </div>
   );
 };

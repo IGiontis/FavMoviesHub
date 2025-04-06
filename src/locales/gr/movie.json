@@ -1,10 +1,10 @@
 {
-    "year": "Έτος: ",
-    "type": "Τύπος: ",
-    "movie": "Ταινία",
-    "series": "Σειρά",
-    "noComments": "Κανένα σχόλιο ακόμα.",
-    "friendsComments": "Σχόλια Φίλων:",
-    "noFriendsComments": "Κανένα σχόλιο φίλων ακόμα."
-  }
-  
+  "year": "Έτος: ",
+  "type": "Τύπος: ",
+  "movie": "Ταινία",
+  "series": "Σειρά",
+  "noComments": "Κανένα σχόλιο ακόμα.",
+  "myComment": "Το σχόλιό μου:",
+  "friendsComments": "Σχόλια Φίλων:",
+  "noFriendsComments": "Κανένα σχόλιο φίλων ακόμα."
+}

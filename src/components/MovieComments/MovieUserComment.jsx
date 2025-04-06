@@ -5,12 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import useDeleteUserComment from "../../hooks/comments/useDeleteUserComment";
 import ConfirmationModal from "../ConfirmationModal";
-import TranslatedText from "../Language/TranslatedText";
 import LoaderSpinner from "../LoaderSpinner";
+import TranslatedText from "../Language/TranslatedText";
 
 const MovieUserComment = ({ user, movie, comment, isLoading, isError }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteUserComment();
+  
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev);
@@ -30,9 +31,11 @@ const MovieUserComment = ({ user, movie, comment, isLoading, isError }) => {
       {isLoading && <LoaderSpinner text="Loading comments..." />}
       {isError && <p>Error fetching comments.</p>}
 
-      {!isLoading && !isError && comment ? (
+      {!isLoading && !isError && comment && (
         <div className="d-flex align-items-center justify-content-between">
-          <p className="text-break mb-0 me-2">{comment}</p>
+          <div className="text-break mb-0 me-2 d-flex align-items-center"><div className="fw-medium me-2">
+            <TranslatedText text="myComment" ns="movie"/>
+           </div>{comment}</div>
           <Button
             color="link"
             size="sm"
@@ -44,14 +47,7 @@ const MovieUserComment = ({ user, movie, comment, isLoading, isError }) => {
             {isDeleting ? "Deleting..." : <FontAwesomeIcon icon={faTrash} />}
           </Button>
         </div>
-      ) : (
-        !isLoading &&
-        !isError && (
-          <p className="mb-0">
-            <TranslatedText text="noComments" ns="movie" />
-          </p>
-        )
-      )}
+      ) }
 
       <ConfirmationModal
         isOpen={isModalOpen}

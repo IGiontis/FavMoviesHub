@@ -1,6 +1,24 @@
-/* MovieInteractionButtons.module.css */
+/* Hover effect for the icon */
 .iconHoverable:hover {
-    color: #007bff !important;
-    transition: color 0.3s ease-in-out;
-  }
-  
+  color: #007bff !important;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Fade transition for the friends' comments */
+.fadeEnter {
+  opacity: 0;
+}
+
+.fadeEnterActive {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.fadeExit {
+  opacity: 1;
+}
+
+.fadeExitActive {
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}

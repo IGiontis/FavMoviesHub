@@ -4,6 +4,7 @@
   "movie": "Movie",
   "series": "Series",
   "noComments": "No Comment yet.",
+  "myComment":"My Comment:",
   "friendsComments": "Firend's Comments:",
   "noFriendsComments": "No Friends Comments yet."
 }
