@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { Col, Row, Container } from "reactstrap";
-import MoviesGallery from "./MoviesGallery";
+import MoviesGallery from "../../components/MovieCard/MoviesGallery";
 import { useMovies } from "@/hooks/useMovies";
 import { useDebounce } from "../../hooks/useDebounce";
 import SearchInput from "../../components/FormInputs/SearchInput";

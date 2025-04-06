@@ -5,7 +5,7 @@ import { useFriends } from "../../hooks/useFriends";
 import { useFetchUsernames } from "../../hooks/useFetchUsernames";
 import { useLikedMovies } from "../../hooks/useFetchLikedMovies";
 import useLikedMoviesActions from "@/hooks/useLikedMoviesActions";
-import MovieCard from "../LandingPage/MovieCard";
+import MovieCard from "../../components/MovieCard/MovieCard";
 import FriendsList from "./FriendsList";
 import TranslatedText from "../../components/Language/TranslatedText";
 import FriendTitleButton from "./FriendTitleButton";

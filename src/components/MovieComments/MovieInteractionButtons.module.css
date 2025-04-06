@@ -1,0 +1,6 @@
+/* MovieInteractionButtons.module.css */
+.iconHoverable:hover {
+    color: #007bff !important;
+    transition: color 0.3s ease-in-out;
+  }
+  

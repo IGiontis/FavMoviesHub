@@ -6,6 +6,7 @@ import MovieUserComment from "./MovieUserComment";
 import PropTypes from "prop-types";
 import FriendsMovieComments from "./FriendsMovieComments";
 import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
+import styles from "./MovieInteractionButtons.module.css";
 
 const MovieInteractionButtons = ({
   toggleCommentModal,
@@ -31,7 +32,7 @@ const MovieInteractionButtons = ({
           <FontAwesomeIcon
             icon={faComment}
             size="lg"
-            className={classnames({
+            className={classnames(styles.iconHoverable, {
               "text-primary": userComment,
               "text-secondary": !userComment,
             })}
