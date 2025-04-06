@@ -1,31 +1,38 @@
 import { Container, Card, CardBody, CardTitle, CardFooter } from "reactstrap";
 import GoToHomeButton from "../components/Buttons/GoToHomeButton";
-import { getLastUpdateDate } from "../utils/getLastUpdateDate";
+
+import TranslatedText from "../components/Language/TranslatedText";
+import LastUpdatedDate from "../components/LastUpdatedDate";
 
 const PrivacyPolicy = () => {
   return (
     <Container className="mt-5">
       <Card>
         <CardBody>
-          <CardTitle tag="h2">Πολιτική Απορρήτου</CardTitle>
-          <p>Τελευταία ενημέρωση: {getLastUpdateDate()}</p>
+          <CardTitle tag="h2">
+            <TranslatedText text="privacyPolicyTitle" ns="privacyPolicy" />
+          </CardTitle>
+          <LastUpdatedDate />
           <p>
-            Αυτή η πολιτική απορρήτου εξηγεί πώς συλλέγουμε, χρησιμοποιούμε και προστατεύουμε τα προσωπικά σας δεδομένα
-            κατά τη χρήση του ιστότοπού μας.
+            <TranslatedText text="privacyPolicyInfo" ns="privacyPolicy" />
           </p>
-          <h4>1. Πληροφορίες που Συλλέγουμε</h4>
+          <h4>
+            <TranslatedText text="infoCollectionTitle" ns="privacyPolicy" />
+          </h4>
           <p>
-            Συλλέγουμε πληροφορίες που παρέχετε κατά την εγγραφή σας, όπως όνομα, email και άλλα στοιχεία επικοινωνίας.
+            <TranslatedText text="infoCollectionContent" ns="privacyPolicy" />
           </p>
-          <h4>2. Πώς Χρησιμοποιούμε τις Πληροφορίες</h4>
+          <h4>
+            <TranslatedText text="howWeUseInfoTitle" ns="privacyPolicy" />
+          </h4>
           <p>
-            Τα δεδομένα σας χρησιμοποιούνται για τη βελτίωση των υπηρεσιών μας, την επικοινωνία μαζί σας και την ανάλυση
-            της χρήσης του ιστότοπου.
+            <TranslatedText text="howWeUseInfoContent" ns="privacyPolicy" />
           </p>
-          <h4>3. Ασφάλεια Δεδομένων</h4>
+          <h4>
+            <TranslatedText text="dataSecurityTitle" ns="privacyPolicy" />
+          </h4>
           <p>
-            Λαμβάνουμε μέτρα για την προστασία των προσωπικών σας δεδομένων, αλλά δεν μπορούμε να εγγυηθούμε πλήρη
-            ασφάλεια.
+            <TranslatedText text="dataSecurityContent" ns="privacyPolicy" />
           </p>
         </CardBody>
         <CardFooter className="d-flex justify-content-end">

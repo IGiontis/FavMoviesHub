@@ -1,0 +1,14 @@
+{
+  "termsOfUse": "Terms of use",
+  "lastUpdated": "Last Updated:",
+  "welcome": "Welcome to our website. By accessing and using this website, you agree to the following terms of use. If you do not agree, please do not use our service.",
+  "section1Title": "1. Use of the Service",
+  "section1": "The website is provided for personal and non-commercial use. Reproduction, distribution, or modification of the content is not allowed without permission.",
+  "section2Title": "2. User Accounts",
+  "section2": "If you create an account, you are responsible for maintaining the security of your personal data.",
+  "section3Tittle": "3. Limitation of Liability",
+  "section3": "We are not responsible for any losses or damages arising from the use of this website.",
+  "section4Title": "4. Use of OMDB API",
+  "section4": "The website uses the OMDB API to retrieve movie information. We are not responsible for the accuracy of data provided by third-party providers.",
+  "goToHome": "Home"
+}

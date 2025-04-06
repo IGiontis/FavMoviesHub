@@ -12,7 +12,7 @@ const TermsOfUse = lazy(() => import("../pages/TermsOfUse"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 
 const AppRoutes = () => (
-  <Suspense fallback={<LoaderSpinner/>}>
+  <Suspense fallback={<LoaderSpinner />}>
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/about" element={<AboutTab />} />
@@ -26,11 +26,13 @@ const AppRoutes = () => (
           </ProtectedRoute>
         }
       />
-      <Route path="friends" element={
-        <ProtectedRoute>
-       <FriendsTab/>
-        </ProtectedRoute>
-      }
+      <Route
+        path="friends"
+        element={
+          <ProtectedRoute>
+            <FriendsTab />
+          </ProtectedRoute>
+        }
       />
       <Route path="*" element={<PageNotFound />} />
     </Routes>

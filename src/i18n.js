@@ -20,7 +20,6 @@ import grMovie from "./locales/gr/movie.json";
 import enCommentsModal from "./locales/en/commentsModal.json";
 import grCommentsModal from "./locales/gr/commentsModal.json";
 
-
 import enAbout from "./locales/en/about.json";
 import grAbout from "./locales/gr/about.json";
 
@@ -28,9 +27,16 @@ import enProfile from "./locales/en/profile.json";
 import grProfile from "./locales/gr/profile.json";
 
 import enSignInRegister from "./locales/en/signInRegister.json";
-import grSignInRegister from "./locales/gr/singInRegister.json";
+import grSignInRegister from "./locales/gr/signInRegister.json";
 
+import enTermsOfUse from "./locales/en/termsOfUse.json";
+import grTermsOfUse from "./locales/gr/termsOfUse.json";
 
+import enPrivacyPolicy from "./locales/en/privacyPolicy.json";
+import grPrivacyPolicy from "./locales/gr/privacyPolicy.json";
+
+import enMonths from "./locales/en/months.json";
+import grMonths from "./locales/gr/months.json";
 
 // Add other namespaces if necessary
 // import enCommon from "./locales/en/common.json";
@@ -47,6 +53,9 @@ const resources = {
     about: enAbout,
     profile: enProfile,
     signInRegister: enSignInRegister,
+    termOfUse: enTermsOfUse,
+    privacyPolicy: enPrivacyPolicy,
+    months: enMonths,
     // common: enCommon, // Add other namespaces as needed
   },
   gr: {
@@ -59,6 +68,9 @@ const resources = {
     about: grAbout,
     profile: grProfile,
     signInRegister: grSignInRegister,
+    termOfUse: grTermsOfUse,
+    privacyPolicy: grPrivacyPolicy,
+    months: grMonths,
     // common: grCommon, // Add other namespaces as needed
   },
 };

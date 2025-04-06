@@ -4,6 +4,7 @@ import NavbarLandingPage from "../pages/Navigation/NavbarLandingPage";
 import { ToastContainer, Zoom } from "react-toastify";
 import FriendPopUpTabCard from "@/pages/FriedPopUpTabCard/FriendPopUpTabCard";
 import { useSelector } from "react-redux";
+import TranslatedText from "./Language/TranslatedText";
 
 const Layout = ({ children }) => {
   const isAddFriendOpen = useSelector((state) => state.friends.isAddFriendOpen);
@@ -18,10 +19,10 @@ const Layout = ({ children }) => {
           <p>© {new Date().getFullYear()} ILIAS GIONTIS. All Rights Reserved.</p>
           <div className="mt-2">
             <Link to="/terms" className="text-primary mx-2">
-              Όροι Χρήσης
+              <TranslatedText text="termsOfUse" ns="termOfUse" />
             </Link>
             <Link to="/privacy" className="text-primary mx-2">
-              Πολιτική Απορρήτου
+              <TranslatedText text="privacyPolicyTitle" ns="privacyPolicy" />
             </Link>
           </div>
         </footer>
