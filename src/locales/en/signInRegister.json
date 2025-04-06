@@ -1,0 +1,18 @@
+{
+  "signIn": "Sign In",
+  "usernameEmail": "Username/Email",
+  "usernameOrEmail": "Username or Email",
+  "password": "Password",
+  "enterYourPassword": "Enter your password",
+  "cancel": "Cancel",
+  "save": "Save",
+
+  "username": "Username",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email",
+  "phoneNumber": "Phone Number",
+  "confirmPassword": "Confirm Password"
+
+ 
+}

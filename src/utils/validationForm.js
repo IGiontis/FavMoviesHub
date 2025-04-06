@@ -68,7 +68,7 @@ export const generateValidationForm = (formSchema) => {
 
     // Apply required validation if `is_not_null` is set
     if (field.validation?.is_not_null) {
-      validation = validation.required(`${field.label} is required`);
+      validation = validation.required(`${field.validationLabel} is required`);
     }
 
     // Asynchronous validation for username (case insensitive)
@@ -76,7 +76,7 @@ export const generateValidationForm = (formSchema) => {
       validation = validation
         .matches(
           /^[A-Za-z][A-Za-z0-9_-]*$/,
-          "Username must start with a letter and can only contain letters, numbers, _ or - . Spaces are not allowed."
+          "Username must start with a letter and can only contain letters, numbers, _ or - . Spaces are not allowed, also only in English."
         )
         .min(4, "Username must be at least 4 characters long")
         .max(20, "Username cannot be longer than 20 characters")

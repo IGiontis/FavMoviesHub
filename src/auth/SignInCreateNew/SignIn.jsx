@@ -1,23 +1,24 @@
 import { useMemo } from "react";
 import { useFormik } from "formik";
 import { Card, CardBody, CardFooter, CardHeader } from "reactstrap";
-
 import { useDispatch } from "react-redux";
-
+import { useTranslation } from "react-i18next"; // <-- Import useTranslation
 import FormInputsComponent from "../../components/FormInputs/FormInputsComponent";
 import CancelSaveButtons from "../../components/FormInputs/CancelSaveButtons";
 import getSignInSchema from "./schema/signInSchema";
 import { generateValidationForm } from "../../utils/validationForm";
-
 import { signInHandler } from "../../services/signInCreateNewServices";
 import HeaderCloseBtn from "../../components/FormInputs/HeaderCloseBtn";
 import PropTypes from "prop-types";
 
 const SignIn = ({ toggleModal }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); // <-- Get translation function
 
   const schema = useMemo(() => getSignInSchema(), []);
-  const validationSchema = useMemo(() => generateValidationForm(schema), [schema]);
+  
+  // Pass `t` (translation function) to generateValidationForm
+  const validationSchema = useMemo(() => generateValidationForm(schema, t), [schema, t]);
 
   const formik = useFormik({
     initialValues: {
@@ -38,9 +39,6 @@ const SignIn = ({ toggleModal }) => {
         setSubmitting(false); // Ensure submitting state resets
       }
     },
-    
-    
-    
   });
 
   const handleSave = () => {

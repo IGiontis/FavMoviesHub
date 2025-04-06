@@ -2,7 +2,7 @@ const getPersonalInfoViewSchema = (user) => {
   const schema = {
     fields: [
       {
-        label: "firstName", // Translation key
+        label: "firstName", 
         type: "string",
         fieldType: "textfield",
         value: user.firstName,

@@ -27,6 +27,11 @@ import grAbout from "./locales/gr/about.json";
 import enProfile from "./locales/en/profile.json";
 import grProfile from "./locales/gr/profile.json";
 
+import enSignInRegister from "./locales/en/signInRegister.json";
+import grSignInRegister from "./locales/gr/singInRegister.json";
+
+
+
 // Add other namespaces if necessary
 // import enCommon from "./locales/en/common.json";
 // import grCommon from "./locales/gr/common.json";
@@ -41,6 +46,7 @@ const resources = {
     commentsModal: enCommentsModal,
     about: enAbout,
     profile: enProfile,
+    signInRegister: enSignInRegister,
     // common: enCommon, // Add other namespaces as needed
   },
   gr: {
@@ -52,6 +58,7 @@ const resources = {
     commentsModal: grCommentsModal,
     about: grAbout,
     profile: grProfile,
+    signInRegister: grSignInRegister,
     // common: grCommon, // Add other namespaces as needed
   },
 };

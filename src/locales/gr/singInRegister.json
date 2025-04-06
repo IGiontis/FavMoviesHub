@@ -1,0 +1,18 @@
+{
+  "signIn": "Σύνδεση",
+  "usernameEmail": "Όνομα χρήστη/email",
+  "usernameOrEmail": "Όνομα χρήστη ή email",
+  "password": "Κωδικός πρόσβασης",
+  "enterYourPassword": "Εισάγετε τον κωδικό πρόσβασης",
+  "cancel": "Ακύρωση",
+  "save": "Αποθήκευση",
+
+  "username": "Όνομα χρήστη",
+  "firstName": "Όνομα",
+  "lastName": "Επώνυμο",
+  "email": "Email",
+  "phoneNumber": "Αριθμός τηλεφώνου",
+  "confirmPassword": "Επιβεβαίωση κωδικού πρόσβασης"
+
+
+}
