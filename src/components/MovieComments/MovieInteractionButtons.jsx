@@ -1,9 +1,11 @@
+import classnames from "classnames";
 import { Badge, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faComments } from "@fortawesome/free-solid-svg-icons";
 import MovieUserComment from "./MovieUserComment";
 import PropTypes from "prop-types";
 import FriendsMovieComments from "./FriendsMovieComments";
+import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 
 const MovieInteractionButtons = ({
   toggleCommentModal,
@@ -14,43 +16,57 @@ const MovieInteractionButtons = ({
   isFriendsCommentsShow,
   friendsComments,
 }) => {
+  const hasFriendsComments = friendsComments && friendsComments.length > 0;
+  const { data: comments, isLoading, isError } = useUserMovieComments(user.uid);
+  const userComment = comments?.[movie.imdbID] || null;
   return (
     <div className="mt-3">
       <div className="d-flex align-items-center border-bottom pb-2">
-        <span className="me-4">
-          <Button
-            color="link"
-            className="p-0 border-0 bg-transparent position-relative"
-            onClick={toggleCommentModal}
-            aria-label="Comment on Movie"
-          >
-            <FontAwesomeIcon icon={faComment} size="lg" className="text-primary" />
-          </Button>
-        </span>
-        <span>
-          <Button
-            color="link"
-            className="p-0 border-0 bg-transparent position-relative"
-            onClick={toggleShowFriendsComments}
-            aria-label="Show Friends' Comments"
-          >
-            <FontAwesomeIcon icon={faComments} size="lg" className="text-primary" />
-            {friendsCommentCount > 0 && (
-              <Badge
-                color="danger"
-                pill
-                className="position-absolute top-0 start-100 translate-middle"
-                style={{ fontSize: "0.75rem", minWidth: "1.25rem", padding: "0.2rem 0.4rem" }}
-              >
-                {friendsCommentCount}
-              </Badge>
-            )}
-          </Button>
-        </span>
+        <Button
+          color="link"
+          className="p-0 border-0 bg-transparent position-relative me-4"
+          onClick={toggleCommentModal}
+          aria-label="Comment on Movie"
+        >
+          <FontAwesomeIcon
+            icon={faComment}
+            size="lg"
+            className={classnames({
+              "text-primary": userComment,
+              "text-secondary": !userComment,
+            })}
+          />
+        </Button>
+
+        <Button
+          color="link"
+          className="p-0 border-0 bg-transparent position-relative"
+          onClick={toggleShowFriendsComments}
+          aria-label="Show Friends' Comments"
+        >
+          <FontAwesomeIcon
+            icon={faComments}
+            size="lg"
+            className={classnames({
+              "text-primary": hasFriendsComments,
+              "text-secondary": !hasFriendsComments,
+            })}
+          />
+
+          {hasFriendsComments && (
+            <Badge
+              color="danger"
+              pill
+              className="position-absolute top-0 start-100 translate-middle"
+              style={{ fontSize: "0.75rem", minWidth: "1.25rem", padding: "0.2rem 0.4rem" }}
+            >
+              {friendsCommentCount}
+            </Badge>
+          )}
+        </Button>
       </div>
 
-
-      <MovieUserComment user={user} movie={movie} />
+      <MovieUserComment user={user} movie={movie} comment={userComment} isLoading={isLoading} isError={isError} />
 
       {isFriendsCommentsShow && (
         <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} friendsComments={friendsComments} />

@@ -3,18 +3,14 @@ import PropTypes from "prop-types";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 import useDeleteUserComment from "../../hooks/comments/useDeleteUserComment";
 import ConfirmationModal from "../ConfirmationModal";
 import TranslatedText from "../Language/TranslatedText";
 import LoaderSpinner from "../LoaderSpinner";
 
-const MovieUserComment = ({ user, movie }) => {
+const MovieUserComment = ({ user, movie, comment, isLoading, isError }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: comments, isLoading, isError } = useUserMovieComments(user.uid);
   const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteUserComment();
-
-  const comment = comments?.[movie.imdbID] || null;
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev);
@@ -31,9 +27,10 @@ const MovieUserComment = ({ user, movie }) => {
 
   return (
     <div className="mt-3">
-      {isLoading && <LoaderSpinner text="Loading comments..."/>}
+      {isLoading && <LoaderSpinner text="Loading comments..." />}
       {isError && <p>Error fetching comments.</p>}
-      {comment ? (
+
+      {!isLoading && !isError && comment ? (
         <div className="d-flex align-items-center justify-content-between">
           <p className="text-break mb-0 me-2">{comment}</p>
           <Button
@@ -48,10 +45,14 @@ const MovieUserComment = ({ user, movie }) => {
           </Button>
         </div>
       ) : (
-        <p className="mb-0">
-          <TranslatedText text="noComments" ns="movie" />
-        </p>
+        !isLoading &&
+        !isError && (
+          <p className="mb-0">
+            <TranslatedText text="noComments" ns="movie" />
+          </p>
+        )
       )}
+
       <ConfirmationModal
         isOpen={isModalOpen}
         message={`Are you sure you want to delete this comment?`}
@@ -67,6 +68,9 @@ MovieUserComment.propTypes = {
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
   }).isRequired,
+  comment: PropTypes.string,
+  isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
 };
 
 export default memo(MovieUserComment);

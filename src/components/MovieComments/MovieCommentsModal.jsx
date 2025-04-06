@@ -7,6 +7,8 @@ import { saveUserMovieComment } from "../../services/movieComments/movieCommentS
 import TranslatedText from "../Language/TranslatedText";
 import { useTranslation } from "react-i18next";
 
+const MAX_COMMENT_LENGTH = 100;
+
 const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }) => {
   const { t } = useTranslation("commentsModal");
   const [comment, setComment] = useState("");
@@ -15,18 +17,17 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
 
   useEffect(() => {
     if (userComments?.[movieID]) {
-      setComment(userComments[movieID]); // If comment exists, set it
+      setComment(userComments[movieID]);
     } else {
-      setComment(""); // If deleted, reset the state
+      setComment("");
     }
   }, [userComments, movieID]);
 
-  const mutation = useMutation({
+  const saveCommentMutation = useMutation({
     mutationFn: saveUserMovieComment,
     onSuccess: () => {
-      setComment("");
       toggleModal();
-      queryClient.invalidateQueries(["userMovieComments", userID]); // Invalidate entire user comments cache
+      queryClient.invalidateQueries(["userMovieComments", userID]);
     },
     onError: (error) => {
       console.error("Error saving comment:", error);
@@ -34,76 +35,119 @@ const MovieCommentsModal = ({ movieID, userID, isOpen, toggleModal, movieTitle }
   });
 
   const handleSaveComment = useCallback(async () => {
-    if (comment.trim() === userComments?.[movieID]) return; // Prevent unnecessary API call
+    if (comment.trim() === userComments?.[movieID]) return;
     try {
-      await mutation.mutateAsync({ userID, movieID, comment });
+      await saveCommentMutation.mutateAsync({ userID, movieID, comment });
     } catch (error) {
       console.error("Failed to save comment:", error);
     }
-  }, [mutation, userID, movieID, comment, userComments]);
+  }, [saveCommentMutation, userID, movieID, comment, userComments]);
 
   const handleToggle = useCallback(() => {
-    if (!mutation.isPending) {
+    if (!saveCommentMutation.isPending) {
       toggleModal();
     }
-  }, [mutation.isPending, toggleModal]);
+  }, [saveCommentMutation.isPending, toggleModal]);
 
   const handleCommentChange = useCallback((e) => {
-    setComment(e.target.value.slice(0, 100));
+    setComment(e.target.value.slice(0, MAX_COMMENT_LENGTH));
   }, []);
-
-  const placeholderText = t("enterYourComment");
 
   return (
     <Modal
       isOpen={isOpen}
       toggle={handleToggle}
-      backdrop={mutation.isPending ? "static" : true}
-      keyboard={!mutation.isPending}
+      backdrop={saveCommentMutation.isPending ? "static" : true}
+      keyboard={!saveCommentMutation.isPending}
       centered
     >
-      <div className="p-3 d-flex  align-items-start justify-content-between">
-        <h5 className="me-3 mb-0">
-          <TranslatedText text="commentOn" ns="commentsModal" />
-          {movieTitle}
-        </h5>
-
-        <Button close aria-label="Close" onClick={handleToggle}></Button>
-      </div>
-      <ModalBody>
-        <div>
-          <Input
-            type="textarea"
-            value={comment}
-            onChange={handleCommentChange}
-            placeholder={placeholderText}
-            rows="4"
-            disabled={mutation.isPending}
-            className="no-resize"
-          />
-
-          <small className="d-flex justify-content-end mt-1">
-            {100 - comment.length} <TranslatedText text="charactersLeft" ns="commentsModal" />
-          </small>
-        </div>
-
-        {mutation.isError && <div style={{ color: "red" }}>Error: {mutation.error?.message}</div>}
-      </ModalBody>
-      <ModalFooter>
-        <Button className="custom-transparent-btn" onClick={toggleModal} disabled={mutation.isPending}>
-          <TranslatedText text="cancel" ns="commentsModal" />
-        </Button>
-        <Button  color="primary" onClick={handleSaveComment} disabled={mutation.isPending || !comment.trim()}>
-          {mutation.isPending ? (
-            <TranslatedText text="saving" ns="commentsModal" />
-          ) : (
-            <TranslatedText text="saveComment" ns="commentsModal" />
-          )}
-        </Button>
-      </ModalFooter>
+      <ModalHeader title={movieTitle} onClose={handleToggle} />
+      <ModalContent
+        comment={comment}
+        onChange={handleCommentChange}
+        isSaving={saveCommentMutation.isPending}
+        error={saveCommentMutation.error}
+        placeholder={t("enterYourComment")}
+      />
+      <ModalFooterActions
+        onCancel={handleToggle}
+        onSave={handleSaveComment}
+        isSaving={saveCommentMutation.isPending}
+        isSaveDisabled={!comment.trim()}
+      />
     </Modal>
   );
 };
+
+// ------------------- Sub-components -------------------
+
+const ModalHeader = ({ title, onClose }) => (
+  <div className="p-3 d-flex align-items-start justify-content-between">
+    <h5 className="me-3 mb-0">
+      <TranslatedText text="commentOn" ns="commentsModal" /> {title}
+    </h5>
+    <Button close aria-label="Close" onClick={onClose} />
+  </div>
+);
+
+
+
+const ModalContent = ({ comment, onChange, isSaving, error, placeholder }) => (
+  <ModalBody>
+    <div>
+      <Input
+        type="textarea"
+        value={comment}
+        onChange={onChange}
+        placeholder={placeholder}
+        rows="4"
+        disabled={isSaving}
+        className="no-resize"
+      />
+      <small className="d-flex justify-content-end mt-1">
+        {MAX_COMMENT_LENGTH - comment.length} <TranslatedText text="charactersLeft" ns="commentsModal" />
+      </small>
+    </div>
+    {error && <div style={{ color: "red" }}>Error: {error.message}</div>}
+  </ModalBody>
+);
+
+ModalContent.propTypes = {
+  comment: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  error: PropTypes.object,
+  placeholder: PropTypes.string.isRequired,
+};
+
+const ModalFooterActions = ({ onCancel, onSave, isSaving, isSaveDisabled }) => (
+  <ModalFooter>
+    <Button className="custom-transparent-btn" onClick={onCancel} disabled={isSaving}>
+      <TranslatedText text="cancel" ns="commentsModal" />
+    </Button>
+    <Button color="primary" onClick={onSave} disabled={isSaving || isSaveDisabled}>
+      {isSaving ? (
+        <TranslatedText text="saving" ns="commentsModal" />
+      ) : (
+        <TranslatedText text="saveComment" ns="commentsModal" />
+      )}
+    </Button>
+  </ModalFooter>
+);
+
+ModalHeader.propTypes = {
+  title: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+ModalFooterActions.propTypes = {
+  onCancel: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  isSaving: PropTypes.bool.isRequired,
+  isSaveDisabled: PropTypes.bool.isRequired,
+};
+
+// ------------------- Parent component PropTypes -------------------
 
 MovieCommentsModal.propTypes = {
   movieID: PropTypes.string.isRequired,
