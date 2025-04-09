@@ -5,7 +5,7 @@ import { useMovies } from "@/hooks/useMovies";
 import { useDebounce } from "../../hooks/useDebounce";
 import SearchInput from "../../components/FormInputs/SearchInput";
 import TranslatedText from "../../components/Language/TranslatedText";
-import LoaderSpinner from "../../components/LoaderSpinner";
+import { Skeleton } from "@mui/material";
 
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,9 +49,12 @@ const LandingPage = () => {
             />
           </div>
 
-          {isLoading && (
-           <LoaderSpinner text="Loading movies..."/>
-          )}
+          {isLoading &&
+            [...Array(6)].map((_, index) => (
+              <Col key={index} className="mb-4" xs={12} sm={6} md={6} lg={5} xl={4} xxl={3}>
+                <Skeleton variant="rectangular" height={400} />
+              </Col>
+            ))}
 
           {error && <p className="text-danger">Error loading movies.</p>}
 
