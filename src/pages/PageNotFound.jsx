@@ -11,8 +11,8 @@ const PageNotFound = () => {
   return (
     <Container fluid className="d-flex justify-content-center mt-5">
       <Row>
-        <Col className="d-flex align-items-center">
-          <h6 className="mb-0 me-4">PageNotFound</h6>
+        <Col className="d-flex flex-column align-items-center">
+          <h4 className="mb-4 me-4"> PAGE NOT FOUND! ☹️</h4>
           <button type="button" onClick={handleGoHome} className="btn btn-primary">
             <TranslatedText text="goToHome" ns="termOfUse" />
           </button>

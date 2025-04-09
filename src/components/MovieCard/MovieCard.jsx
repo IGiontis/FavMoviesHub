@@ -1,7 +1,6 @@
 import { memo, useCallback, useState } from "react";
-import { Card, CardBody, CardImg, CardTitle, Button } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as solidHeart, faHeart as regularHeart } from "@fortawesome/free-solid-svg-icons";
+import { Card, CardBody, CardImg, CardTitle } from "reactstrap";
+
 import PropTypes from "prop-types";
 import MovieRating from "../../components/MovieRatings/MovieRating";
 import defaultImage from "../../assets/movieBackground.jpeg";
@@ -9,7 +8,7 @@ import MovieCommentsModal from "../../components/MovieComments/MovieCommentsModa
 import MovieInteractionButtons from "../../components/MovieComments/MovieInteractionButtons";
 import useFriendsMovieComments from "../../hooks/comments/useFriendsMovieComments";
 import TranslatedText from "../../components/Language/TranslatedText";
-import styles from "./MovieCard.module.css";
+import MovieLikeButton from "../Buttons/MovieLikeButton";
 
 const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
@@ -98,34 +97,6 @@ const MovieCard = ({ movie, isLiked, isProcessing, handleMovieLike, user }) => {
 };
 
 export default memo(MovieCard);
-
-const MovieLikeButton = ({ isLiked, handleMovieLike, movie, isProcessing }) => {
-  return (
-    <Button
-      type="button"
-      className={`position-absolute top-0 end-0 m-2 p-1 ${styles.buttonHoverable}`}
-      onClick={() => handleMovieLike(movie)}
-      disabled={isProcessing}
-      aria-label={isLiked ? "Unlike Movie" : "Like Movie"}
-    >
-      <FontAwesomeIcon
-        icon={isLiked ? solidHeart : regularHeart}
-        size="lg"
-        className={`${isLiked ? "text-danger" : "text-gray-500"} ${styles.iconHoverable}`}
-      />
-    </Button>
-  );
-};
-
-MovieLikeButton.propTypes = {
-  isLiked: PropTypes.bool.isRequired,
-  handleMovieLike: PropTypes.func.isRequired,
-  movie: PropTypes.shape({
-    imdbID: PropTypes.string.isRequired,
-    Title: PropTypes.string.isRequired,
-  }).isRequired,
-  isProcessing: PropTypes.bool.isRequired,
-};
 
 MovieCard.propTypes = {
   movie: PropTypes.shape({

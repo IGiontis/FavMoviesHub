@@ -1,8 +1,0 @@
-/* LikeButton.module.css */
-
-/* Apply hover effect on the button */
-.buttonHoverable:hover .iconHoverable {
-    color: #dc3545 !important; /* Apply text-danger color to the icon when hovering over the button */
-    transition: color 0.3s ease-in-out;
-  }
-  
