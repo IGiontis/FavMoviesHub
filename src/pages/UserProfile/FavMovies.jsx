@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useLikedMovies} from "../../hooks/useFetchLikedMovies"
-import MoviesGallery from "../LandingPage/MoviesGallery";
+import MoviesGallery from "../../components/MovieCard/MoviesGallery";
 
 const FavMovies = () => {
   const user = useSelector((state) => state.auth.user);
