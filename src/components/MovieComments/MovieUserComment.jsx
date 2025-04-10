@@ -11,7 +11,6 @@ import TranslatedText from "../Language/TranslatedText";
 const MovieUserComment = ({ user, movie, comment, isLoading, isError }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteUserComment();
-  
 
   const toggleModal = useCallback(() => {
     setIsModalOpen((prev) => !prev);
@@ -27,27 +26,30 @@ const MovieUserComment = ({ user, movie, comment, isLoading, isError }) => {
   }, [deleteComment, movie.imdbID, user.uid, toggleModal]);
 
   return (
-    <div className="mt-3">
+    <div className="py-3 border-bottom">
       {isLoading && <LoaderSpinner text="Loading comments..." />}
       {isError && <p>Error fetching comments.</p>}
 
       {!isLoading && !isError && comment && (
-        <div className="d-flex align-items-center justify-content-between">
-          <div className="text-break mb-0 me-2 d-flex align-items-center"><div className="fw-medium me-2">
-            <TranslatedText text="myComment" ns="movie"/>
-           </div>{comment}</div>
-          <Button
-            color="link"
-            size="sm"
-            className="text-danger"
-            onClick={toggleModal}
-            disabled={isDeleting}
-            aria-label="Delete Comment"
-          >
-            {isDeleting ? "Deleting..." : <FontAwesomeIcon icon={faTrash} />}
-          </Button>
-        </div>
-      ) }
+        <>
+          <div className="fw-medium  ">
+            <TranslatedText text="myComment" ns="movie" />
+          </div>
+          <div className="d-flex align-items-center justify-content-between">
+            <div className="text-break mb-0 me-2 d-flex ">{comment}</div>
+            <Button
+              color="link"
+              size="sm"
+              className="text-danger"
+              onClick={toggleModal}
+              disabled={isDeleting}
+              aria-label="Delete Comment"
+            >
+              {isDeleting ? "Deleting..." : <FontAwesomeIcon icon={faTrash} />}
+            </Button>
+          </div>
+        </>
+      )}
 
       <ConfirmationModal
         isOpen={isModalOpen}
