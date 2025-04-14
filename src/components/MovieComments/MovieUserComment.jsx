@@ -25,8 +25,10 @@ const MovieUserComment = ({ user, movie, comment, isLoading, isError }) => {
     }
   }, [deleteComment, movie.imdbID, user.uid, toggleModal]);
 
+  if(!comment) return null
+
   return (
-    <div className="py-3 border-bottom">
+    <div className="py-3 ">
       {isLoading && <LoaderSpinner text="Loading comments..." />}
       {isError && <p>Error fetching comments.</p>}
 

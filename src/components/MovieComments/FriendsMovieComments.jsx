@@ -8,7 +8,7 @@ const FriendsMovieComments = ({ friendsComments }) => {
   const commentCount = useMemo(() => friendsComments.length, [friendsComments]);
 
   return (
-    <div className="mt-3">
+    <div className="pt-3 border-top">
       <h6>
         <TranslatedText text="friendsComments" ns="movie" />
       </h6>

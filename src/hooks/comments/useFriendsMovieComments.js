@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useFriends } from "../useFriends";
-import { listenToFriendsMovieComments } from "../../services/movieComments/listenToFirendsMovieComments";
+import { listenToFriendsMovieComments } from "../../services/movieComments/listenToFriendsMovieComments";
 
 const useFriendsMovieComments = (userID, movieID) => {
   const { data: friends } = useFriends(userID);

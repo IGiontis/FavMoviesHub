@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import FriendsMovieComments from "./FriendsMovieComments";
 import useUserMovieComments from "../../hooks/comments/useUserMovieComments";
 import styles from "./MovieInteractionButtons.module.css";
+import FriendsRatings from "../MovieRatings/FriendsRatings";
 
 const MovieInteractionButtons = ({
   toggleCommentModal,
@@ -23,51 +24,53 @@ const MovieInteractionButtons = ({
 
   return (
     <div className="mt-3">
-      <div className="d-flex align-items-center border-bottom pb-2">
-        <Button
-          color="link"
-          className="p-0 border-0 bg-transparent position-relative me-4"
-          onClick={toggleCommentModal}
-          aria-label="Comment on Movie"
-        >
-          <FontAwesomeIcon
-            icon={faComment}
-            size="lg"
-            className={classnames(styles.iconHoverable, {
-              "text-primary": userComment,
-              "text-secondary": !userComment,
-            })}
-          />
-        </Button>
+      <div className="d-flex flex-wrap align-items-center justify-content-between border-bottom pb-2">
+        <div className="d-flex align-items-center  ">
+          <Button
+            color="link"
+            className="p-0 border-0 bg-transparent position-relative me-4"
+            onClick={toggleCommentModal}
+            aria-label="Comment on Movie"
+          >
+            <FontAwesomeIcon
+              icon={faComment}
+              size="lg"
+              className={classnames(styles.iconHoverable, {
+                "text-primary": userComment,
+                "text-secondary": !userComment,
+              })}
+            />
+          </Button>
 
-        <Button
-          color="link"
-          className="p-0 border-0 bg-transparent position-relative"
-          onClick={toggleShowFriendsComments}
-          aria-label="Show Friends' Comments"
-        >
-          <FontAwesomeIcon
-            icon={faComments}
-            size="lg"
-            className={classnames({
-              "text-primary": hasFriendsComments,
-              "text-secondary": !hasFriendsComments,
-            })}
-          />
+          <Button
+            color="link"
+            className="p-0 border-0 bg-transparent position-relative"
+            onClick={toggleShowFriendsComments}
+            aria-label="Show Friends' Comments"
+          >
+            <FontAwesomeIcon
+              icon={faComments}
+              size="lg"
+              className={classnames({
+                "text-primary": hasFriendsComments,
+                "text-secondary": !hasFriendsComments,
+              })}
+            />
 
-          {hasFriendsComments && (
-            <Badge
-              color="danger"
-              pill
-              className="position-absolute top-0 start-100 translate-middle"
-              style={{ fontSize: "0.75rem", minWidth: "1.25rem", padding: "0.2rem 0.4rem" }}
-            >
-              {friendsCommentCount}
-            </Badge>
-          )}
-        </Button>
+            {hasFriendsComments && (
+              <Badge
+                color="danger"
+                pill
+                className="position-absolute top-0 start-100 translate-middle"
+                style={{ fontSize: "0.75rem", minWidth: "1.25rem", padding: "0.2rem 0.4rem" }}
+              >
+                {friendsCommentCount}
+              </Badge>
+            )}
+          </Button>
+        </div>
+        <FriendsRatings userID={user.uid} movieID={movie.imdbID} />
       </div>
-
       <MovieUserComment user={user} movie={movie} comment={userComment} isLoading={isLoading} isError={isError} />
 
       {/* Apply fade transition with CSS classes */}
@@ -79,9 +82,7 @@ const MovieInteractionButtons = ({
           [styles.fadeExitActive]: !isFriendsCommentsShow,
         })}
       >
-        {isFriendsCommentsShow && (
-          <FriendsMovieComments userID={user.uid} movieID={movie.imdbID} friendsComments={friendsComments} />
-        )}
+        {isFriendsCommentsShow && <FriendsMovieComments friendsComments={friendsComments} />}
       </div>
     </div>
   );
