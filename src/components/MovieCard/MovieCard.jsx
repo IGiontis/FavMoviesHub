@@ -111,5 +111,5 @@ MovieCard.propTypes = {
   handleMovieLike: PropTypes.func.isRequired,
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
-  }), // Optional since the app might be used without login
+  }),
 };

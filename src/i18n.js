@@ -38,6 +38,9 @@ import grPrivacyPolicy from "./locales/gr/privacyPolicy.json";
 import enMonths from "./locales/en/months.json";
 import grMonths from "./locales/gr/months.json";
 
+import enFriendsRatings from "./locales/en/ratingsFriendsModal.json";
+import grFriendsRatings from "./locales/gr/ratingsFriendsModal.json";
+
 // Add other namespaces if necessary
 // import enCommon from "./locales/en/common.json";
 // import grCommon from "./locales/gr/common.json";
@@ -56,6 +59,7 @@ const resources = {
     termOfUse: enTermsOfUse,
     privacyPolicy: enPrivacyPolicy,
     months: enMonths,
+    ratingFriendsModal: enFriendsRatings,
     // common: enCommon, // Add other namespaces as needed
   },
   gr: {
@@ -71,6 +75,7 @@ const resources = {
     termOfUse: grTermsOfUse,
     privacyPolicy: grPrivacyPolicy,
     months: grMonths,
+    ratingFriendsModal: grFriendsRatings,
     // common: grCommon, // Add other namespaces as needed
   },
 };

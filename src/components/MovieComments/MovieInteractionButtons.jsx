@@ -73,7 +73,6 @@ const MovieInteractionButtons = ({
       </div>
       <MovieUserComment user={user} movie={movie} comment={userComment} isLoading={isLoading} isError={isError} />
 
-      {/* Apply fade transition with CSS classes */}
       <div
         className={classnames({
           [styles.fadeEnter]: !isFriendsCommentsShow,
