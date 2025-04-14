@@ -13,10 +13,10 @@ const LandingPage = () => {
   // Function to restrict input to English characters
   const handleSearchChange = useCallback((e) => {
     const input = e.target.value;
-
-    // Regex to allow only English letters, numbers, and basic punctuation
-    const regex = /^[A-Za-z0-9 .,?!]*$/;
-
+  
+    // Regex to allow only English letters, numbers, basic punctuation, &, and -
+    const regex = /^[A-Za-z0-9 .,?!&-]*$/;
+  
     if (regex.test(input)) {
       setSearchTerm(input); // Update search term only if valid
     }
