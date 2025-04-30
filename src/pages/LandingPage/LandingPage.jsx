@@ -13,10 +13,10 @@ const LandingPage = () => {
   // Function to restrict input to English characters
   const handleSearchChange = useCallback((e) => {
     const input = e.target.value;
-  
+
     // Regex to allow only English letters, numbers, basic punctuation, &, and -
     const regex = /^[A-Za-z0-9 .,?!&-]*$/;
-  
+
     if (regex.test(input)) {
       setSearchTerm(input); // Update search term only if valid
     }
@@ -49,12 +49,15 @@ const LandingPage = () => {
             />
           </div>
 
-          {isLoading &&
-            [...Array(6)].map((_, index) => (
-              <Col key={index} className="mb-4" xs={12} sm={6} md={6} lg={5} xl={4} xxl={3}>
-                <Skeleton variant="rectangular" height={400} />
-              </Col>
-            ))}
+          {isLoading && (
+            <Row>
+              {[...Array(6)].map((_, index) => (
+                <Col key={index} className="mb-4" xs={12} sm={6} md={6} lg={5} xl={4} xxl={3}>
+                  <Skeleton variant="rectangular" height={400} />
+                </Col>
+              ))}
+            </Row>
+          )}
 
           {error && <p className="text-danger">Error loading movies.</p>}
 
