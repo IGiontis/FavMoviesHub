@@ -3,10 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- SEO & Metadata -->
+    <title>Fav Movies Share</title>
     <meta name="description" content="Fav Movies Share - Share and discover your favorite movies with friends!" />
     <meta name="google-site-verification" content="RO32_dCaoJZxK-Vf9RoHFcHrgv5kQ5lmbScpQmMTULQ" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <title>Fav Movies Share</title>
+
+    <!-- Open Graph (for social sharing & search preview) -->
+    <meta property="og:title" content="Fav Movies Share" />
+    <meta property="og:description" content="Share and discover your favorite movies with friends!" />
+    <meta property="og:url" content="https://favmoviesshare.netlify.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./src/assets/movieBackground.jpeg" /> <!-- Optional: update with your actual preview image -->
 
     <!-- Inline loader CSS -->
     <style>
@@ -15,7 +24,7 @@
         inset: 0;
         background: #fff;
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         z-index: 9999;
@@ -32,7 +41,7 @@
         width: 50px;
         height: 50px;
         animation: spin 1.5s linear infinite;
-        margin-top: 15px; 
+        margin-top: 15px;
       }
 
       @keyframes spin {
@@ -40,7 +49,6 @@
         100% { transform: rotate(360deg); }
       }
 
-      /* Fade-out effect */
       #preloader.fade-out {
         opacity: 0;
         pointer-events: none;

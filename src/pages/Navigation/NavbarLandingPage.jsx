@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useReducer } from "react";
 import { Navbar, NavbarBrand, Nav, Collapse, NavbarToggler, Modal } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -14,67 +14,78 @@ import { memo } from "react";
 import LanguageSwitcher from "../../components/Language/LanguageSwitcher";
 import NavigationButtons from "./NavigationButtons";
 
+const initialState = {
+  isNavbarOpen: false,
+  isDropdownOpen: false,
+  isConfirmationModalOpen: false,
+  modal: { isOpen: false, type: null },
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "TOGGLE_NAVBAR":
+      return { ...state, isNavbarOpen: !state.isNavbarOpen };
+    case "TOGGLE_DROPDOWN":
+      return { ...state, isDropdownOpen: !state.isDropdownOpen };
+    case "OPEN_MODAL":
+      return { ...state, modal: { isOpen: true, type: action.payload } };
+    case "CLOSE_MODAL":
+      return { ...state, modal: { isOpen: false, type: null } };
+    case "OPEN_CONFIRMATION":
+      return { ...state, isConfirmationModalOpen: true };
+    case "CLOSE_CONFIRMATION":
+      return { ...state, isConfirmationModalOpen: false };
+    default:
+      return state;
+  }
+}
+
 const NavbarLandingPage = () => {
-  const dispatch = useDispatch();
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const user = useSelector((state) => state.auth.user);
   const memoizedUser = useMemo(() => user, [user]);
-
   const navigate = useNavigate();
+  const reduxDispatch = useDispatch();
 
-  // Use a single state object for modal management
-  const [modalState, setModalState] = useState({ isOpen: false, type: null });
-  const openModal = useCallback((type) => setModalState({ isOpen: true, type }), []);
-  const closeModal = useCallback(() => setModalState({ isOpen: false, type: null }), []);
-
-  // Other local state
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-
-  // Handlers wrapped in useCallback
   const handleLogout = useCallback(() => {
-    dispatch(logout());
+    reduxDispatch(logout());
     navigate("/");
-    setIsConfirmationModalOpen(false);
-  }, [dispatch, navigate]);
-
-  const toggleNavbar = useCallback(() => setIsOpen((prev) => !prev), []);
-  const toggleDropdown = useCallback(() => setIsDropdownOpen((prev) => !prev), []);
-  const openSignIn = useCallback(() => openModal("sign-in"), [openModal]);
+    dispatch({ type: "CLOSE_CONFIRMATION" });
+  }, [reduxDispatch, navigate]);
 
   return (
     <>
       <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={Link} to="/" className="me-auto d-flex align-items-center justify-content-between">
-          <span className="">Fav Movies Share</span>
-          
-            <LanguageSwitcher />
-        
+          <span>Fav Movies Share</span>
+          <LanguageSwitcher />
           <NavigationButtons user={memoizedUser} />
         </NavbarBrand>
-        <NavbarToggler onClick={toggleNavbar} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ms-auto d-flex flex-wrap align-items-center  navbar-nav" navbar>
+        <NavbarToggler onClick={() => dispatch({ type: "TOGGLE_NAVBAR" })} />
+        <Collapse isOpen={state.isNavbarOpen} navbar>
+          <Nav className="ms-auto d-flex flex-wrap align-items-center navbar-nav" navbar>
             <NavigationLinks
               user={memoizedUser}
-              openModal={openModal}
-              toggleDropdown={toggleDropdown}
-              isDropdownOpen={isDropdownOpen}
-              setIsConfirmationModalOpen={setIsConfirmationModalOpen}
+              openModal={(type) => dispatch({ type: "OPEN_MODAL", payload: type })}
+              toggleDropdown={() => dispatch({ type: "TOGGLE_DROPDOWN" })}
+              isDropdownOpen={state.isDropdownOpen}
+              setIsConfirmationModalOpen={() => dispatch({ type: "OPEN_CONFIRMATION" })}
             />
           </Nav>
         </Collapse>
       </Navbar>
 
-      {/* Modal using consolidated state */}
-      <Modal isOpen={modalState.isOpen} toggle={closeModal} centered>
-        {modalState.type === "sign-in" && <SignIn toggleModal={closeModal} />}
-        {modalState.type === "create-account" && <CreateAccount toggleModal={closeModal} openSignIn={openSignIn} />}
+      <Modal isOpen={state.modal.isOpen} toggle={() => dispatch({ type: "CLOSE_MODAL" })} centered>
+        {state.modal.type === "sign-in" && <SignIn toggleModal={() => dispatch({ type: "CLOSE_MODAL" })} />}
+        {state.modal.type === "create-account" && (
+          <CreateAccount toggleModal={() => dispatch({ type: "CLOSE_MODAL" })} openSignIn={() => dispatch({ type: "OPEN_MODAL", payload: "sign-in" })} />
+        )}
       </Modal>
 
       <ConfirmationModal
-        isOpen={isConfirmationModalOpen}
-        onCancel={() => setIsConfirmationModalOpen(false)}
+        isOpen={state.isConfirmationModalOpen}
+        onCancel={() => dispatch({ type: "CLOSE_CONFIRMATION" })}
         onConfirm={handleLogout}
         message="Are you sure you want to log out?"
       />

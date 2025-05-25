@@ -11,10 +11,7 @@ const NavigationFriendButton = memo(() => {
   return (
     <button
       onClick={handleToggleAddFriend}
-      className={classNames(
-        "btn btn-link nav-link p-0 border-0 me-2 position-relative",
-        { "add-friend-active": isAddFriendOpen } //  Conditionally apply class
-      )}
+      className={classNames("btn btn-link nav-link p-0 border-0 me-2 position-relative", { "add-friend-active": isAddFriendOpen })}
       aria-label="Open friend requests"
     >
       <FontAwesomeIcon icon={faUserPlus} size="xs" />
