@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useInfiniteScroll } from "../hooks/useinfiniteScroll";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 
 const LoadMoreWrapper = ({ itemsLength, loadCount = 6, children }) => {
   const { visibleCount, loadMoreRef } = useInfiniteScroll(itemsLength, loadCount);
